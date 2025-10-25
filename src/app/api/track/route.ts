@@ -4,6 +4,10 @@ import path from 'path';
 
 const analyticsPath = path.join(process.cwd(), 'src/data/analytics.json');
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(request: Request) {
   try {
     const { type, data } = await request.json();

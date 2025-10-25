@@ -4,6 +4,10 @@ import path from 'path';
 
 const contentPath = path.join(process.cwd(), 'src/data/content.json');
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(request: Request) {
   try {
     const { id } = await request.json();

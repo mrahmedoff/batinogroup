@@ -4,6 +4,10 @@ import { headers } from 'next/headers';
 // Pulsuz IP geolocation API
 const IPAPI_URL = 'http://ip-api.com/json/';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET() {
   try {
     // Client IP-ni əldə et
