@@ -1,0 +1,33 @@
+{
+  "name": "batino-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "deploy": "npm run build && npx firebase-tools deploy --only hosting",
+    "deploy:rules": "npx firebase-tools deploy --only firestore:rules"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.55.0",
+    "eslint-config-next": "14.2.5",
+    "firebase": "^12.4.0",
+    "next": "14.2.5",
+    "nodemailer": "^7.0.10",
+    "postcss": "^8.4.31",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "@types/nodemailer": "^7.0.3",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15"
+  }
+}
