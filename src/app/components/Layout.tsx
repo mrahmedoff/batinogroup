@@ -4,6 +4,7 @@ import { translations } from '../translations';
 import { HomeIcon, InformationCircleIcon, WrenchScrewdriverIcon, PhoneIcon, EnvelopeIcon, MapPinIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Analytics from './Analytics';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -50,6 +51,7 @@ export default function Layout({ children, locale }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <Analytics />
       {/* Modern Header with sticky navigation */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100">
         <nav className="container mx-auto flex justify-between items-center px-6 py-4">

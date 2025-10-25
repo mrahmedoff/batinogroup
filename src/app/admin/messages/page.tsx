@@ -40,6 +40,23 @@ export default function Messages() {
     }
   };
 
+  const handleMarkAsRead = async (id: number) => {
+    try {
+      await fetch('/api/messages/mark-read', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+      
+      // Update local state
+      setMessages(messages.map(m => 
+        m.id === id ? { ...m, unread: false } : m
+      ));
+    } catch (error) {
+      console.error('Failed to mark as read:', error);
+    }
+  };
+
   const handleDelete = async (id: number) => {
     if (confirm('Bu mesajı silmək istədiyinizdən əminsiniz?')) {
       try {
@@ -179,7 +196,13 @@ export default function Messages() {
               {filteredMessages.map((message) => (
                 <div
                   key={message.id}
-                  onClick={() => setSelectedMessage(message.id)}
+                  onClick={() => {
+                    setSelectedMessage(message.id);
+                    // Mesaj açıldıqda avtomatik oxunmuş kimi işarələ
+                    if (message.unread) {
+                      handleMarkAsRead(message.id);
+                    }
+                  }}
                   className={`p-4 cursor-pointer transition-colors ${
                     selectedMessage === message.id
                       ? 'bg-blue-50 border-l-4 border-blue-600'
@@ -268,8 +291,12 @@ export default function Messages() {
                   >
                     Cavab Ver
                   </button>
-                  <button className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-all">
-                    Oxunmuş Kimi İşarələ
+                  <button 
+                    onClick={() => handleMarkAsRead(selectedMsg.id)}
+                    disabled={!selectedMsg.unread}
+                    className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {selectedMsg.unread ? 'Oxunmuş Kimi İşarələ' : 'Oxunmuş ✓'}
                   </button>
                 </div>
               </div>

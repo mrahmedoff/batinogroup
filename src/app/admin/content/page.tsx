@@ -28,12 +28,22 @@ export default function ContentManagement() {
       description: '',
       mission: '',
       vision: '',
-      values: '',
+      values: [],
+    },
+    services: {
+      title: '',
+      subtitle: '',
+      items: [],
     },
     contact: {
       phone: '',
       email: '',
       address: '',
+      workingHours: {
+        weekdays: '',
+        saturday: '',
+        sunday: '',
+      },
     },
   });
 
@@ -147,59 +157,170 @@ export default function ContentManagement() {
             ) : (
               <>
                 {activeTab === 'home' && (
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Badge Mətni
-                      </label>
-                      <input
-                        type="text"
-                        value={content.home.hero.badge}
-                        onChange={(e) => setContent({
-                          ...content,
-                          home: {
-                            ...content.home,
-                            hero: { ...content.home.hero, badge: e.target.value }
-                          }
-                        })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
+                  <div className="space-y-8">
+                    {/* Hero Section */}
+                    <div className="bg-gray-50 p-6 rounded-xl">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4">Hero Bölməsi</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Badge Mətni
+                          </label>
+                          <input
+                            type="text"
+                            value={content.home.hero.badge}
+                            onChange={(e) => setContent({
+                              ...content,
+                              home: {
+                                ...content.home,
+                                hero: { ...content.home.hero, badge: e.target.value }
+                              }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Məsələn: Azərbaycanda #1 Təchizat Şirkəti"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Başlıq
+                          </label>
+                          <input
+                            type="text"
+                            value={content.home.hero.title}
+                            onChange={(e) => setContent({
+                              ...content,
+                              home: {
+                                ...content.home,
+                                hero: { ...content.home.hero, title: e.target.value }
+                              }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Əsas başlıq"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Alt Başlıq
+                          </label>
+                          <textarea
+                            value={content.home.hero.subtitle}
+                            onChange={(e) => setContent({
+                              ...content,
+                              home: {
+                                ...content.home,
+                                hero: { ...content.home.hero, subtitle: e.target.value }
+                              }
+                            })}
+                            rows={4}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Qısa təsvir"
+                          />
+                        </div>
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Başlıq
-                      </label>
-                      <input
-                        type="text"
-                        value={content.home.hero.title}
-                        onChange={(e) => setContent({
-                          ...content,
-                          home: {
-                            ...content.home,
-                            hero: { ...content.home.hero, title: e.target.value }
-                          }
-                        })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Alt Başlıq
-                      </label>
-                      <textarea
-                        value={content.home.hero.subtitle}
-                        onChange={(e) => setContent({
-                          ...content,
-                          home: {
-                            ...content.home,
-                            hero: { ...content.home.hero, subtitle: e.target.value }
-                          }
-                        })}
-                        rows={4}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
+                    {/* Statistics */}
+                    <div className="bg-gray-50 p-6 rounded-xl">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-bold text-gray-900">Statistika</h3>
+                        <button
+                          onClick={() => {
+                            const newStat = { label: '', value: '', icon: '📊' };
+                            setContent({
+                              ...content,
+                              home: {
+                                ...content.home,
+                                stats: [...(content.home.stats || []), newStat]
+                              }
+                            });
+                          }}
+                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                        >
+                          + Statistika Əlavə Et
+                        </button>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        {(content.home.stats || []).map((stat: any, index: number) => (
+                          <div key={index} className="bg-white p-4 rounded-lg border border-gray-200">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-xs font-semibold text-gray-600 mb-1">
+                                  Icon (Emoji)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={stat.icon}
+                                  onChange={(e) => {
+                                    const newStats = [...content.home.stats];
+                                    newStats[index].icon = e.target.value;
+                                    setContent({
+                                      ...content,
+                                      home: { ...content.home, stats: newStats }
+                                    });
+                                  }}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-2xl text-center"
+                                  placeholder="📊"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-xs font-semibold text-gray-600 mb-1">
+                                  Rəqəm
+                                </label>
+                                <input
+                                  type="text"
+                                  value={stat.value}
+                                  onChange={(e) => {
+                                    const newStats = [...content.home.stats];
+                                    newStats[index].value = e.target.value;
+                                    setContent({
+                                      ...content,
+                                      home: { ...content.home, stats: newStats }
+                                    });
+                                  }}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  placeholder="500+"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-xs font-semibold text-gray-600 mb-1">
+                                  Etiket
+                                </label>
+                                <div className="flex gap-2">
+                                  <input
+                                    type="text"
+                                    value={stat.label}
+                                    onChange={(e) => {
+                                      const newStats = [...content.home.stats];
+                                      newStats[index].label = e.target.value;
+                                      setContent({
+                                        ...content,
+                                        home: { ...content.home, stats: newStats }
+                                      });
+                                    }}
+                                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Müştərilər"
+                                  />
+                                  <button
+                                    onClick={() => {
+                                      const newStats = content.home.stats.filter((_: any, i: number) => i !== index);
+                                      setContent({
+                                        ...content,
+                                        home: { ...content.home, stats: newStats }
+                                      });
+                                    }}
+                                    className="px-3 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors"
+                                  >
+                                    🗑️
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     {/* Preview */}
@@ -210,7 +331,19 @@ export default function ContentManagement() {
                           <span className="text-sm font-medium text-blue-800">{content.home.hero.badge}</span>
                         </div>
                         <h1 className="text-4xl font-bold text-gray-900 mb-4">{content.home.hero.title}</h1>
-                        <p className="text-lg text-gray-600">{content.home.hero.subtitle}</p>
+                        <p className="text-lg text-gray-600 mb-8">{content.home.hero.subtitle}</p>
+                        
+                        {content.home.stats && content.home.stats.length > 0 && (
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                            {content.home.stats.map((stat: any, index: number) => (
+                              <div key={index} className="text-center p-4 bg-gray-50 rounded-lg">
+                                <div className="text-3xl mb-2">{stat.icon}</div>
+                                <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                                <div className="text-sm text-gray-600">{stat.label}</div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

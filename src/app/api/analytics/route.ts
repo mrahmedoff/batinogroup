@@ -43,9 +43,23 @@ function filterByRange(data: any, range: string) {
   const prevPageViews = previousStats.reduce((sum: number, day: any) => sum + day.pageViews, 0);
   const prevMessages = previousStats.reduce((sum: number, day: any) => sum + day.messages, 0);
   
-  const visitorChange = prevVisitors > 0 ? ((totalVisitors - prevVisitors) / prevVisitors * 100).toFixed(1) : 0;
-  const pageViewChange = prevPageViews > 0 ? ((totalPageViews - prevPageViews) / prevPageViews * 100).toFixed(1) : 0;
-  const messageChange = prevMessages > 0 ? ((totalMessages - prevMessages) / prevMessages * 100).toFixed(1) : 0;
+  // Dəyişiklik faizini hesabla (0 bölməni qarşısını al)
+  const visitorChange = prevVisitors > 0 
+    ? parseFloat(((totalVisitors - prevVisitors) / prevVisitors * 100).toFixed(1))
+    : totalVisitors > 0 ? 100 : 0;
+  
+  const pageViewChange = prevPageViews > 0 
+    ? parseFloat(((totalPageViews - prevPageViews) / prevPageViews * 100).toFixed(1))
+    : totalPageViews > 0 ? 100 : 0;
+  
+  const messageChange = prevMessages > 0 
+    ? parseFloat(((totalMessages - prevMessages) / prevMessages * 100).toFixed(1))
+    : totalMessages > 0 ? 100 : 0;
+  
+  // Bounce rate hesabla (səhifə baxışı varsa)
+  const bounceRate = totalPageViews > 0 
+    ? parseFloat((((totalPageViews - totalVisitors) / totalPageViews * 100)).toFixed(1))
+    : 0;
   
   return {
     ...data,
@@ -55,24 +69,29 @@ function filterByRange(data: any, range: string) {
       totalVisitors,
       totalPageViews,
       totalMessages,
+      bounceRate,
     },
     trends: {
       visitors: { 
         value: totalVisitors, 
-        change: parseFloat(visitorChange as string), 
-        trend: parseFloat(visitorChange as string) >= 0 ? 'up' : 'down' 
+        change: visitorChange, 
+        trend: visitorChange >= 0 ? 'up' : 'down' 
       },
       pageViews: { 
         value: totalPageViews, 
-        change: parseFloat(pageViewChange as string), 
-        trend: parseFloat(pageViewChange as string) >= 0 ? 'up' : 'down' 
+        change: pageViewChange, 
+        trend: pageViewChange >= 0 ? 'up' : 'down' 
       },
       messages: { 
         value: totalMessages, 
-        change: parseFloat(messageChange as string), 
-        trend: parseFloat(messageChange as string) >= 0 ? 'up' : 'down' 
+        change: messageChange, 
+        trend: messageChange >= 0 ? 'up' : 'down' 
       },
-      bounceRate: data.trends.bounceRate,
+      bounceRate: { 
+        value: bounceRate, 
+        change: 0, 
+        trend: 'down' 
+      },
     },
   };
 }

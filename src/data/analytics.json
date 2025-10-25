@@ -1,303 +1,115 @@
 {
   "overview": {
-    "totalVisitors": 12543,
-    "totalPageViews": 45678,
-    "totalMessages": 234,
-    "avgSessionDuration": "3:45",
-    "bounceRate": 42.5,
-    "conversionRate": 3.2
+    "totalVisitors": 2,
+    "totalPageViews": 18,
+    "totalMessages": 0,
+    "avgSessionDuration": "0:00",
+    "bounceRate": 0,
+    "conversionRate": 0
   },
   "trends": {
     "visitors": {
-      "value": 12543,
-      "change": 12.5,
+      "value": 0,
+      "change": 0,
       "trend": "up"
     },
     "pageViews": {
-      "value": 45678,
-      "change": 8.3,
+      "value": 0,
+      "change": 0,
       "trend": "up"
     },
     "messages": {
-      "value": 234,
-      "change": 15.7,
+      "value": 0,
+      "change": 0,
       "trend": "up"
     },
     "bounceRate": {
-      "value": 42.5,
-      "change": -5.2,
+      "value": 0,
+      "change": 0,
       "trend": "down"
     }
   },
   "dailyStats": [
     {
-      "date": "2025-09-26",
-      "visitors": 102,
-      "pageViews": 373,
-      "messages": 7
-    },
-    {
-      "date": "2025-09-27",
-      "visitors": 239,
-      "pageViews": 427,
-      "messages": 7
-    },
-    {
-      "date": "2025-09-28",
-      "visitors": 216,
-      "pageViews": 197,
-      "messages": 6
-    },
-    {
-      "date": "2025-09-29",
-      "visitors": 131,
-      "pageViews": 529,
-      "messages": 3
-    },
-    {
-      "date": "2025-09-30",
-      "visitors": 218,
-      "pageViews": 125,
-      "messages": 3
-    },
-    {
-      "date": "2025-10-01",
-      "visitors": 212,
-      "pageViews": 226,
-      "messages": 6
-    },
-    {
-      "date": "2025-10-02",
-      "visitors": 128,
-      "pageViews": 473,
-      "messages": 5
-    },
-    {
-      "date": "2025-10-03",
-      "visitors": 136,
-      "pageViews": 107,
-      "messages": 4
-    },
-    {
-      "date": "2025-10-04",
-      "visitors": 109,
-      "pageViews": 282,
-      "messages": 3
-    },
-    {
-      "date": "2025-10-05",
-      "visitors": 168,
-      "pageViews": 552,
-      "messages": 6
-    },
-    {
-      "date": "2025-10-06",
-      "visitors": 230,
-      "pageViews": 579,
-      "messages": 9
-    },
-    {
-      "date": "2025-10-07",
-      "visitors": 169,
-      "pageViews": 330,
-      "messages": 1
-    },
-    {
-      "date": "2025-10-08",
-      "visitors": 197,
-      "pageViews": 576,
-      "messages": 2
-    },
-    {
-      "date": "2025-10-09",
-      "visitors": 84,
-      "pageViews": 144,
-      "messages": 1
-    },
-    {
-      "date": "2025-10-10",
-      "visitors": 141,
-      "pageViews": 329,
-      "messages": 8
-    },
-    {
-      "date": "2025-10-11",
-      "visitors": 155,
-      "pageViews": 506,
-      "messages": 1
-    },
-    {
-      "date": "2025-10-12",
-      "visitors": 132,
-      "pageViews": 409,
-      "messages": 4
-    },
-    {
-      "date": "2025-10-13",
-      "visitors": 123,
-      "pageViews": 486,
-      "messages": 3
-    },
-    {
-      "date": "2025-10-14",
-      "visitors": 197,
-      "pageViews": 415,
-      "messages": 6
-    },
-    {
-      "date": "2025-10-15",
-      "visitors": 76,
-      "pageViews": 220,
-      "messages": 6
-    },
-    {
-      "date": "2025-10-16",
-      "visitors": 189,
-      "pageViews": 305,
-      "messages": 9
-    },
-    {
-      "date": "2025-10-17",
-      "visitors": 222,
-      "pageViews": 191,
-      "messages": 8
-    },
-    {
-      "date": "2025-10-18",
-      "visitors": 89,
-      "pageViews": 186,
-      "messages": 2
-    },
-    {
-      "date": "2025-10-19",
-      "visitors": 151,
-      "pageViews": 334,
-      "messages": 4
-    },
-    {
-      "date": "2025-10-20",
-      "visitors": 177,
-      "pageViews": 176,
-      "messages": 7
-    },
-    {
-      "date": "2025-10-21",
-      "visitors": 129,
-      "pageViews": 350,
-      "messages": 6
-    },
-    {
-      "date": "2025-10-22",
-      "visitors": 217,
-      "pageViews": 428,
-      "messages": 10
-    },
-    {
-      "date": "2025-10-23",
-      "visitors": 130,
-      "pageViews": 383,
-      "messages": 7
-    },
-    {
-      "date": "2025-10-24",
-      "visitors": 171,
-      "pageViews": 465,
-      "messages": 4
-    },
-    {
       "date": "2025-10-25",
-      "visitors": 141,
-      "pageViews": 303,
-      "messages": 7
+      "visitors": 2,
+      "pageViews": 18,
+      "messages": 0
     }
   ],
   "topPages": [
     {
       "path": "/az",
-      "views": 15234,
-      "percentage": 33.4
+      "views": 8,
+      "percentage": 44.4
     },
     {
       "path": "/az/services",
-      "views": 8765,
-      "percentage": 19.2
-    },
-    {
-      "path": "/az/about",
-      "views": 6543,
-      "percentage": 14.3
+      "views": 5,
+      "percentage": 27.8
     },
     {
       "path": "/az/contact",
-      "views": 5432,
-      "percentage": 11.9
+      "views": 3,
+      "percentage": 16.7
     },
     {
-      "path": "/admin/dashboard",
-      "views": 2345,
-      "percentage": 5.1
+      "path": "/az/about",
+      "views": 2,
+      "percentage": 11.1
     }
   ],
+  "deviceCounts": {
+    "Desktop": 2,
+    "Mobile": 0,
+    "Tablet": 0
+  },
   "devices": [
     {
       "name": "Desktop",
-      "value": 45,
+      "value": 100,
       "color": "#667eea"
     },
     {
       "name": "Mobile",
-      "value": 40,
+      "value": 0,
       "color": "#764ba2"
     },
     {
       "name": "Tablet",
-      "value": 15,
+      "value": 0,
       "color": "#f093fb"
     }
   ],
+  "browserCounts": {
+    "Chrome": 2,
+    "Safari": 0,
+    "Firefox": 0,
+    "Edge": 0
+  },
   "browsers": [
     {
       "name": "Chrome",
-      "value": 52
+      "value": 100
     },
     {
       "name": "Safari",
-      "value": 25
+      "value": 0
     },
     {
       "name": "Firefox",
-      "value": 15
+      "value": 0
     },
     {
       "name": "Edge",
-      "value": 8
+      "value": 0
     }
   ],
   "countries": [
     {
-      "name": "Azərbaycan",
-      "value": 8500,
-      "flag": "🇦🇿"
-    },
-    {
-      "name": "Türkiyə",
-      "value": 2100,
-      "flag": "🇹🇷"
-    },
-    {
-      "name": "Rusiya",
-      "value": 1200,
-      "flag": "🇷🇺"
-    },
-    {
-      "name": "ABŞ",
-      "value": 543,
-      "flag": "🇺🇸"
-    },
-    {
-      "name": "Digər",
-      "value": 200,
-      "flag": "🌍"
+      "name": "Polşa",
+      "value": 1,
+      "flag": "🇵🇱"
     }
   ]
 }

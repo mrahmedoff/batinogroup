@@ -2,6 +2,7 @@
 import { translations } from '../../translations';
 import { EnvelopeIcon, UserIcon, ChatBubbleLeftIcon, MapPinIcon, PhoneIcon, ClockIcon, BuildingOfficeIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
+import { trackMessage } from '../../components/Analytics';
 
 export default function Contact() {
   const t = translations.az;
@@ -49,6 +50,9 @@ export default function Contact() {
         setSubmitted(true);
         setFormData({ name: '', email: '', phone: '', company: '', message: '' });
         setTimeout(() => setSubmitted(false), 5000);
+        
+        // Mesaj statistikasını yenilə
+        trackMessage();
       }
     } catch (error) {
       console.error('Failed to send message:', error);
