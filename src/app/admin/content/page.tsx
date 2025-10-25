@@ -126,21 +126,25 @@ export default function ContentManagement() {
           </button>
         </div>
 
-        {/* Tabs */}
-        <div className="bg-white rounded-xl shadow-sm">
-          <div className="border-b border-gray-200">
-            <nav className="flex space-x-4 px-6" aria-label="Tabs">
+        {/* Tabs - Enhanced Card Design */}
+        <div className="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="p-4 bg-gradient-to-r from-blue-600 to-purple-600">
+            <h3 className="text-white font-bold text-lg">Səhifə Bölmələri</h3>
+            <p className="text-blue-100 text-sm">Redaktə etmək istədiyiniz bölməni seçin</p>
+          </div>
+          <div className="p-4">
+            <nav className="flex flex-wrap gap-3" aria-label="Tabs">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 py-4 px-3 border-b-2 font-medium text-sm transition-colors ${
+                  className={`flex items-center space-x-3 px-6 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
                     activeTab === tab.id
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white scale-105'
+                      : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
                   }`}
                 >
-                  <span className="text-xl">{tab.icon}</span>
+                  <span className="text-2xl">{tab.icon}</span>
                   <span>{tab.name}</span>
                 </button>
               ))}
@@ -158,9 +162,17 @@ export default function ContentManagement() {
               <>
                 {activeTab === 'home' && (
                   <div className="space-y-8">
-                    {/* Hero Section */}
-                    <div className="bg-gray-50 p-6 rounded-xl">
-                      <h3 className="text-lg font-bold text-gray-900 mb-4">Hero Bölməsi</h3>
+                    {/* Hero Section - Enhanced Card */}
+                    <div className="bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-lg border-2 border-gray-100">
+                      <div className="flex items-center mb-6">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                          <span className="text-2xl">🎯</span>
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900">Hero Bölməsi</h3>
+                          <p className="text-sm text-gray-600">Ana səhifə başlıq bölməsi</p>
+                        </div>
+                      </div>
                       <div className="space-y-4">
                         <div>
                           <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -221,10 +233,18 @@ export default function ContentManagement() {
                       </div>
                     </div>
 
-                    {/* Statistics */}
-                    <div className="bg-gray-50 p-6 rounded-xl">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-bold text-gray-900">Statistika</h3>
+                    {/* Statistics - Enhanced Card */}
+                    <div className="bg-gradient-to-br from-white to-purple-50 p-8 rounded-2xl shadow-lg border-2 border-gray-100">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center">
+                          <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                            <span className="text-2xl">📊</span>
+                          </div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-gray-900">Statistika</h3>
+                            <p className="text-sm text-gray-600">Rəqəmlərlə nailiyyətlər</p>
+                          </div>
+                        </div>
                         <button
                           onClick={() => {
                             const newStat = { label: '', value: '', icon: '📊' };
@@ -236,7 +256,7 @@ export default function ContentManagement() {
                               }
                             });
                           }}
-                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                          className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl hover:from-purple-700 hover:to-purple-800 transition-all shadow-lg hover:shadow-xl font-bold transform hover:-translate-y-0.5"
                         >
                           + Statistika Əlavə Et
                         </button>
@@ -244,7 +264,7 @@ export default function ContentManagement() {
                       
                       <div className="space-y-4">
                         {(content.home.stats || []).map((stat: any, index: number) => (
-                          <div key={index} className="bg-white p-4 rounded-lg border border-gray-200">
+                          <div key={index} className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-md hover:shadow-lg transition-all">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                               <div>
                                 <label className="block text-xs font-semibold text-gray-600 mb-1">
@@ -323,10 +343,18 @@ export default function ContentManagement() {
                       </div>
                     </div>
 
-                    {/* Preview */}
-                    <div className="mt-8 p-6 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl">
-                      <h3 className="text-lg font-bold text-gray-900 mb-4">Önizləmə</h3>
-                      <div className="bg-white p-8 rounded-lg">
+                    {/* Preview - Enhanced Card */}
+                    <div className="mt-8 p-8 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-lg border-2 border-blue-200">
+                      <div className="flex items-center mb-6">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                          <span className="text-2xl">👁️</span>
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900">Önizləmə</h3>
+                          <p className="text-sm text-gray-600">Dəyişikliklərin görünüşü</p>
+                        </div>
+                      </div>
+                      <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
                         <div className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full mb-4">
                           <span className="text-sm font-medium text-blue-800">{content.home.hero.badge}</span>
                         </div>
@@ -429,58 +457,324 @@ export default function ContentManagement() {
                 )}
 
                 {activeTab === 'services' && (
-                  <div className="text-center py-12">
-                    <PencilSquareIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Xidmətlər Məzmunu</h3>
-                    <p className="text-gray-600">Bu bölmə tezliklə əlavə ediləcək</p>
+                  <div className="space-y-8">
+                    {/* Services Header */}
+                    <div className="bg-gray-50 p-6 rounded-xl">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4">Xidmətlər Başlığı</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Başlıq
+                          </label>
+                          <input
+                            type="text"
+                            value={content.services?.title || ''}
+                            onChange={(e) => setContent({
+                              ...content,
+                              services: { ...content.services, title: e.target.value }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Xidmətlərimiz"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Alt Başlıq
+                          </label>
+                          <textarea
+                            value={content.services?.subtitle || ''}
+                            onChange={(e) => setContent({
+                              ...content,
+                              services: { ...content.services, subtitle: e.target.value }
+                            })}
+                            rows={3}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Xidmətlər haqqında qısa məlumat"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Services List - Enhanced Card */}
+                    <div className="bg-gradient-to-br from-white to-green-50 p-8 rounded-2xl shadow-lg border-2 border-gray-100">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center">
+                          <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                            <span className="text-2xl">⚙️</span>
+                          </div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-gray-900">Xidmətlər Siyahısı</h3>
+                            <p className="text-sm text-gray-600">Təklif olunan xidmətlər</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            const newService = { 
+                              icon: '⚙️', 
+                              title: '', 
+                              description: '',
+                              features: []
+                            };
+                            setContent({
+                              ...content,
+                              services: {
+                                ...content.services,
+                                items: [...(content.services?.items || []), newService]
+                              }
+                            });
+                          }}
+                          className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl hover:from-green-700 hover:to-green-800 transition-all shadow-lg hover:shadow-xl font-bold transform hover:-translate-y-0.5"
+                        >
+                          + Xidmət Əlavə Et
+                        </button>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        {(content.services?.items || []).map((service: any, index: number) => (
+                          <div key={index} className="bg-white p-6 rounded-2xl border-2 border-gray-200 shadow-md hover:shadow-lg transition-all">
+                            <div className="flex items-start justify-between mb-4">
+                              <h4 className="font-bold text-gray-900">Xidmət #{index + 1}</h4>
+                              <button
+                                onClick={() => {
+                                  const newServices = content.services.items.filter((_: any, i: number) => i !== index);
+                                  setContent({
+                                    ...content,
+                                    services: { ...content.services, items: newServices }
+                                  });
+                                }}
+                                className="px-3 py-1 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors text-sm"
+                              >
+                                Sil
+                              </button>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                              <div>
+                                <label className="block text-xs font-semibold text-gray-600 mb-1">
+                                  Icon (Emoji)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={service.icon}
+                                  onChange={(e) => {
+                                    const newServices = [...content.services.items];
+                                    newServices[index].icon = e.target.value;
+                                    setContent({
+                                      ...content,
+                                      services: { ...content.services, items: newServices }
+                                    });
+                                  }}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-2xl text-center"
+                                  placeholder="⚙️"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-xs font-semibold text-gray-600 mb-1">
+                                  Başlıq
+                                </label>
+                                <input
+                                  type="text"
+                                  value={service.title}
+                                  onChange={(e) => {
+                                    const newServices = [...content.services.items];
+                                    newServices[index].title = e.target.value;
+                                    setContent({
+                                      ...content,
+                                      services: { ...content.services, items: newServices }
+                                    });
+                                  }}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  placeholder="Xidmət adı"
+                                />
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <label className="block text-xs font-semibold text-gray-600 mb-1">
+                                Təsvir
+                              </label>
+                              <textarea
+                                value={service.description}
+                                onChange={(e) => {
+                                  const newServices = [...content.services.items];
+                                  newServices[index].description = e.target.value;
+                                  setContent({
+                                    ...content,
+                                    services: { ...content.services, items: newServices }
+                                  });
+                                }}
+                                rows={3}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Xidmət haqqında məlumat"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
 
                 {activeTab === 'contact' && (
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Telefon
-                      </label>
-                      <input
-                        type="tel"
-                        value={content.contact.phone}
-                        onChange={(e) => setContent({
-                          ...content,
-                          contact: { ...content.contact, phone: e.target.value }
-                        })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
+                  <div className="space-y-8">
+                    {/* Contact Info */}
+                    <div className="bg-gray-50 p-6 rounded-xl">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4">Əlaqə Məlumatları</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            📞 Telefon
+                          </label>
+                          <input
+                            type="tel"
+                            value={content.contact.phone}
+                            onChange={(e) => setContent({
+                              ...content,
+                              contact: { ...content.contact, phone: e.target.value }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="+994 XX XXX XX XX"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            📧 Email
+                          </label>
+                          <input
+                            type="email"
+                            value={content.contact.email}
+                            onChange={(e) => setContent({
+                              ...content,
+                              contact: { ...content.contact, email: e.target.value }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="info@example.com"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            📍 Ünvan
+                          </label>
+                          <textarea
+                            value={content.contact.address}
+                            onChange={(e) => setContent({
+                              ...content,
+                              contact: { ...content.contact, address: e.target.value }
+                            })}
+                            rows={2}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Bakı şəhəri, ..."
+                          />
+                        </div>
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        value={content.contact.email}
-                        onChange={(e) => setContent({
-                          ...content,
-                          contact: { ...content.contact, email: e.target.value }
-                        })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
+                    {/* Working Hours */}
+                    <div className="bg-gray-50 p-6 rounded-xl">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4">⏰ İş Saatları</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Bazar ertəsi - Cümə
+                          </label>
+                          <input
+                            type="text"
+                            value={content.contact.workingHours?.weekdays || ''}
+                            onChange={(e) => setContent({
+                              ...content,
+                              contact: { 
+                                ...content.contact, 
+                                workingHours: { 
+                                  ...content.contact.workingHours, 
+                                  weekdays: e.target.value 
+                                }
+                              }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Bazar ertəsi - Cümə: 09:00 - 18:00"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Şənbə
+                          </label>
+                          <input
+                            type="text"
+                            value={content.contact.workingHours?.saturday || ''}
+                            onChange={(e) => setContent({
+                              ...content,
+                              contact: { 
+                                ...content.contact, 
+                                workingHours: { 
+                                  ...content.contact.workingHours, 
+                                  saturday: e.target.value 
+                                }
+                              }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Şənbə: 10:00 - 15:00"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Bazar
+                          </label>
+                          <input
+                            type="text"
+                            value={content.contact.workingHours?.sunday || ''}
+                            onChange={(e) => setContent({
+                              ...content,
+                              contact: { 
+                                ...content.contact, 
+                                workingHours: { 
+                                  ...content.contact.workingHours, 
+                                  sunday: e.target.value 
+                                }
+                              }
+                            })}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Bazar: Bağlı"
+                          />
+                        </div>
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Ünvan
-                      </label>
-                      <input
-                        type="text"
-                        value={content.contact.address}
-                        onChange={(e) => setContent({
-                          ...content,
-                          contact: { ...content.contact, address: e.target.value }
-                        })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
+                    {/* Preview */}
+                    <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-xl">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4">Önizləmə</h3>
+                      <div className="bg-white p-6 rounded-lg space-y-4">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">📞</span>
+                          <div>
+                            <p className="text-sm text-gray-600">Telefon</p>
+                            <p className="font-semibold text-gray-900">{content.contact.phone}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">📧</span>
+                          <div>
+                            <p className="text-sm text-gray-600">Email</p>
+                            <p className="font-semibold text-gray-900">{content.contact.email}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">📍</span>
+                          <div>
+                            <p className="text-sm text-gray-600">Ünvan</p>
+                            <p className="font-semibold text-gray-900">{content.contact.address}</p>
+                          </div>
+                        </div>
+                        <div className="border-t pt-4 mt-4">
+                          <p className="text-sm font-semibold text-gray-700 mb-2">İş Saatları:</p>
+                          <p className="text-sm text-gray-600">{content.contact.workingHours?.weekdays}</p>
+                          <p className="text-sm text-gray-600">{content.contact.workingHours?.saturday}</p>
+                          <p className="text-sm text-gray-600">{content.contact.workingHours?.sunday}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

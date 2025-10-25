@@ -101,7 +101,7 @@
       "id": 1761430054514,
       "date": "2025-10-25",
       "time": "00:07",
-      "unread": true
+      "unread": false
     },
     {
       "name": "Batya",
@@ -113,7 +113,7 @@
       "id": 1761429888931,
       "date": "2025-10-25",
       "time": "00:04",
-      "unread": true
+      "unread": false
     }
   ]
 }

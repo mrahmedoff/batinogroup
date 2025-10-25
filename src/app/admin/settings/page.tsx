@@ -116,62 +116,66 @@ export default function Settings() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Settings Menu */}
+          {/* Settings Menu - Enhanced Card */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm p-4 space-y-2">
+            <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg p-5 space-y-3 border border-gray-100">
+              <div className="mb-4 p-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl">
+                <h3 className="text-white font-bold text-lg">Tənzimləmələr</h3>
+                <p className="text-blue-100 text-sm">Bölmələr</p>
+              </div>
               <button 
                 onClick={() => setActiveSection('general')}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                className={`w-full flex items-center space-x-3 px-5 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
                   activeSection === 'general' 
-                    ? 'bg-blue-50 text-blue-600' 
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
                 }`}
               >
-                <GlobeAltIcon className="w-5 h-5" />
+                <GlobeAltIcon className="w-6 h-6" />
                 <span>Ümumi</span>
               </button>
               <button 
                 onClick={() => setActiveSection('contact')}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                className={`w-full flex items-center space-x-3 px-5 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
                   activeSection === 'contact' 
-                    ? 'bg-blue-50 text-blue-600' 
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
                 }`}
               >
-                <UserIcon className="w-5 h-5" />
+                <UserIcon className="w-6 h-6" />
                 <span>Əlaqə Məlumatları</span>
               </button>
               <button 
                 onClick={() => setActiveSection('hours')}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                className={`w-full flex items-center space-x-3 px-5 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
                   activeSection === 'hours' 
-                    ? 'bg-blue-50 text-blue-600' 
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
                 }`}
               >
-                <ClockIcon className="w-5 h-5" />
+                <ClockIcon className="w-6 h-6" />
                 <span>İş Saatları</span>
               </button>
               <button 
                 onClick={() => setActiveSection('notifications')}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                className={`w-full flex items-center space-x-3 px-5 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
                   activeSection === 'notifications' 
-                    ? 'bg-blue-50 text-blue-600' 
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
                 }`}
               >
-                <BellIcon className="w-5 h-5" />
+                <BellIcon className="w-6 h-6" />
                 <span>Bildirişlər</span>
               </button>
               <button 
                 onClick={() => setActiveSection('system')}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                className={`w-full flex items-center space-x-3 px-5 py-4 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
                   activeSection === 'system' 
-                    ? 'bg-blue-50 text-blue-600' 
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-200'
                 }`}
               >
-                <ShieldCheckIcon className="w-5 h-5" />
+                <ShieldCheckIcon className="w-6 h-6" />
                 <span>Sistem</span>
               </button>
             </div>
@@ -186,10 +190,18 @@ export default function Settings() {
               </div>
             ) : (
               <>
-                {/* General Settings */}
+                {/* General Settings - Enhanced Card */}
                 {activeSection === 'general' && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">Ümumi Tənzimləmələr</h2>
+                  <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div className="flex items-center mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                        <GlobeAltIcon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-gray-900">Ümumi Tənzimləmələr</h2>
+                        <p className="text-sm text-gray-600">Əsas sayt parametrləri</p>
+                      </div>
+                    </div>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -218,10 +230,18 @@ export default function Settings() {
                   </div>
                 )}
 
-                {/* Contact Settings */}
+                {/* Contact Settings - Enhanced Card */}
                 {activeSection === 'contact' && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">Əlaqə Məlumatları</h2>
+                  <div className="bg-gradient-to-br from-white to-green-50 rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div className="flex items-center mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                        <UserIcon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-gray-900">Əlaqə Məlumatları</h2>
+                        <p className="text-sm text-gray-600">Şirkət əlaqə detalları</p>
+                      </div>
+                    </div>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -318,10 +338,18 @@ export default function Settings() {
                   </div>
                 )}
 
-                {/* Working Hours */}
+                {/* Working Hours - Enhanced Card */}
                 {activeSection === 'hours' && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">İş Saatları</h2>
+                  <div className="bg-gradient-to-br from-white to-orange-50 rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div className="flex items-center mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-700 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                        <ClockIcon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-gray-900">İş Saatları</h2>
+                        <p className="text-sm text-gray-600">Ofis iş vaxtları</p>
+                      </div>
+                    </div>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -374,15 +402,28 @@ export default function Settings() {
                   </div>
                 )}
 
-                {/* Notification Settings */}
+                {/* Notification Settings - Enhanced Card */}
                 {activeSection === 'notifications' && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">Bildiriş Tənzimləmələri</h2>
+                  <div className="bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div className="flex items-center mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                        <BellIcon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-gray-900">Bildiriş Tənzimləmələri</h2>
+                        <p className="text-sm text-gray-600">Xəbərdarlıq parametrləri</p>
+                      </div>
+                    </div>
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                        <div>
-                          <p className="font-semibold text-gray-900">Email Bildirişləri</p>
-                          <p className="text-sm text-gray-600">Yeni mesajlar üçün email bildirişi</p>
+                      <div className="flex items-center justify-between p-6 bg-white rounded-2xl shadow-md border-2 border-gray-100 hover:border-blue-300 transition-all">
+                        <div className="flex items-center">
+                          <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                            <span className="text-2xl">📧</span>
+                          </div>
+                          <div>
+                            <p className="font-bold text-gray-900 text-lg">Email Bildirişləri</p>
+                            <p className="text-sm text-gray-600">Yeni mesajlar üçün email bildirişi</p>
+                          </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input
@@ -391,14 +432,19 @@ export default function Settings() {
                             onChange={(e) => setSettings({ ...settings, emailNotifications: e.target.checked })}
                             className="sr-only peer"
                           />
-                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                          <div className="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-blue-600 peer-checked:to-purple-600 shadow-lg"></div>
                         </label>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                        <div>
-                          <p className="font-semibold text-gray-900">SMS Bildirişləri</p>
-                          <p className="text-sm text-gray-600">Təcili mesajlar üçün SMS</p>
+                      <div className="flex items-center justify-between p-6 bg-white rounded-2xl shadow-md border-2 border-gray-100 hover:border-green-300 transition-all">
+                        <div className="flex items-center">
+                          <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                            <span className="text-2xl">📱</span>
+                          </div>
+                          <div>
+                            <p className="font-bold text-gray-900 text-lg">SMS Bildirişləri</p>
+                            <p className="text-sm text-gray-600">Təcili mesajlar üçün SMS</p>
+                          </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input
@@ -407,7 +453,7 @@ export default function Settings() {
                             onChange={(e) => setSettings({ ...settings, smsNotifications: e.target.checked })}
                             className="sr-only peer"
                           />
-                          <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                          <div className="w-14 h-7 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-green-600 peer-checked:to-green-700 shadow-lg"></div>
                         </label>
                       </div>
                     </div>

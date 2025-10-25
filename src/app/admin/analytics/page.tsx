@@ -112,55 +112,76 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Key Metrics */}
+        {/* Key Metrics - Enhanced Card Design */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {Object.entries(analytics.trends).map(([key, data]: [string, any]) => (
-            <div key={key} className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                  key === 'visitors' ? 'bg-blue-100' :
-                  key === 'pageViews' ? 'bg-purple-100' :
-                  key === 'messages' ? 'bg-green-100' : 'bg-orange-100'
-                }`}>
-                  {key === 'visitors' && <UserGroupIcon className="w-6 h-6 text-blue-600" />}
-                  {key === 'pageViews' && <EyeIcon className="w-6 h-6 text-purple-600" />}
-                  {key === 'messages' && <EnvelopeIcon className="w-6 h-6 text-green-600" />}
-                  {key === 'bounceRate' && <ChartBarIcon className="w-6 h-6 text-orange-600" />}
+            <div key={key} className="group relative bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+              {/* Background Gradient Effect */}
+              <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 ${
+                key === 'visitors' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
+                key === 'pageViews' ? 'bg-gradient-to-br from-purple-500 to-purple-600' :
+                key === 'messages' ? 'bg-gradient-to-br from-green-500 to-green-600' : 'bg-gradient-to-br from-orange-500 to-orange-600'
+              }`}></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 ${
+                    key === 'visitors' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
+                    key === 'pageViews' ? 'bg-gradient-to-br from-purple-500 to-purple-600' :
+                    key === 'messages' ? 'bg-gradient-to-br from-green-500 to-green-600' : 'bg-gradient-to-br from-orange-500 to-orange-600'
+                  }`}>
+                    {key === 'visitors' && <UserGroupIcon className="w-7 h-7 text-white" />}
+                    {key === 'pageViews' && <EyeIcon className="w-7 h-7 text-white" />}
+                    {key === 'messages' && <EnvelopeIcon className="w-7 h-7 text-white" />}
+                    {key === 'bounceRate' && <ChartBarIcon className="w-7 h-7 text-white" />}
+                  </div>
+                  <div className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm font-bold ${
+                    data.trend === 'up' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                  }`}>
+                    {data.trend === 'up' ? (
+                      <ArrowTrendingUpIcon className="w-4 h-4" />
+                    ) : (
+                      <ArrowTrendingDownIcon className="w-4 h-4" />
+                    )}
+                    <span>{Math.abs(data.change)}%</span>
+                  </div>
                 </div>
-                <div className={`flex items-center space-x-1 text-sm font-semibold ${
-                  data.trend === 'up' ? 'text-green-600' : 'text-red-600'
+                <h3 className={`text-3xl font-bold mb-1 transition-colors ${
+                  key === 'visitors' ? 'text-gray-900 group-hover:text-blue-600' :
+                  key === 'pageViews' ? 'text-gray-900 group-hover:text-purple-600' :
+                  key === 'messages' ? 'text-gray-900 group-hover:text-green-600' : 'text-gray-900 group-hover:text-orange-600'
                 }`}>
-                  {data.trend === 'up' ? (
-                    <ArrowTrendingUpIcon className="w-4 h-4" />
-                  ) : (
-                    <ArrowTrendingDownIcon className="w-4 h-4" />
-                  )}
-                  <span>{Math.abs(data.change)}%</span>
-                </div>
+                  {typeof data.value === 'number' && data.value > 1000 
+                    ? data.value.toLocaleString() 
+                    : data.value}
+                  {key === 'bounceRate' && '%'}
+                </h3>
+                <p className="text-sm font-medium text-gray-600">
+                  {key === 'visitors' ? 'Ziyarətçilər' :
+                   key === 'pageViews' ? 'Səhifə Baxışları' :
+                   key === 'messages' ? 'Mesajlar' : 'Bounce Rate'}
+                </p>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-1">
-                {typeof data.value === 'number' && data.value > 1000 
-                  ? data.value.toLocaleString() 
-                  : data.value}
-                {key === 'bounceRate' && '%'}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {key === 'visitors' ? 'Ziyarətçilər' :
-                 key === 'pageViews' ? 'Səhifə Baxışları' :
-                 key === 'messages' ? 'Mesajlar' : 'Bounce Rate'}
-              </p>
             </div>
           ))}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Daily Stats Chart */}
-          <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">
-              {timeRange === '1d' ? 'Bugünkü' : 
-               timeRange === '7d' ? 'Son 7 Günün' : 
-               timeRange === '30d' ? 'Son 30 Günün' : 'Son 90 Günün'} Statistikası
-            </h2>
+          {/* Daily Stats Chart - Enhanced Card */}
+          <div className="lg:col-span-2 bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg p-8 border border-gray-100">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {timeRange === '1d' ? 'Bugünkü' : 
+                   timeRange === '7d' ? 'Son 7 Günün' : 
+                   timeRange === '30d' ? 'Son 30 Günün' : 'Son 90 Günün'} Statistikası
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">Ziyarətçi sayının dinamikası</p>
+              </div>
+              <div className="px-4 py-2 bg-blue-100 rounded-full">
+                <span className="text-sm font-bold text-blue-700">📊 Canlı</span>
+              </div>
+            </div>
             {analytics.dailyStats.length === 0 ? (
               <div className="h-64 flex items-center justify-center">
                 <div className="text-center">
@@ -196,24 +217,29 @@ export default function Analytics() {
             )}
           </div>
 
-          {/* Device Stats */}
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Cihaz Statistikası</h2>
-            <div className="space-y-4">
+          {/* Device Stats - Enhanced Card */}
+          <div className="bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg p-6 border border-gray-100">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Cihaz Statistikası</h2>
+              <p className="text-sm text-gray-600 mt-1">İstifadəçi cihazları</p>
+            </div>
+            <div className="space-y-5">
               {analytics.devices.map((device: any, index: number) => (
-                <div key={index}>
-                  <div className="flex items-center justify-between mb-2">
+                <div key={index} className="group p-4 bg-white rounded-xl hover:shadow-md transition-all border border-gray-100">
+                  <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center">
-                      {device.name === 'Desktop' && <ComputerDesktopIcon className="w-5 h-5 text-gray-600 mr-2" />}
-                      {device.name === 'Mobile' && <DevicePhoneMobileIcon className="w-5 h-5 text-gray-600 mr-2" />}
-                      {device.name === 'Tablet' && <GlobeAltIcon className="w-5 h-5 text-gray-600 mr-2" />}
-                      <span className="text-sm font-medium text-gray-700">{device.name}</span>
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-3 shadow-md group-hover:shadow-lg transition-shadow">
+                        {device.name === 'Desktop' && <ComputerDesktopIcon className="w-5 h-5 text-white" />}
+                        {device.name === 'Mobile' && <DevicePhoneMobileIcon className="w-5 h-5 text-white" />}
+                        {device.name === 'Tablet' && <GlobeAltIcon className="w-5 h-5 text-white" />}
+                      </div>
+                      <span className="text-sm font-bold text-gray-900">{device.name}</span>
                     </div>
-                    <span className="text-sm font-bold text-gray-900">{device.value}%</span>
+                    <span className="text-lg font-bold text-gray-900">{device.value}%</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-gray-200 rounded-full h-3 shadow-inner">
                     <div
-                      className="h-2 rounded-full transition-all duration-500"
+                      className="h-3 rounded-full transition-all duration-500 shadow-md"
                       style={{ width: `${device.value}%`, backgroundColor: device.color }}
                     ></div>
                   </div>
@@ -224,9 +250,12 @@ export default function Analytics() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Top Pages */}
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Ən Çox Baxılan Səhifələr</h2>
+          {/* Top Pages - Enhanced Card */}
+          <div className="bg-gradient-to-br from-white to-green-50 rounded-2xl shadow-lg p-6 border border-gray-100">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Ən Çox Baxılan Səhifələr</h2>
+              <p className="text-sm text-gray-600 mt-1">Populyar məzmun</p>
+            </div>
             {analytics.topPages.length === 0 ? (
               <div className="text-center py-12">
                 <EyeIcon className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -254,9 +283,12 @@ export default function Analytics() {
             )}
           </div>
 
-          {/* Countries */}
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Ölkələr üzrə Statistika</h2>
+          {/* Countries - Enhanced Card */}
+          <div className="bg-gradient-to-br from-white to-orange-50 rounded-2xl shadow-lg p-6 border border-gray-100">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Ölkələr üzrə Statistika</h2>
+              <p className="text-sm text-gray-600 mt-1">Coğrafi paylanma</p>
+            </div>
             {analytics.countries.length === 0 ? (
               <div className="text-center py-12">
                 <GlobeAltIcon className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -279,14 +311,20 @@ export default function Analytics() {
           </div>
         </div>
 
-        {/* Browsers */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">Brauzer Statistikası</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* Browsers - Enhanced Card Grid */}
+        <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg p-8 border border-gray-100">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">Brauzer Statistikası</h2>
+            <p className="text-sm text-gray-600 mt-1">İstifadəçi brauzerlərinin paylanması</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {analytics.browsers.map((browser: any, index: number) => (
-              <div key={index} className="p-6 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl text-center hover:shadow-md transition-shadow">
-                <p className="text-3xl font-bold text-gray-900 mb-2">{browser.value}%</p>
-                <p className="text-sm font-medium text-gray-600">{browser.name}</p>
+              <div key={index} className="group p-6 bg-white rounded-2xl text-center hover:shadow-xl transition-all border-2 border-gray-100 hover:border-blue-300 transform hover:-translate-y-1 cursor-pointer">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-shadow">
+                  <span className="text-2xl">🌐</span>
+                </div>
+                <p className="text-4xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{browser.value}%</p>
+                <p className="text-sm font-bold text-gray-600">{browser.name}</p>
               </div>
             ))}
           </div>

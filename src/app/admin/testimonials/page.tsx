@@ -119,93 +119,110 @@ export default function Testimonials() {
           </button>
         </div>
 
-        {/* Stats */}
+        {/* Stats - Enhanced Card Design */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <div className="flex items-center justify-between">
+          <div className="group relative bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-600 opacity-0 group-hover:opacity-5 transition-opacity"></div>
+            <div className="relative z-10 flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Ümumi Rəylər</p>
-                <p className="text-3xl font-bold text-gray-900">{testimonials.length}</p>
+                <p className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">Ümumi Rəylər</p>
+                <p className="text-4xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{testimonials.length}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <StarIcon className="w-6 h-6 text-blue-600" />
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+                <StarIcon className="w-8 h-8 text-white" />
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <div className="flex items-center justify-between">
+          <div className="group relative bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-green-600 opacity-0 group-hover:opacity-5 transition-opacity"></div>
+            <div className="relative z-10 flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Aktiv Rəylər</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">Aktiv Rəylər</p>
+                <p className="text-4xl font-bold text-gray-900 group-hover:text-green-600 transition-colors">
                   {testimonials.filter(t => t.active).length}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">✓</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+                <span className="text-3xl">✓</span>
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <div className="flex items-center justify-between">
+          <div className="group relative bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all border border-gray-100 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500 to-yellow-600 opacity-0 group-hover:opacity-5 transition-opacity"></div>
+            <div className="relative z-10 flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Orta Reytinq</p>
-                <p className="text-3xl font-bold text-gray-900">5.0</p>
+                <p className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">Orta Reytinq</p>
+                <p className="text-4xl font-bold text-gray-900 group-hover:text-yellow-600 transition-colors">5.0</p>
               </div>
-              <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">⭐</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+                <span className="text-3xl">⭐</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Testimonials Grid */}
+        {/* Testimonials Grid - Enhanced Card Design */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
-              {/* Rating */}
-              <div className="flex items-center mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < testimonial.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                    }`}
-                  />
-                ))}
-              </div>
+            <div key={testimonial.id} className="group relative bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all border-2 border-gray-100 hover:border-blue-200 overflow-hidden transform hover:-translate-y-1">
+              {/* Background Gradient Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-0 group-hover:opacity-5 transition-opacity"></div>
+              
+              <div className="relative z-10">
+                {/* Rating */}
+                <div className="flex items-center mb-4 p-3 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl">
+                  {[...Array(5)].map((_, i) => (
+                    <StarIcon
+                      key={i}
+                      className={`w-6 h-6 ${
+                        i < testimonial.rating ? 'text-yellow-400 fill-current drop-shadow-md' : 'text-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
 
-              {/* Text */}
-              <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
+                {/* Text */}
+                <div className="mb-5 p-4 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl">
+                  <p className="text-gray-700 italic leading-relaxed font-medium">"{testimonial.text}"</p>
+                </div>
 
-              {/* Author */}
-              <div className="mb-4">
-                <p className="font-bold text-gray-900">{testimonial.name}</p>
-                <p className="text-sm text-gray-600">{testimonial.position}</p>
-                <p className="text-sm text-gray-500">{testimonial.company}</p>
-              </div>
+                {/* Author */}
+                <div className="mb-4 p-4 bg-white rounded-xl border border-gray-100">
+                  <div className="flex items-center mb-2">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mr-3 shadow-md">
+                      <span className="text-white font-bold">{testimonial.name.charAt(0)}</span>
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900">{testimonial.name}</p>
+                      <p className="text-sm text-gray-600">{testimonial.position}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm font-semibold text-gray-500 ml-13">{testimonial.company}</p>
+                </div>
 
-              {/* Status */}
-              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  testimonial.active
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-gray-100 text-gray-700'
-                }`}>
-                  {testimonial.active ? 'Aktiv' : 'Deaktiv'}
-                </span>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => handleEdit(testimonial)}
-                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                  >
-                    <PencilSquareIcon className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(testimonial.id)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    <TrashIcon className="w-5 h-5" />
-                  </button>
+                {/* Status & Actions */}
+                <div className="flex items-center justify-between pt-4 border-t-2 border-gray-100">
+                  <span className={`px-4 py-2 rounded-xl text-xs font-bold shadow-md ${
+                    testimonial.active
+                      ? 'bg-gradient-to-r from-green-500 to-green-600 text-white'
+                      : 'bg-gray-200 text-gray-700'
+                  }`}>
+                    {testimonial.active ? '✓ Aktiv' : 'Deaktiv'}
+                  </span>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => handleEdit(testimonial)}
+                      className="p-2.5 text-blue-600 hover:bg-blue-50 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-110"
+                    >
+                      <PencilSquareIcon className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(testimonial.id)}
+                      className="p-2.5 text-red-600 hover:bg-red-50 rounded-xl transition-all shadow-md hover:shadow-lg transform hover:scale-110"
+                    >
+                      <TrashIcon className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

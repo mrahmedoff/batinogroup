@@ -1,7 +1,7 @@
 {
   "overview": {
-    "totalVisitors": 2,
-    "totalPageViews": 18,
+    "totalVisitors": 4,
+    "totalPageViews": 24,
     "totalMessages": 0,
     "avgSessionDuration": "0:00",
     "bounceRate": 0,
@@ -32,35 +32,35 @@
   "dailyStats": [
     {
       "date": "2025-10-25",
-      "visitors": 2,
-      "pageViews": 18,
+      "visitors": 4,
+      "pageViews": 24,
       "messages": 0
     }
   ],
   "topPages": [
     {
       "path": "/az",
-      "views": 8,
-      "percentage": 44.4
+      "views": 14,
+      "percentage": 58.3
     },
     {
       "path": "/az/services",
       "views": 5,
-      "percentage": 27.8
+      "percentage": 20.8
     },
     {
       "path": "/az/contact",
       "views": 3,
-      "percentage": 16.7
+      "percentage": 12.5
     },
     {
       "path": "/az/about",
       "views": 2,
-      "percentage": 11.1
+      "percentage": 8.3
     }
   ],
   "deviceCounts": {
-    "Desktop": 2,
+    "Desktop": 4,
     "Mobile": 0,
     "Tablet": 0
   },
@@ -82,7 +82,7 @@
     }
   ],
   "browserCounts": {
-    "Chrome": 2,
+    "Chrome": 4,
     "Safari": 0,
     "Firefox": 0,
     "Edge": 0
@@ -108,7 +108,7 @@
   "countries": [
     {
       "name": "Polşa",
-      "value": 1,
+      "value": 3,
       "flag": "🇵🇱"
     }
   ]
