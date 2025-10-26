@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useData } from '@/contexts/DataContext';
-import { Briefcase, MapPin, Clock, Send, DollarSign, X, Upload, CheckCircle } from 'lucide-react';
+import { Briefcase, MapPin, Clock, Send, DollarSign, X, Upload, CheckCircle, FileText, Loader2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { uploadCV } from '@/lib/uploadCV';
 
 export default function CareerPage() {
   const { t } = useLanguage();
@@ -275,8 +276,11 @@ export default function CareerPage() {
               message: `
 Vakansiya: ${selectedJob.title}
 Telefon: ${data.phone}
-CV: ${data.cv}
-Əlavə məlumat: ${data.coverLetter || 'Yoxdur'}
+CV Faylı: ${data.cvFileName}
+CV Link: ${data.cv}
+
+Əlavə məlumat: 
+${data.coverLetter || 'Yoxdur'}
               `.trim()
             });
             setApplicationSuccess(true);
@@ -312,10 +316,58 @@ function ApplicationModal({
     cv: '',
     coverLetter: ''
   });
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!allowedTypes.includes(file.type)) {
+        setUploadError('Yalnız PDF və Word (.doc, .docx) faylları qəbul edilir');
+        return;
+      }
+
+      // Validate file size (max 15MB)
+      const maxSize = 15 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setUploadError('Fayl ölçüsü 15MB-dan çox ola bilməz');
+        return;
+      }
+
+      setCvFile(file);
+      setUploadError('');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    if (!cvFile) {
+      setUploadError('CV faylı seçin');
+      return;
+    }
+
+    setIsUploading(true);
+    setUploadError('');
+
+    try {
+      // Upload CV to Firebase Storage
+      const cvUrl = await uploadCV(cvFile, formData.fullName);
+      
+      // Submit form with CV URL
+      onSubmit({
+        ...formData,
+        cv: cvUrl,
+        cvFileName: cvFile.name
+      });
+    } catch (error) {
+      console.error('Upload error:', error);
+      setUploadError(error instanceof Error ? error.message : 'CV yüklənərkən xəta baş verdi');
+      setIsUploading(false);
+    }
   };
 
   if (success) {
@@ -401,20 +453,40 @@ function ApplicationModal({
             </label>
             <div className="relative">
               <input
-                type="text"
-                value={formData.cv}
-                onChange={(e) => setFormData({...formData, cv: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none pr-12"
-                placeholder="CV faylının linki və ya məlumatı"
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
+                className="hidden"
+                id="cv-upload"
                 required
               />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                <Upload className="w-5 h-5 text-gray-400" />
-              </div>
+              <label
+                htmlFor="cv-upload"
+                className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 transition-colors cursor-pointer flex items-center justify-center gap-3 bg-gray-50 hover:bg-blue-50"
+              >
+                {cvFile ? (
+                  <>
+                    <FileText className="w-5 h-5 text-blue-600" />
+                    <span className="text-sm font-medium text-gray-700">{cvFile.name}</span>
+                    <span className="text-xs text-gray-500">({(cvFile.size / 1024).toFixed(0)} KB)</span>
+                  </>
+                ) : (
+                  <>
+                    <Upload className="w-5 h-5 text-gray-400" />
+                    <span className="text-sm text-gray-600">CV faylını seçin və ya buraya sürüşdürün</span>
+                  </>
+                )}
+              </label>
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              CV faylınızı Google Drive, Dropbox və ya digər platformada paylaşın və linki daxil edin
+              PDF, DOC və ya DOCX formatında, maksimum 15MB
             </p>
+            {uploadError && (
+              <p className="text-xs text-red-600 mt-1 flex items-center gap-1">
+                <X className="w-3 h-3" />
+                {uploadError}
+              </p>
+            )}
           </div>
 
           <div>
@@ -440,15 +512,26 @@ function ApplicationModal({
           <div className="flex gap-3 pt-4">
             <button
               type="submit"
-              className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+              disabled={isUploading || !cvFile}
+              className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Send className="w-5 h-5" />
-              Müraciəti Göndər
+              {isUploading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  CV yüklənir...
+                </>
+              ) : (
+                <>
+                  <Send className="w-5 h-5" />
+                  Müraciəti Göndər
+                </>
+              )}
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition-colors"
+              disabled={isUploading}
+              className="px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50"
             >
               Ləğv et
             </button>

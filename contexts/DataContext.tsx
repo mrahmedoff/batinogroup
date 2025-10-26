@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Service, Project, TeamMember, Message } from '@/types';
 import { services as initialServices, projects as initialProjects, team as initialTeam } from '@/lib/mockData';
+import { addDocument, updateDocument, deleteDocument, getDocuments } from '@/lib/firebaseHelpers';
 
 interface SiteSettings {
   siteName: string;
@@ -79,6 +80,7 @@ interface DataContextType {
   certificates: Certificate[];
   jobs: Job[];
   settings: SiteSettings;
+  isLoading: boolean;
   addService: (service: Service) => void;
   updateService: (service: Service) => void;
   deleteService: (id: string) => void;
@@ -132,196 +134,294 @@ export function DataProvider({ children }: { children: ReactNode }) {
     instagram: ''
   });
 
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Load from localStorage after hydration
+  // Load from Firebase on mount
   useEffect(() => {
-    const savedServices = localStorage.getItem('services');
-    const savedProjects = localStorage.getItem('projects');
-    const savedTeam = localStorage.getItem('team');
-    const savedMessages = localStorage.getItem('messages');
-    const savedNews = localStorage.getItem('news');
-    const savedPartners = localStorage.getItem('partners');
-    const savedCertificates = localStorage.getItem('certificates');
-    const savedJobs = localStorage.getItem('jobs');
-    const savedSettings = localStorage.getItem('settings');
+    const loadData = async () => {
+      try {
+        const [
+          servicesData,
+          projectsData,
+          teamData,
+          messagesData,
+          newsData,
+          partnersData,
+          certificatesData,
+          jobsData,
+          settingsData,
+        ] = await Promise.all([
+          getDocuments('services'),
+          getDocuments('projects'),
+          getDocuments('team'),
+          getDocuments('messages'),
+          getDocuments('news'),
+          getDocuments('partners'),
+          getDocuments('certificates'),
+          getDocuments('jobs'),
+          getDocuments('settings'),
+        ]);
 
-    if (savedServices) setServices(JSON.parse(savedServices));
-    if (savedProjects) setProjects(JSON.parse(savedProjects));
-    if (savedTeam) setTeam(JSON.parse(savedTeam));
-    if (savedMessages) setMessages(JSON.parse(savedMessages));
-    if (savedNews) setNews(JSON.parse(savedNews));
-    if (savedPartners) setPartners(JSON.parse(savedPartners));
-    if (savedCertificates) setCertificates(JSON.parse(savedCertificates));
-    if (savedJobs) setJobs(JSON.parse(savedJobs));
-    if (savedSettings) setSettings(JSON.parse(savedSettings));
+        if (servicesData.length > 0) setServices(servicesData as any);
+        if (projectsData.length > 0) setProjects(projectsData as any);
+        if (teamData.length > 0) setTeam(teamData as any);
+        if (messagesData.length > 0) setMessages(messagesData as any);
+        if (newsData.length > 0) setNews(newsData as any);
+        if (partnersData.length > 0) setPartners(partnersData as any);
+        if (certificatesData.length > 0) setCertificates(certificatesData as any);
+        if (jobsData.length > 0) setJobs(jobsData as any);
+        if (settingsData.length > 0) setSettings(settingsData[0] as any);
+      } catch (error) {
+        console.error('Error loading data from Firebase:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    setIsHydrated(true);
+    loadData();
   }, []);
 
-  // Save to localStorage only after hydration
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('services', JSON.stringify(services));
+  const addService = async (service: Service) => {
+    try {
+      const newService = await addDocument('services', service);
+      setServices([...services, newService as Service]);
+    } catch (error) {
+      console.error('Error adding service:', error);
     }
-  }, [services, isHydrated]);
+  };
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('projects', JSON.stringify(projects));
+  const updateService = async (service: Service) => {
+    try {
+      await updateDocument('services', service.id, service);
+      setServices(services.map(s => s.id === service.id ? service : s));
+    } catch (error) {
+      console.error('Error updating service:', error);
     }
-  }, [projects, isHydrated]);
+  };
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('team', JSON.stringify(team));
+  const deleteService = async (id: string) => {
+    try {
+      await deleteDocument('services', id);
+      setServices(services.filter(s => s.id !== id));
+    } catch (error) {
+      console.error('Error deleting service:', error);
     }
-  }, [team, isHydrated]);
+  };
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('messages', JSON.stringify(messages));
+  const addProject = async (project: Project) => {
+    try {
+      const newProject = await addDocument('projects', project);
+      setProjects([...projects, newProject as Project]);
+    } catch (error) {
+      console.error('Error adding project:', error);
     }
-  }, [messages, isHydrated]);
+  };
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('settings', JSON.stringify(settings));
+  const updateProject = async (project: Project) => {
+    try {
+      await updateDocument('projects', project.id, project);
+      setProjects(projects.map(p => p.id === project.id ? project : p));
+    } catch (error) {
+      console.error('Error updating project:', error);
     }
-  }, [settings, isHydrated]);
+  };
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('news', JSON.stringify(news));
+  const deleteProject = async (id: string) => {
+    try {
+      await deleteDocument('projects', id);
+      setProjects(projects.filter(p => p.id !== id));
+    } catch (error) {
+      console.error('Error deleting project:', error);
     }
-  }, [news, isHydrated]);
+  };
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('partners', JSON.stringify(partners));
+  const addTeamMember = async (member: TeamMember) => {
+    try {
+      const newMember = await addDocument('team', member);
+      setTeam([...team, newMember as TeamMember]);
+    } catch (error) {
+      console.error('Error adding team member:', error);
     }
-  }, [partners, isHydrated]);
+  };
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('certificates', JSON.stringify(certificates));
+  const updateTeamMember = async (member: TeamMember) => {
+    try {
+      await updateDocument('team', member.id, member);
+      setTeam(team.map(m => m.id === member.id ? member : m));
+    } catch (error) {
+      console.error('Error updating team member:', error);
     }
-  }, [certificates, isHydrated]);
+  };
 
-  useEffect(() => {
-    if (isHydrated) {
-      localStorage.setItem('jobs', JSON.stringify(jobs));
+  const deleteTeamMember = async (id: string) => {
+    try {
+      await deleteDocument('team', id);
+      setTeam(team.filter(m => m.id !== id));
+    } catch (error) {
+      console.error('Error deleting team member:', error);
     }
-  }, [jobs, isHydrated]);
-
-  const addService = (service: Service) => {
-    setServices([...services, { ...service, id: Date.now().toString() }]);
   };
 
-  const updateService = (service: Service) => {
-    setServices(services.map(s => s.id === service.id ? service : s));
+  const addMessage = async (messageData: Omit<Message, 'id' | 'date' | 'read'>) => {
+    try {
+      const newMessage: Omit<Message, 'id'> = {
+        ...messageData,
+        date: new Date().toISOString().split('T')[0],
+        read: false
+      };
+      const addedMessage = await addDocument('messages', newMessage);
+      setMessages([addedMessage as Message, ...messages]);
+    } catch (error) {
+      console.error('Error adding message:', error);
+    }
   };
 
-  const deleteService = (id: string) => {
-    setServices(services.filter(s => s.id !== id));
+  const deleteMessage = async (id: string) => {
+    try {
+      await deleteDocument('messages', id);
+      setMessages(messages.filter(m => m.id !== id));
+    } catch (error) {
+      console.error('Error deleting message:', error);
+    }
   };
 
-  const addProject = (project: Project) => {
-    setProjects([...projects, { ...project, id: Date.now().toString() }]);
+  const markMessageAsRead = async (id: string) => {
+    try {
+      const message = messages.find(m => m.id === id);
+      if (message) {
+        await updateDocument('messages', id, { ...message, read: true });
+        setMessages(messages.map(m => m.id === id ? { ...m, read: true } : m));
+      }
+    } catch (error) {
+      console.error('Error marking message as read:', error);
+    }
   };
 
-  const updateProject = (project: Project) => {
-    setProjects(projects.map(p => p.id === project.id ? project : p));
-  };
-
-  const deleteProject = (id: string) => {
-    setProjects(projects.filter(p => p.id !== id));
-  };
-
-  const addTeamMember = (member: TeamMember) => {
-    setTeam([...team, { ...member, id: Date.now().toString() }]);
-  };
-
-  const updateTeamMember = (member: TeamMember) => {
-    setTeam(team.map(m => m.id === member.id ? member : m));
-  };
-
-  const deleteTeamMember = (id: string) => {
-    setTeam(team.filter(m => m.id !== id));
-  };
-
-  const addMessage = (messageData: Omit<Message, 'id' | 'date' | 'read'>) => {
-    const newMessage: Message = {
-      ...messageData,
-      id: Date.now().toString(),
-      date: new Date().toISOString().split('T')[0],
-      read: false
-    };
-    setMessages([newMessage, ...messages]);
-  };
-
-  const deleteMessage = (id: string) => {
-    setMessages(messages.filter(m => m.id !== id));
-  };
-
-  const markMessageAsRead = (id: string) => {
-    setMessages(messages.map(m => m.id === id ? { ...m, read: true } : m));
-  };
-
-  const updateSettings = (newSettings: SiteSettings) => {
-    setSettings(newSettings);
+  const updateSettings = async (newSettings: SiteSettings) => {
+    try {
+      // Settings-də yalnız 1 document olmalıdır
+      const settingsDocs = await getDocuments('settings');
+      if (settingsDocs.length > 0) {
+        await updateDocument('settings', settingsDocs[0].id, newSettings);
+      } else {
+        await addDocument('settings', newSettings);
+      }
+      setSettings(newSettings);
+    } catch (error) {
+      console.error('Error updating settings:', error);
+    }
   };
 
   // News functions
-  const addNews = (newsItem: NewsItem) => {
-    setNews([...news, { ...newsItem, id: Date.now().toString() }]);
+  const addNews = async (newsItem: NewsItem) => {
+    try {
+      const newNews = await addDocument('news', newsItem);
+      setNews([...news, newNews as NewsItem]);
+    } catch (error) {
+      console.error('Error adding news:', error);
+    }
   };
 
-  const updateNews = (newsItem: NewsItem) => {
-    setNews(news.map(n => n.id === newsItem.id ? newsItem : n));
+  const updateNews = async (newsItem: NewsItem) => {
+    try {
+      await updateDocument('news', newsItem.id, newsItem);
+      setNews(news.map(n => n.id === newsItem.id ? newsItem : n));
+    } catch (error) {
+      console.error('Error updating news:', error);
+    }
   };
 
-  const deleteNews = (id: string) => {
-    setNews(news.filter(n => n.id !== id));
+  const deleteNews = async (id: string) => {
+    try {
+      await deleteDocument('news', id);
+      setNews(news.filter(n => n.id !== id));
+    } catch (error) {
+      console.error('Error deleting news:', error);
+    }
   };
 
   // Partner functions
-  const addPartner = (partner: Partner) => {
-    setPartners([...partners, { ...partner, id: Date.now().toString() }]);
+  const addPartner = async (partner: Partner) => {
+    try {
+      const newPartner = await addDocument('partners', partner);
+      setPartners([...partners, newPartner as Partner]);
+    } catch (error) {
+      console.error('Error adding partner:', error);
+    }
   };
 
-  const updatePartner = (partner: Partner) => {
-    setPartners(partners.map(p => p.id === partner.id ? partner : p));
+  const updatePartner = async (partner: Partner) => {
+    try {
+      await updateDocument('partners', partner.id, partner);
+      setPartners(partners.map(p => p.id === partner.id ? partner : p));
+    } catch (error) {
+      console.error('Error updating partner:', error);
+    }
   };
 
-  const deletePartner = (id: string) => {
-    setPartners(partners.filter(p => p.id !== id));
+  const deletePartner = async (id: string) => {
+    try {
+      await deleteDocument('partners', id);
+      setPartners(partners.filter(p => p.id !== id));
+    } catch (error) {
+      console.error('Error deleting partner:', error);
+    }
   };
 
   // Certificate functions
-  const addCertificate = (certificate: Certificate) => {
-    setCertificates([...certificates, { ...certificate, id: Date.now().toString() }]);
+  const addCertificate = async (certificate: Certificate) => {
+    try {
+      const newCertificate = await addDocument('certificates', certificate);
+      setCertificates([...certificates, newCertificate as Certificate]);
+    } catch (error) {
+      console.error('Error adding certificate:', error);
+    }
   };
 
-  const updateCertificate = (certificate: Certificate) => {
-    setCertificates(certificates.map(c => c.id === certificate.id ? certificate : c));
+  const updateCertificate = async (certificate: Certificate) => {
+    try {
+      await updateDocument('certificates', certificate.id, certificate);
+      setCertificates(certificates.map(c => c.id === certificate.id ? certificate : c));
+    } catch (error) {
+      console.error('Error updating certificate:', error);
+    }
   };
 
-  const deleteCertificate = (id: string) => {
-    setCertificates(certificates.filter(c => c.id !== id));
+  const deleteCertificate = async (id: string) => {
+    try {
+      await deleteDocument('certificates', id);
+      setCertificates(certificates.filter(c => c.id !== id));
+    } catch (error) {
+      console.error('Error deleting certificate:', error);
+    }
   };
 
   // Job functions
-  const addJob = (job: Job) => {
-    setJobs([...jobs, { ...job, id: Date.now().toString() }]);
+  const addJob = async (job: Job) => {
+    try {
+      const newJob = await addDocument('jobs', job);
+      setJobs([...jobs, newJob as Job]);
+    } catch (error) {
+      console.error('Error adding job:', error);
+    }
   };
 
-  const updateJob = (job: Job) => {
-    setJobs(jobs.map(j => j.id === job.id ? job : j));
+  const updateJob = async (job: Job) => {
+    try {
+      await updateDocument('jobs', job.id, job);
+      setJobs(jobs.map(j => j.id === job.id ? job : j));
+    } catch (error) {
+      console.error('Error updating job:', error);
+    }
   };
 
-  const deleteJob = (id: string) => {
-    setJobs(jobs.filter(j => j.id !== id));
+  const deleteJob = async (id: string) => {
+    try {
+      await deleteDocument('jobs', id);
+      setJobs(jobs.filter(j => j.id !== id));
+    } catch (error) {
+      console.error('Error deleting job:', error);
+    }
   };
 
   return (
@@ -337,6 +437,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         certificates,
         jobs,
         settings,
+        isLoading,
         addService,
         updateService,
         deleteService,

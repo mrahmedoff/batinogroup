@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { DataProvider } from "@/contexts/DataContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "BatinoGroup - Təchizat Həlləri və Mühəndislik",
@@ -16,11 +17,13 @@ export default function RootLayout({
   return (
     <html lang="az">
       <body className="font-sans antialiased">
-        <LanguageProvider>
-          <DataProvider>
-            {children}
-          </DataProvider>
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <DataProvider>
+              {children}
+            </DataProvider>
+          </LanguageProvider>
+        </AuthProvider>
       </body>
     </html>
   );

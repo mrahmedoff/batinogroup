@@ -1,0 +1,149 @@
+===========================================
+FIRESTORE RULES (Production)
+===========================================
+
+Firebase Console → Firestore Database → Rules
+https://console.firebase.google.com/project/batinogroup-website/firestore/rules
+
+Aşağıdakı rules-u kopyalayın və yapışdırın:
+
+---START FIRESTORE RULES---
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Services - Hamı oxuya bilər, yalnız admin yaza bilər
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Projects - Hamı oxuya bilər, yalnız admin yaza bilər
+    match /projects/{projectId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Team - Hamı oxuya bilər, yalnız admin yaza bilər
+    match /team/{memberId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // News - Hamı oxuya bilər, yalnız admin yaza bilər
+    match /news/{newsId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Partners - Hamı oxuya bilər, yalnız admin yaza bilər
+    match /partners/{partnerId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Certificates - Hamı oxuya bilər, yalnız admin yaza bilər
+    match /certificates/{certId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Jobs - Hamı oxuya bilər, yalnız admin yaza bilər
+    match /jobs/{jobId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Messages - Hamı yarada bilər (contact form), yalnız admin oxuya/silə bilər
+    match /messages/{messageId} {
+      allow read: if request.auth != null;
+      allow create: if true;
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Settings - Hamı oxuya bilər, yalnız admin yaza bilər
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
+
+---END FIRESTORE RULES---
+
+
+===========================================
+STORAGE RULES (Production)
+===========================================
+
+Firebase Console → Storage → Rules
+https://console.firebase.google.com/project/batinogroup-website/storage/rules
+
+Aşağıdakı rules-u kopyalayın və yapışdırın:
+
+---START STORAGE RULES---
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // CV faylları
+    match /cvs/{fileName} {
+      // Hamı CV yükləyə bilər (max 15MB, yalnız PDF/DOC/DOCX)
+      allow create: if request.resource.size < 15 * 1024 * 1024
+                    && (request.resource.contentType == 'application/pdf' 
+                    || request.resource.contentType == 'application/msword'
+                    || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+      
+      // Yalnız admin oxuya və silə bilər
+      allow read, delete: if request.auth != null;
+    }
+    
+    // Digər fayllar (şəkillər və s.)
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
+
+---END STORAGE RULES---
+
+
+===========================================
+QURAŞDIRMA ADDMLARI
+===========================================
+
+1. Firestore Rules:
+   - Firebase Console açın
+   - Firestore Database → Rules
+   - Yuxarıdakı Firestore rules-u kopyalayın
+   - Yapışdırın
+   - "Publish" düyməsinə klikləyin
+
+2. Storage Rules:
+   - Firebase Console açın
+   - Storage → Rules
+   - Yuxarıdakı Storage rules-u kopyalayın
+   - Yapışdırın
+   - "Publish" düyməsinə klikləyin
+
+3. Test:
+   - 1-2 dəqiqə gözləyin
+   - Admin panelə login olun
+   - Vakansiya əlavə edin
+   - İşləməlidir! ✅
+
+
+===========================================
+TƏHLÜKƏSİZLİK
+===========================================
+
+✅ Yalnız login olmuş admin dəyişiklik edə bilər
+✅ Hamı saytı görə bilər (public data)
+✅ Contact form hamı göndərə bilər
+✅ CV upload məhdudlaşdırılıb (5MB, PDF/DOC)
+✅ Yalnız admin CV-ləri görə bilər
+
+===========================================

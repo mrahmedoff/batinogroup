@@ -1,13 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, Settings, FolderKanban, Users, Image, Mail, Sliders, Home,
-  Newspaper, Handshake, Award, Briefcase, ChevronDown, ChevronRight
+  Newspaper, Handshake, Award, Briefcase, ChevronDown, ChevronRight, LogOut, User, Menu, X
 } from 'lucide-react';
 import { useState } from 'react';
 import { useData } from '@/contexts/DataContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface MenuItem {
   label: string;
@@ -19,10 +20,27 @@ interface MenuItem {
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { messages } = useData();
+  const { user, logout } = useAuth();
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['content']);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const unreadCount = messages.filter(m => !m.read).length;
+
+  const handleLogout = async () => {
+    if (confirm('Çıxış etmək istədiyinizdən əminsiniz?')) {
+      setIsLoggingOut(true);
+      try {
+        await logout();
+        router.push('/admin/login');
+      } catch (error) {
+        console.error('Logout error:', error);
+        setIsLoggingOut(false);
+      }
+    }
+  };
 
   const toggleMenu = (label: string) => {
     setExpandedMenus(prev => 
@@ -67,19 +85,46 @@ export default function AdminSidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200 flex flex-col">
-      {/* Logo */}
-      <div className="p-6 border-b border-slate-200">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-lg">
-            <span className="text-white font-bold text-lg">B</span>
-          </div>
-          <div>
-            <span className="text-lg font-bold text-slate-900 block">BatinoGroup</span>
-            <span className="text-xs text-slate-500">Admin Panel</span>
-          </div>
-        </Link>
-      </div>
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 w-10 h-10 bg-white border border-slate-200 rounded-lg flex items-center justify-center shadow-lg hover:bg-slate-50 transition-colors"
+      >
+        {isMobileMenuOpen ? (
+          <X className="w-5 h-5 text-slate-900" strokeWidth={2} />
+        ) : (
+          <Menu className="w-5 h-5 text-slate-900" strokeWidth={2} />
+        )}
+      </button>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-30"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        fixed lg:static inset-y-0 left-0 z-40
+        w-64 bg-white border-r border-slate-200 flex flex-col
+        transform transition-transform duration-300 ease-in-out
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+        {/* Logo */}
+        <div className="p-6 border-b border-slate-200">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-lg">B</span>
+            </div>
+            <div>
+              <span className="text-lg font-bold text-slate-900 block">BatinoGroup</span>
+              <span className="text-xs text-slate-500">Admin Panel</span>
+            </div>
+          </Link>
+        </div>
 
       {/* Menu Sections */}
       <div className="flex-1 py-4 overflow-y-auto">
@@ -146,6 +191,7 @@ export default function AdminSidebar() {
                   <Link
                     key={item.href}
                     href={item.href!}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                       isActive
                         ? 'bg-blue-50 text-blue-600'
@@ -170,7 +216,24 @@ export default function AdminSidebar() {
       </div>
 
       {/* Bottom Section */}
-      <div className="p-4 border-t border-slate-200">
+      <div className="p-4 border-t border-slate-200 space-y-2">
+        {/* User Info */}
+        {user && (
+          <div className="px-3 py-2 bg-slate-50 rounded-lg">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <User className="w-4 h-4 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium text-slate-900 truncate">
+                  {user.email}
+                </p>
+                <p className="text-xs text-slate-500">Admin</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <Link
           href="/"
           className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors"
@@ -178,7 +241,19 @@ export default function AdminSidebar() {
           <Home className="w-5 h-5" strokeWidth={2} />
           <span className="text-sm font-medium">Sayta qayıt</span>
         </Link>
+
+        <button
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+          className="w-full flex items-center gap-3 px-3 py-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+        >
+          <LogOut className="w-5 h-5" strokeWidth={2} />
+          <span className="text-sm font-medium">
+            {isLoggingOut ? 'Çıxış edilir...' : 'Çıxış'}
+          </span>
+        </button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useData } from '@/contexts/DataContext';
-import { Mail, Trash2, Inbox, Calendar, X, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, Trash2, Inbox, Calendar, X, Send, CheckCircle, AlertCircle, Loader2, FileText, Download } from 'lucide-react';
 
 export default function MessagesAdmin() {
   const { messages, deleteMessage, markMessageAsRead } = useData();
@@ -143,6 +143,25 @@ export default function MessagesAdmin() {
 
               <div className="border-t border-slate-200 pt-6">
                 <p className="text-slate-700 whitespace-pre-wrap">{selectedMessage.message}</p>
+                
+                {/* CV Download Link */}
+                {selectedMessage.message.includes('CV Link:') && (
+                  <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <FileText className="w-5 h-5 text-blue-600" />
+                      <span className="font-semibold text-blue-900">CV Faylı</span>
+                    </div>
+                    <a
+                      href={selectedMessage.message.split('CV Link: ')[1]?.split('\n')[0]?.trim()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
+                      CV-ni Yüklə
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div className="mt-6 pt-6 border-t border-slate-200">
