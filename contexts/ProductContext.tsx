@@ -69,6 +69,13 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
 
   // Load initial data and setup real-time listeners
   useEffect(() => {
+    // Only run on client side
+    if (typeof window === 'undefined') {
+      setLoading(false);
+      setCategoriesLoading(false);
+      return;
+    }
+
     let unsubscribeProducts: (() => void) | undefined;
     let unsubscribeCategories: (() => void) | undefined;
 
