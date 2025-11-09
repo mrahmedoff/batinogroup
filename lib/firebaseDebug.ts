@@ -86,8 +86,6 @@ export const addSampleData = async () => {
       name: 'Test Product',
       category: categoryId,
       subcategory: 'Test Subcategory',
-      description: 'Test product for debugging',
-      price: 99.99,
       status: 'active'
     });
     

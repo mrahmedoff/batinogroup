@@ -117,40 +117,28 @@ export const seedProducts = async (categoryIds: any) => {
       name: 'SKF Bearing 6205',
       category: categoryIds.sparePartsId,
       subcategory: 'Bearings Group',
-      description: 'High quality SKF bearing for industrial applications',
-      price: 25.99,
-      status: 'active',
-      sku: 'SKF-6205-001'
+      status: 'active'
     });
 
     await addProduct({
       name: 'Industrial V-Belt',
       category: categoryIds.sparePartsId,
       subcategory: 'Belts Group',
-      description: 'Heavy duty V-belt for industrial machinery',
-      price: 45.50,
-      status: 'active',
-      sku: 'BELT-V-150'
+      status: 'active'
     });
 
     await addProduct({
       name: 'Grundfos Slurry Pump CR32',
       category: categoryIds.productsId,
       subcategory: 'Slurry Pump',
-      description: 'Heavy duty slurry pump for mining operations',
-      price: 1250.00,
-      status: 'active',
-      sku: 'PUMP-CR32-001'
+      status: 'active'
     });
 
     await addProduct({
       name: 'Fluke Vibration Analyzer',
       category: categoryIds.devicesId,
       subcategory: 'Vibration Analyzer',
-      description: 'Professional vibration analysis device',
-      price: 2500.00,
-      status: 'active',
-      sku: 'FLUKE-VIB-001'
+      status: 'active'
     });
 
     console.log('Products added successfully!');

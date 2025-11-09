@@ -52,7 +52,8 @@ export default function ProductsAdmin() {
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
+                         product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         product.subcategory.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = !selectedCategory || product.category === selectedCategory;
     const matchesSubcategory = !selectedSubcategory || product.subcategory === selectedSubcategory;
     
