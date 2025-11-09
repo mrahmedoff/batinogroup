@@ -47,6 +47,27 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 export const useProducts = () => {
   const context = useContext(ProductContext);
   if (context === undefined) {
+    // During SSR, return default values instead of throwing
+    if (typeof window === 'undefined') {
+      return {
+        products: [],
+        loading: false,
+        error: null,
+        addProduct: async () => '',
+        updateProduct: async () => {},
+        deleteProduct: async () => {},
+        categories: [],
+        categoriesLoading: false,
+        categoriesError: null,
+        addCategory: async () => '',
+        updateCategory: async () => {},
+        deleteCategory: async () => {},
+        getCategoriesByMenuType: () => [],
+        getProductsByCategory: () => [],
+        getMainCategories: () => [],
+        getSubCategories: () => []
+      };
+    }
     throw new Error('useProducts must be used within a ProductProvider');
   }
   return context;
