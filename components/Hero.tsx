@@ -6,7 +6,7 @@ import { ArrowRight, Shield, Award, Users, TrendingUp, ChevronLeft, ChevronRight
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
@@ -71,14 +71,14 @@ export default function Hero() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link 
-                href="/about"
+                href={`/${language}/about`}
                 className="px-8 py-4 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 transition-all inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 {t.learnMore}
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link 
-                href="/contact"
+                href={`/${language}/contact`}
                 className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-900 transition-all inline-flex items-center gap-2"
               >
                 {t.contactUs}

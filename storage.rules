@@ -1,0 +1,18 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Məhsul şəkilləri üçün icazələr
+    match /products/{allPaths=**} {
+      // Hər kəs oxuya bilər (public read)
+      allow read: if true;
+      
+      // Yalnız admin yazıb silə bilər
+      allow write, delete: if request.auth != null;
+    }
+    
+    // Digər fayllar üçün ümumi icazələr (development üçün)
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

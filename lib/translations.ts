@@ -33,6 +33,7 @@ export const translations = {
     quickLinks: 'Sürətli keçidlər',
     services: 'Xidmətlər',
     projects: 'Layihələr',
+    products: 'Məhsullar və Sistemlər',
     followUs: 'Bizi izləyin',
     allRightsReserved: 'Bütün hüquqlar qorunur',
     
@@ -309,6 +310,24 @@ export const translations = {
     backToNews: 'Xəbərlərə qayıt',
     author: 'Müəllif',
     readTime: 'dəq oxu',
+    
+    // Testimonials
+    clientReviews: 'Müştəri Rəyləri',
+    clientReviewsDesc: 'Müştərilərimizin bizimlə bağlı fikirləri',
+    noClientReviews: 'Hələ ki müştəri rəyi yoxdur',
+    
+    // Partners
+    partnersDesc: 'Etibarlı tərəfdaşlarımızla birlikdə uğura doğru',
+    noPartners: 'Hələ ki tərəfdaş yoxdur',
+    becomePartnerDesc: 'Bizimlə əməkdaşlıq etmək və uğurlu layihələr həyata keçirmək üçün əlaqə saxlayın',
+    
+    // Mobile Menu
+    subcategories: 'Alt Kateqoriyalar',
+    categories: 'Kateqoriyalar',
+    menu: 'Menu',
+    noSubcategories: 'Bu kateqoriyada alt kateqoriya yoxdur',
+    goToCategory: 'Kateqoriyaya keç',
+    languageSelector: 'Dil / Language',
   },
   en: {
     // Header
@@ -342,6 +361,7 @@ export const translations = {
     quickLinks: 'Quick Links',
     services: 'Services',
     projects: 'Projects',
+    products: 'Products & Systems',
     followUs: 'Follow Us',
     allRightsReserved: 'All rights reserved',
     
@@ -618,5 +638,23 @@ export const translations = {
     backToNews: 'Back to News',
     author: 'Author',
     readTime: 'min read',
+    
+    // Testimonials
+    clientReviews: 'Client Reviews',
+    clientReviewsDesc: 'What our clients say about us',
+    noClientReviews: 'No client reviews yet',
+    
+    // Partners
+    partnersDesc: 'Together with our trusted partners towards success',
+    noPartners: 'No partners yet',
+    becomePartnerDesc: 'Contact us to collaborate and implement successful projects',
+    
+    // Mobile Menu
+    subcategories: 'Subcategories',
+    categories: 'Categories',
+    menu: 'Menu',
+    noSubcategories: 'No subcategories in this category',
+    goToCategory: 'Go to Category',
+    languageSelector: 'Language / Dil',
   }
 };

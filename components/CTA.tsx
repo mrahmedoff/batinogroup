@@ -5,7 +5,7 @@ import { ArrowRight, Phone } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function CTA() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <section className="relative py-20 overflow-hidden">
@@ -27,7 +27,7 @@ export default function CTA() {
         
         <div className="flex flex-wrap gap-4 justify-center">
           <Link 
-            href="/contact"
+            href={`/${language}/contact`}
             className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             {t.contactUs}

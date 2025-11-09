@@ -9,10 +9,14 @@ import {
   orderBy,
   Timestamp 
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { db, isFirebaseConfigured } from './firebase';
 
 // Generic CRUD operations
 export const addDocument = async (collectionName: string, data: any) => {
+  if (!isFirebaseConfigured || !db) {
+    console.warn('Firebase not configured, skipping addDocument');
+    return { id: Date.now().toString(), ...data };
+  }
   try {
     const docRef = await addDoc(collection(db, collectionName), {
       ...data,
@@ -27,6 +31,10 @@ export const addDocument = async (collectionName: string, data: any) => {
 };
 
 export const updateDocument = async (collectionName: string, id: string, data: any) => {
+  if (!isFirebaseConfigured || !db) {
+    console.warn('Firebase not configured, skipping updateDocument');
+    return { id, ...data };
+  }
   try {
     const docRef = doc(db, collectionName, id);
     await updateDoc(docRef, {
@@ -41,6 +49,10 @@ export const updateDocument = async (collectionName: string, id: string, data: a
 };
 
 export const deleteDocument = async (collectionName: string, id: string) => {
+  if (!isFirebaseConfigured || !db) {
+    console.warn('Firebase not configured, skipping deleteDocument');
+    return;
+  }
   try {
     await deleteDoc(doc(db, collectionName, id));
   } catch (error) {
@@ -50,6 +62,10 @@ export const deleteDocument = async (collectionName: string, id: string) => {
 };
 
 export const getDocuments = async (collectionName: string) => {
+  if (!isFirebaseConfigured || !db) {
+    console.warn('Firebase not configured, returning empty array');
+    return [];
+  }
   try {
     const q = query(collection(db, collectionName), orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
@@ -59,6 +75,6 @@ export const getDocuments = async (collectionName: string) => {
     }));
   } catch (error) {
     console.error('Error getting documents:', error);
-    throw error;
+    return [];
   }
 };

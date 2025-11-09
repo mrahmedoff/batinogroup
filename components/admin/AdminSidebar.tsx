@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, Settings, FolderKanban, Users, Image, Mail, Sliders, Home,
-  Newspaper, Handshake, Award, Briefcase, ChevronDown, ChevronRight, LogOut, User, Menu, X
+  Newspaper, Handshake, Award, Briefcase, ChevronDown, ChevronRight, LogOut, User, Menu, X,
+  Package, FolderTree
 } from 'lucide-react';
 import { useState } from 'react';
 import { useData } from '@/contexts/DataContext';
@@ -55,6 +56,13 @@ export default function AdminSidebar() {
       title: 'ƏSAS',
       items: [
         { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+      ]
+    },
+    {
+      title: 'MƏHSUL İDARƏSİ',
+      items: [
+        { label: 'Məhsullar', href: '/admin/products', icon: Package },
+        { label: 'Kateqoriyalar', href: '/admin/categories', icon: FolderTree },
       ]
     },
     {

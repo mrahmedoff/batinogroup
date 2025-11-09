@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Service, Project, TeamMember, Message } from '@/types';
-import { services as initialServices, projects as initialProjects, team as initialTeam } from '@/lib/mockData';
 import { addDocument, updateDocument, deleteDocument, getDocuments } from '@/lib/firebaseHelpers';
 
 interface SiteSettings {
@@ -111,15 +110,11 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export function DataProvider({ children }: { children: ReactNode }) {
-  const [services, setServices] = useState<Service[]>(initialServices);
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
-  const [team, setTeam] = useState<TeamMember[]>(initialTeam);
+  const [services, setServices] = useState<Service[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [team, setTeam] = useState<TeamMember[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [media, setMedia] = useState<Media[]>([
-    { id: '1', title: 'Yeni Layihə Açılışı', description: 'Bakıda yeni layihəmizin açılışı', type: 'Xəbər', date: '2025-01-15' },
-    { id: '2', title: 'Komanda Görüşü', description: 'İllik komanda görüşümüz', type: 'Şəkil', date: '2025-01-10' },
-    { id: '3', title: 'Layihə Təqdimatı', description: 'Yeni layihənin təqdimatı', type: 'Video', date: '2025-01-05' },
-  ]);
+  const [media, setMedia] = useState<Media[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [certificates, setCertificates] = useState<Certificate[]>([]);
@@ -140,6 +135,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const loadData = async () => {
       try {
+        // Check if running in browser
+        if (typeof window === 'undefined') {
+          setIsLoading(false);
+          return;
+        }
+
         const [
           servicesData,
           projectsData,
@@ -162,14 +163,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
           getDocuments('settings'),
         ]);
 
-        if (servicesData.length > 0) setServices(servicesData as any);
-        if (projectsData.length > 0) setProjects(projectsData as any);
-        if (teamData.length > 0) setTeam(teamData as any);
-        if (messagesData.length > 0) setMessages(messagesData as any);
-        if (newsData.length > 0) setNews(newsData as any);
-        if (partnersData.length > 0) setPartners(partnersData as any);
-        if (certificatesData.length > 0) setCertificates(certificatesData as any);
-        if (jobsData.length > 0) setJobs(jobsData as any);
+        setServices(servicesData as any);
+        setProjects(projectsData as any);
+        setTeam(teamData as any);
+        setMessages(messagesData as any);
+        setNews(newsData as any);
+        setPartners(partnersData as any);
+        setCertificates(certificatesData as any);
+        setJobs(jobsData as any);
         if (settingsData.length > 0) setSettings(settingsData[0] as any);
       } catch (error) {
         console.error('Error loading data from Firebase:', error);

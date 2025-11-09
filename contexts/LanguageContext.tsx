@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { useParams, useRouter, usePathname } from 'next/navigation';
 import { Language, translations } from '@/lib/translations';
 
 interface LanguageContextType {
@@ -12,22 +13,33 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
+  const params = useParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  
+  // Extract locale from pathname as fallback
+  const pathnameLocale = pathname?.split('/')[1] as Language;
+  const currentLocale = (params?.locale as Language) || pathnameLocale || 'az';
+  
   const [language, setLanguageState] = useState<Language>('az');
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && (savedLanguage === 'az' || savedLanguage === 'en')) {
-      setLanguageState(savedLanguage);
+    if (currentLocale && ['az', 'en'].includes(currentLocale)) {
+      setLanguageState(currentLocale);
     }
     setIsHydrated(true);
-  }, []);
+  }, [currentLocale]);
 
   const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    if (isHydrated) {
-      localStorage.setItem('language', lang);
-    }
+    if (!isHydrated) return;
+    
+    // Save to cookie for middleware
+    document.cookie = `language=${lang}; path=/; max-age=31536000`; // 1 year
+    
+    // Navigate to new locale
+    const newPathname = pathname.replace(`/${language}`, `/${lang}`);
+    router.push(newPathname);
   };
 
   return (
@@ -35,7 +47,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       value={{
         language,
         setLanguage,
-        t: translations[language],
+        t: translations[language] || translations.az,
       }}
     >
       {children}
