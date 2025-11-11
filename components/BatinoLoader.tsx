@@ -7,26 +7,33 @@ export default function BatinoLoader() {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Start fade out after 2.5 seconds
+    // Block body scroll while loading
+    document.body.style.overflow = 'hidden';
+    
+    // Start fade out after 3.5 seconds
     const fadeTimer = setTimeout(() => {
       setFadeOut(true);
-    }, 2500);
+    }, 3500);
 
-    // Hide completely after 3 seconds
+    // Hide completely after 4 seconds
     const hideTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+      // Restore body scroll
+      document.body.style.overflow = 'unset';
+    }, 4000);
 
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(hideTimer);
+      // Restore body scroll on cleanup
+      document.body.style.overflow = 'unset';
     };
   }, []);
 
   if (!isLoading) return null;
 
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
+    <div className={`fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
       {/* Animated Background Particles */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-75"></div>
@@ -77,7 +84,7 @@ export default function BatinoLoader() {
 
         {/* Progress Bar */}
         <div className="w-64 mx-auto bg-slate-700 rounded-full h-2 overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full animate-pulse shadow-lg transform origin-left animate-[loading_2.5s_ease-in-out_forwards]"></div>
+          <div className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full animate-pulse shadow-lg transform origin-left animate-[loading_3.5s_ease-in-out_forwards]"></div>
         </div>
         
         {/* Loading Text */}
@@ -88,8 +95,17 @@ export default function BatinoLoader() {
 
       <style jsx>{`
         @keyframes loading {
-          0% { width: 0%; }
-          100% { width: 100%; }
+          0% { 
+            width: 0%; 
+            opacity: 0.5;
+          }
+          50% { 
+            opacity: 1;
+          }
+          100% { 
+            width: 100%; 
+            opacity: 0.8;
+          }
         }
       `}</style>
     </div>
