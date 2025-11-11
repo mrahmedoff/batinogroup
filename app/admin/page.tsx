@@ -12,7 +12,8 @@ import {
   Newspaper,
   Image,
   Handshake,
-  Cog
+  Cog,
+  Upload
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -104,18 +105,18 @@ export default function AdminDashboard() {
       color: 'yellow'
     },
     {
+      title: 'Logo Dəyişdir',
+      description: 'Sayt logosunu yeniləyin',
+      icon: Upload,
+      href: '/admin/settings#logo',
+      color: 'blue'
+    },
+    {
       title: 'Xəbərlər',
       description: 'Xəbər və məqalələr',
       icon: Newspaper,
       href: '/admin/news',
       color: 'red'
-    },
-    {
-      title: 'Media',
-      description: 'Şəkil və video idarəsi',
-      icon: Image,
-      href: '/admin/media',
-      color: 'pink'
     },
     {
       title: 'Tərəfdaşlar',
@@ -182,19 +183,37 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {quickLinks.map((link) => {
             const IconComponent = link.icon;
+            const isLogoLink = link.title === 'Logo Dəyişdir';
             return (
               <Link
                 key={link.title}
                 href={link.href}
-                className="bg-white rounded-lg p-3 sm:p-4 border border-slate-200 hover:shadow-md transition-all hover:border-slate-300 active:scale-95 group"
+                className={`bg-white rounded-lg p-3 sm:p-4 border transition-all active:scale-95 group ${
+                  isLogoLink 
+                    ? 'border-blue-200 bg-gradient-to-br from-blue-50 to-white hover:shadow-lg hover:border-blue-300' 
+                    : 'border-slate-200 hover:shadow-md hover:border-slate-300'
+                }`}
               >
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${colorClasses[link.color as keyof typeof colorClasses]} group-hover:scale-110 transition-transform`}>
+                  <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${colorClasses[link.color as keyof typeof colorClasses]} group-hover:scale-110 transition-transform ${
+                    isLogoLink ? 'shadow-md' : ''
+                  }`}>
                     <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm sm:text-base font-semibold text-slate-900 mb-0.5 sm:mb-1">{link.title}</h3>
-                    <p className="text-xs text-slate-500 line-clamp-1">{link.description}</p>
+                    <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+                      <h3 className={`text-sm sm:text-base font-semibold ${
+                        isLogoLink ? 'text-blue-900' : 'text-slate-900'
+                      }`}>{link.title}</h3>
+                      {isLogoLink && (
+                        <span className="px-1.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded">
+                          YENİ
+                        </span>
+                      )}
+                    </div>
+                    <p className={`text-xs line-clamp-1 ${
+                      isLogoLink ? 'text-blue-600' : 'text-slate-500'
+                    }`}>{link.description}</p>
                   </div>
                 </div>
               </Link>

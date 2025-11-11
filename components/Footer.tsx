@@ -31,11 +31,13 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href={`/${language}`} className="inline-block mb-6 group">
               <img
-                src="/batinologo.png"
-                alt="Batino Group Logo"
+                src={settings.logo || "/batinologo.png"}
+                alt={settings.siteName || "Batino Group Logo"}
                 width={120}
                 height={50}
                 className="object-contain group-hover:scale-110 transition-transform brightness-0 invert"
+                onLoad={() => console.log('Footer logo loaded:', settings.logo)}
+                onError={(e) => console.error('Footer logo error:', e, 'URL:', settings.logo)}
               />
             </Link>
             <p className="text-gray-400 mb-6 leading-relaxed">

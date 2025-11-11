@@ -9,7 +9,12 @@ import {
   orderBy,
   Timestamp 
 } from 'firebase/firestore';
-import { db, isFirebaseConfigured } from './firebase';
+import { 
+  ref, 
+  uploadBytes, 
+  getDownloadURL 
+} from 'firebase/storage';
+import { db, storage, isFirebaseConfigured } from './firebase';
 
 // Generic CRUD operations
 export const addDocument = async (collectionName: string, data: any) => {
@@ -109,5 +114,46 @@ export const getDocuments = async (collectionName: string) => {
       console.error('Retry also failed:', retryError);
       return [];
     }
+  }
+};
+
+// File upload function
+export const uploadFile = async (file: File, folder: string = 'uploads'): Promise<string> => {
+  if (!isFirebaseConfigured || !storage) {
+    console.warn('Firebase Storage not configured, converting to base64');
+    // Base64 formatında saxla ki, session-dan asılı olmasın
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  try {
+    // Unique filename yaradırıq
+    const timestamp = Date.now();
+    const fileName = `${timestamp}_${file.name}`;
+    const storageRef = ref(storage, `${folder}/${fileName}`);
+    
+    console.log('Attempting to upload file to Firebase Storage:', fileName);
+    
+    // Faylı yükləyirik
+    const snapshot = await uploadBytes(storageRef, file);
+    
+    // Download URL alırıq
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    
+    console.log('File uploaded successfully:', downloadURL);
+    return downloadURL;
+  } catch (error) {
+    console.error('Firebase Storage error:', error);
+    
+    // Firebase xətası olduqda base64 istifadə et
+    console.warn('Falling back to base64 due to Firebase error');
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.readAsDataURL(file);
+    });
   }
 };

@@ -7,7 +7,7 @@ export default function LoadingSpinner() {
           <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-blue-600 absolute inset-0"></div>
           <div className="h-20 w-20 bg-white rounded-full flex items-center justify-center p-3">
             <img
-              src="/batinologo.png"
+              src="/assets/batinologo.png"
               alt="Batino Group Logo"
               width={50}
               height={50}

@@ -12,6 +12,7 @@ interface SiteSettings {
   facebook: string;
   linkedin: string;
   instagram: string;
+  logo: string;
 }
 
 interface Media {
@@ -144,7 +145,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
     address: 'Bakı, Azərbaycan',
     facebook: '',
     linkedin: '',
-    instagram: ''
+    instagram: '',
+    logo: '/batinologo.png'
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -338,14 +340,21 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   const updateSettings = async (newSettings: SiteSettings) => {
     try {
+      console.log('Updating settings:', newSettings);
+      console.log('Logo URL being saved:', newSettings.logo);
+      
       // Settings-də yalnız 1 document olmalıdır
       const settingsDocs = await getDocuments('settings');
       if (settingsDocs.length > 0) {
         await updateDocument('settings', settingsDocs[0].id, newSettings);
+        console.log('Settings updated in Firebase');
       } else {
         await addDocument('settings', newSettings);
+        console.log('Settings added to Firebase');
       }
+      
       setSettings(newSettings);
+      console.log('Settings state updated:', newSettings);
     } catch (error) {
       console.error('Error updating settings:', error);
     }

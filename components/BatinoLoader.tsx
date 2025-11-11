@@ -53,7 +53,7 @@ export default function BatinoLoader() {
             {/* Inner Logo */}
             <div className="absolute inset-4 bg-white rounded-full flex items-center justify-center shadow-2xl transform hover:scale-105 transition-transform duration-300 p-2">
               <img
-                src="/batinologo.png"
+                src="/assets/batinologo.png"
                 alt="Batino Group Logo"
                 width={60}
                 height={60}

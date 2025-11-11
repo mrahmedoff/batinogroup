@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useData } from '@/contexts/DataContext';
-import { Save } from 'lucide-react';
+import { Save, Info } from 'lucide-react';
+import LogoUpload from '@/components/admin/LogoUpload';
 
 export default function SettingsAdmin() {
   const { settings, updateSettings } = useData();
@@ -18,11 +19,43 @@ export default function SettingsAdmin() {
     alert('Parametrlər yadda saxlanıldı!');
   };
 
+  const handleLogoChange = (logoUrl: string) => {
+    const newFormData = {...formData, logo: logoUrl};
+    setFormData(newFormData);
+    
+    // Logo yüklənən kimi avtomatik saxla
+    updateSettings(newFormData);
+    console.log('Logo avtomatik saxlanıldı:', logoUrl);
+  };
+
   return (
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-slate-900">Parametrlər</h1>
         <p className="text-sm text-slate-500 mt-1">Sayt parametrlərini konfiqurasiya edin</p>
+      </div>
+
+      {/* Info Banner */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 max-w-2xl">
+        <div className="flex items-start gap-3">
+          <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          <div>
+            <h3 className="text-sm font-medium text-blue-900 mb-1">Logo Yükləmə Haqqında</h3>
+            <p className="text-sm text-blue-700">
+              Logo yüklədikdən sonra avtomatik olaraq saytın header və footer hissələrində görünəcək. 
+              Ən yaxşı nəticə üçün 200x80 piksel ölçüsündə PNG formatında şəkil istifadə edin.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Logo Upload Section */}
+      <div className="bg-white rounded-xl p-6 max-w-2xl border border-slate-200 mb-6">
+        <h2 className="text-lg font-bold text-slate-900 mb-4">Sayt Loqosu</h2>
+        <LogoUpload 
+          currentLogo={formData.logo} 
+          onLogoChange={handleLogoChange}
+        />
       </div>
 
       <div className="bg-white rounded-xl p-6 max-w-2xl border border-slate-200">

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Phone, Menu, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useProducts } from '@/contexts/ProductContext';
+import { useData } from '@/contexts/DataContext';
 import MegaMenu from './MegaMenu';
 import MobileMenu from './MobileMenu';
 
@@ -19,6 +20,7 @@ export default function Header() {
 
     const { language, t } = useLanguage();
     const { getCategoriesByMenuType } = useProducts();
+    const { settings } = useData();
 
     const menuItems = [
         {
@@ -58,11 +60,13 @@ export default function Header() {
                 <div className="flex justify-between items-center h-20">
                     <Link href={`/${language}`} className="flex items-center">
                         <img
-                            src="/batinologo.png"
-                            alt="Batino Group Logo"
+                            src={settings.logo || "/batinologo.png"}
+                            alt={settings.siteName || "Batino Group Logo"}
                             width={120}
                             height={50}
                             className="object-contain"
+                            onLoad={() => console.log('Header logo loaded:', settings.logo)}
+                            onError={(e) => console.error('Header logo error:', e, 'URL:', settings.logo)}
                         />
                     </Link>
 
