@@ -94,3 +94,39 @@ html {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Product description styling - referans şəkildəki kimi */
+.product-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+  text-align: justify;
+}
+
+.product-description p {
+  margin-bottom: 1rem;
+}
+
+
+
+.product-list {
+  font-size: 14px;
+  color: #333;
+  list-style: none;
+  padding-left: 0;
+}
+
+.product-list li {
+  margin-bottom: 4px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.product-list li::before {
+  content: '♦';
+  color: #2563eb;
+  font-size: 12px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

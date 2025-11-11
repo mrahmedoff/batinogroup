@@ -35,7 +35,10 @@ export default function AdminSidebar() {
       setIsLoggingOut(true);
       try {
         await logout();
-        router.push('/admin/login');
+        // Extract locale from current pathname
+        const pathSegments = pathname.split('/');
+        const locale = pathSegments[1] || 'az';
+        router.push(`/${locale}/admin/login`);
       } catch (error) {
         console.error('Logout error:', error);
         setIsLoggingOut(false);

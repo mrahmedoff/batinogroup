@@ -19,9 +19,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   
   // Extract locale from pathname as fallback
   const pathnameLocale = pathname?.split('/')[1] as Language;
-  const currentLocale = (params?.locale as Language) || pathnameLocale || 'az';
+  const currentLocale = (params?.locale as Language) || pathnameLocale || 'en';
   
-  const [language, setLanguageState] = useState<Language>('az');
+  // Initialize with the current locale to match server rendering
+  const [language, setLanguageState] = useState<Language>(currentLocale);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       value={{
         language,
         setLanguage,
-        t: translations[language] || translations.az,
+        t: translations[language] || translations.en,
       }}
     >
       {children}

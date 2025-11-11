@@ -3,13 +3,13 @@
 import Link from 'next/link';
 import { useData } from '@/contexts/DataContext';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Facebook, 
-  Linkedin, 
-  Instagram, 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Linkedin,
+  Instagram,
   Twitter,
   Youtube,
   Clock,
@@ -21,6 +21,7 @@ export default function Footer() {
   const { settings } = useData();
   const { t, language } = useLanguage();
 
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       {/* Main Footer Content */}
@@ -28,11 +29,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="lg:col-span-1">
-            <Link href={`/${language}`} className="flex items-center gap-2 mb-6 group">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <span className="text-white font-bold text-2xl">B</span>
-              </div>
-              <span className="text-2xl font-bold">{settings.siteName}</span>
+            <Link href={`/${language}`} className="inline-block mb-6 group">
+              <img
+                src="/batinologo.png"
+                alt="Batino Group Logo"
+                width={120}
+                height={50}
+                className="object-contain group-hover:scale-110 transition-transform brightness-0 invert"
+              />
             </Link>
             <p className="text-gray-400 mb-6 leading-relaxed">
               {t.aboutHeroDesc}
@@ -97,7 +101,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-4">
               <li>
-                <a 
+                <a
                   href={`mailto:${settings.email}`}
                   className="flex items-start gap-3 text-gray-400 hover:text-white transition-colors group"
                 >
@@ -111,7 +115,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a 
+                <a
                   href={`tel:${settings.phone}`}
                   className="flex items-start gap-3 text-gray-400 hover:text-white transition-colors group"
                 >
@@ -144,49 +148,49 @@ export default function Footer() {
               {t.followUs}
               <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-blue-500"></span>
             </h3>
-            
+
             {/* Social Media Icons */}
             <div className="flex flex-wrap gap-3 mb-6">
-              <a 
-                href={settings.facebook || '#'} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={settings.facebook || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-all hover:scale-110 group"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a 
-                href={settings.linkedin || '#'} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={settings.linkedin || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-700 transition-all hover:scale-110 group"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a 
-                href={settings.instagram || '#'} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={settings.instagram || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600 transition-all hover:scale-110 group"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a 
-                href="#" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-sky-500 transition-all hover:scale-110 group"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
               </a>
-              <a 
-                href="#" 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-11 h-11 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-red-600 transition-all hover:scale-110 group"
                 aria-label="YouTube"
               >
@@ -200,8 +204,8 @@ export default function Footer() {
                 {t.stayUpdated}
               </p>
               <div className="flex gap-2">
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   placeholder={t.email}
                   className="flex-1 px-3 py-2 bg-gray-700 rounded text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />

@@ -54,6 +54,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     try {
       await signOut(auth);
+      // Explicitly clear user state
+      setUser(null);
     } catch (error) {
       console.error('Logout error:', error);
       throw error;

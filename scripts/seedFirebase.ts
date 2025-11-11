@@ -41,7 +41,7 @@ export const seedCategories = async () => {
       name: 'Bearings Group',
       type: 'sub',
       parentId: sparePartsId,
-      description: 'All types of industrial bearings',
+      description: 'IMEC Bearings Group offers a comprehensive range of high-quality bearings designed to meet the diverse requirements of various industries. Our product lineup includes:\n\n• Ball Bearings\n• Roller Bearings\n• Thrust Bearings\n• Needle Bearings\n• Spherical Bearings\n• Tapered Roller Bearings\n• Angular Contact Bearings\n• Deep Groove Ball Bearings\n• Pillow Block Bearings\n• Flange Bearings\n\nEach bearing is engineered for optimal performance, durability, and reliability, ensuring efficient and seamless operations across all applications. Trust IMEC Bearings Group for superior bearing solutions tailored to your specific requirements.',
       status: 'active',
       order: 1,
       menuType: 'products'
@@ -51,7 +51,7 @@ export const seedCategories = async () => {
       name: 'Belts Group',
       type: 'sub',
       parentId: sparePartsId,
-      description: 'Industrial belts and transmission components',
+      description: 'IMEC Belt Group offers a diverse range of high-quality belts designed to meet the needs of various industries. Our product lineup includes:\n\n• Cleated Belt Conveyors\n• Filter Belts\n• V-Belts\n• Round Belts\n• Flat Belts\n• Rubber Belts\n• Timing Belts\n• Belt Drives\n• Balata Belts\n• Synchronous Belts\n• Cross Belt Drive\n• Jockey Pulley\n• Light Duty Conveyors\n• Quarter Turn Drive\n• Stepped Cone Pulley\n• Conveyer Belt\n\nEach type of belt is engineered for optimal performance, durability, and reliability, ensuring efficient and seamless operations across all applications. Trust IMEC Belt Group for superior belt solutions tailored to your specific requirements.',
       status: 'active',
       order: 2,
       menuType: 'products'
@@ -61,7 +61,7 @@ export const seedCategories = async () => {
       name: 'Valves Group',
       type: 'sub',
       parentId: sparePartsId,
-      description: 'Industrial valves and control systems',
+      description: 'IMEC Valve Group offers a wide range of high-quality valves designed to meet the diverse requirements of various industries. Our product lineup includes:\n\n• Knife Valves\n• Pinch Valves\n• Diaphragm Valves\n• Plug Valves\n• Butterfly Valves\n• Ball Valves\n• Check valves\n• Filter and Strainers\n• Needle Valves\n• Gate Valves\n• Globe Valves\n• Segment Valves\n• Control Valves\n• Safety Valves\n• Pressure Reducers\n• Blasting Discs\n• Electric Actuators\n• Pneumatic Actuators\n• Positioners\n• Solenoid Valves\n• Limit Switch Box\n\nEach valve is engineered for precision, durability, and reliability, ensuring efficient flow control and seamless operation. Trust IMEC Valve Group for all your valve solutions, tailored to your specific needs.',
       status: 'active',
       order: 3,
       menuType: 'products'
@@ -113,6 +113,7 @@ export const seedProducts = async (categoryIds: any) => {
   
   try {
     // Sample products
+    // Bearings Group məhsulları
     await addProduct({
       name: 'SKF Bearing 6205',
       category: categoryIds.sparePartsId,
@@ -121,7 +122,120 @@ export const seedProducts = async (categoryIds: any) => {
     });
 
     await addProduct({
+      name: 'Ball Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Roller Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Thrust Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Needle Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Spherical Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Tapered Roller Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Angular Contact Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Deep Groove Ball Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Pillow Block Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Flange Bearings',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Bearings Group',
+      status: 'active'
+    });
+
+    // Belts Group məhsulları
+    await addProduct({
       name: 'Industrial V-Belt',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Belts Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Cleated Belt Conveyors',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Belts Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Filter Belts',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Belts Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Round Belts',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Belts Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Flat Belts',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Belts Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Rubber Belts',
+      category: categoryIds.sparePartsId,
+      subcategory: 'Belts Group',
+      status: 'active'
+    });
+
+    await addProduct({
+      name: 'Timing Belts',
       category: categoryIds.sparePartsId,
       subcategory: 'Belts Group',
       status: 'active'

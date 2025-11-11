@@ -26,13 +26,15 @@ export default function SubcategoryPage() {
     product => product.subcategory === subcategoryName && product.status === 'active'
   );
   
+  // Alt kateqoriyanı tap
+  const subcategory = categories.find(cat => 
+    cat.type === 'sub' && cat.name === subcategoryName
+  );
+  
   // Ana kateqoriyanı tap
-  const parentCategory = categories.find(cat => {
-    const subcategories = categories.filter(sub => 
-      sub.type === 'sub' && sub.parentId === cat.id
-    );
-    return subcategories.some(sub => sub.name === subcategoryName);
-  });
+  const parentCategory = subcategory ? categories.find(cat => 
+    cat.id === subcategory.parentId
+  ) : null;
 
   // Filtrlənmiş və sıralanmış məhsullar
   const filteredProducts = useMemo(() => {
@@ -55,6 +57,42 @@ export default function SubcategoryPage() {
     return filtered;
   }, [subcategoryProducts, searchTerm, sortBy]);
 
+  // Description mətnini formatlamaq üçün funksiya
+  const renderDescription = (description: string) => {
+    const parts = description.split('\n\n');
+    
+    return (
+      <div className="product-description">
+        {parts.map((part, index) => {
+          if (part.includes('•')) {
+            // Bullet point-li hissə
+            const lines = part.split('\n').filter(line => line.trim());
+            return (
+              <ul key={index} className="product-list mb-4">
+                {lines.map((line, lineIndex) => {
+                  if (line.startsWith('•')) {
+                    const text = line.substring(1).trim();
+                    return (
+                      <li key={lineIndex}>{text}</li>
+                    );
+                  }
+                  return null;
+                })}
+              </ul>
+            );
+          } else {
+            // Adi mətn
+            return (
+              <p key={index} className="mb-4">
+                {part}
+              </p>
+            );
+          }
+        })}
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen">
@@ -75,10 +113,10 @@ export default function SubcategoryPage() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="pt-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-slate-600 mb-8">
+      <main className="pt-24">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Breadcrumb - referans şəkildəki kimi sadə */}
+          <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6">
             <Link href="/products" className="hover:text-blue-600 transition-colors">
               Məhsullar
             </Link>
@@ -94,15 +132,23 @@ export default function SubcategoryPage() {
                 <span>/</span>
               </>
             )}
-            <span className="text-slate-900 font-medium">{subcategoryName}</span>
+            <span className="text-gray-700">{subcategoryName}</span>
           </nav>
 
-          {/* Alt kateqoriya başlığı */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 mb-4">{subcategoryName}</h1>
-            <p className="text-lg text-slate-600">
+          {/* Alt kateqoriya başlığı və təsviri */}
+          <div className="mb-12">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">{subcategoryName}</h1>
+            
+            {/* Subkateqoriya təsviri - Referans şəkildəki kimi */}
+            {subcategory && subcategory.description && (
+              <div className="mb-8">
+                {renderDescription(subcategory.description)}
+              </div>
+            )}
+            
+            <div className="text-sm text-gray-500 mb-2">
               {subcategoryProducts.length} məhsul mövcuddur
-            </p>
+            </div>
           </div>
 
           {/* Filtrlər və axtarış */}

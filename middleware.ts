@@ -31,8 +31,8 @@ function getLocale(request: NextRequest): string {
     if (acceptLanguage.includes('en')) return 'en';
   }
 
-  // Default to Azerbaijani
-  return 'az';
+  // Default to English
+  return 'en';
 }
 
 export const config = {

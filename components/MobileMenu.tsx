@@ -36,12 +36,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             hasMegaMenu: true,
             megaMenuType: 'services' as const
         },
-        {
-            title: t.ourProjects,
-            href: `/${language}/projects`,
-            hasMegaMenu: true,
-            megaMenuType: 'projects' as const
-        },
+
         {
             title: t.media,
             href: `/${language}/media`,
@@ -258,34 +253,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         )}
                     </div>
 
-                    {/* Footer - Language Selector */}
-                    <div className="p-4 border-t border-gray-200 bg-gray-50">
-                        <div className="text-sm text-gray-500 mb-3">{t.languageSelector}</div>
-                        <div className="grid grid-cols-2 gap-2">
-                            <button
-                                onClick={() => setLanguage('az')}
-                                className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-colors ${
-                                    language === 'az'
-                                        ? 'bg-blue-600 text-white'
-                                        : 'bg-white text-gray-700 border border-gray-200'
-                                }`}
-                            >
-                                <span>🇦🇿</span>
-                                <span className="font-medium">AZ</span>
-                            </button>
-                            <button
-                                onClick={() => setLanguage('en')}
-                                className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-colors ${
-                                    language === 'en'
-                                        ? 'bg-blue-600 text-white'
-                                        : 'bg-white text-gray-700 border border-gray-200'
-                                }`}
-                            >
-                                <span>🇬🇧</span>
-                                <span className="font-medium">EN</span>
-                            </button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

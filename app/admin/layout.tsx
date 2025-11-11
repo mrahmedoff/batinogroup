@@ -1,8 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { DataProvider } from '@/contexts/DataContext';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
@@ -11,6 +14,28 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <LoadingSpinner />;
+  }
+
+  return (
+    <AuthProvider>
+      <LanguageProvider>
+        <DataProvider>
+          <AdminLayoutContent>{children}</AdminLayoutContent>
+        </DataProvider>
+      </LanguageProvider>
+    </AuthProvider>
+  );
+}
+
+function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();

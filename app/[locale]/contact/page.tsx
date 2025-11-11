@@ -176,9 +176,7 @@ export default function ContactPage() {
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-2">{t.address}</h3>
                     <p className="text-gray-600">{settings.address}</p>
-                    <a href="#map" className="text-blue-600 hover:underline mt-2 inline-block">
-                      {t.viewOnMap} →
-                    </a>
+
                   </div>
                 </div>
               </div>
@@ -230,61 +228,9 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Map Section */}
-        <section id="map" className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">{t.findUs}</h2>
-              <p className="text-gray-600">{t.findUsDesc}</p>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="aspect-video bg-gray-200 relative">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: 'url(https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&q=80)'
-                  }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                  <div className="text-center text-white">
-                    <MapPin className="w-16 h-16 mx-auto mb-4" />
-                    <p className="text-xl font-bold">{t.mapLoading}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* FAQ Section */}
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">{t.faq}</h2>
-              <p className="text-gray-600">{t.faqDesc}</p>
-            </div>
-            <div className="space-y-4">
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="font-bold text-lg mb-2">Xidmətləriniz hansı sahələri əhatə edir?</h3>
-                <p className="text-gray-600">
-                  Biz təchizat həlləri, mühəndislik xidmətləri, layihə idarəetməsi və texniki dəstək sahələrində xidmət göstəririk.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="font-bold text-lg mb-2">Layihə müddəti nə qədərdir?</h3>
-                <p className="text-gray-600">
-                  Layihə müddəti layihənin mürəkkəbliyindən asılıdır. Orta hesabla 2-6 ay arası dəyişir.
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow">
-                <h3 className="font-bold text-lg mb-2">Qiymət təklifi necə əldə edə bilərəm?</h3>
-                <p className="text-gray-600">
-                  Yuxarıdakı formu dolduraraq və ya bizimlə birbaşa əlaqə saxlayaraq pulsuz qiymət təklifi əldə edə bilərsiniz.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+
+
       </div>
       <Footer />
     </>

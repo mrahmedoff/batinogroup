@@ -15,7 +15,8 @@ import {
   Handshake,
   Cog,
   Package,
-  FolderTree
+  FolderTree,
+  Monitor
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -94,11 +95,18 @@ export default function AdminDashboard() {
 
   const quickLinks = [
     {
+      title: 'Hero Slides',
+      description: 'Ana səhifə slider idarəsi',
+      icon: Monitor,
+      href: '/admin/hero',
+      color: 'blue'
+    },
+    {
       title: 'Məhsul İdarəsi',
       description: 'Məhsul və materialları idarə edin',
       icon: Package,
       href: '/admin/products',
-      color: 'blue'
+      color: 'green'
     },
     {
       title: 'Kateqoriya İdarəsi',

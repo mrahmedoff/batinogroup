@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import { DataProvider } from "@/contexts/DataContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProductProvider } from "@/contexts/ProductContext";
-import { debugFirebase } from "@/lib/firebaseDebug";
+
 import FirebaseStatus from "@/components/FirebaseStatus";
+import FirebaseDebugClient from "@/components/FirebaseDebugClient";
+import BatinoLoader from "@/components/BatinoLoader";
 
 export const metadata: Metadata = {
   title: "BatinoGroup - Təchizat Həlləri və Mühəndislik",
@@ -20,15 +22,11 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  
-  // Debug Firebase configuration on client side
-  if (typeof window !== 'undefined') {
-    debugFirebase();
-  }
-  
+
   return (
     <html lang={locale}>
       <body className="font-sans antialiased">
+        <BatinoLoader />
         <AuthProvider>
           <LanguageProvider>
             <DataProvider>
@@ -37,6 +35,7 @@ export default async function RootLayout({
                 {process.env.NODE_ENV === 'development' && (
                   <>
                     <FirebaseStatus />
+                    <FirebaseDebugClient />
                     <script dangerouslySetInnerHTML={{
                       __html: `
                         console.log('🔥 Firebase Debug Commands Available:');

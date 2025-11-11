@@ -68,6 +68,17 @@ interface Job {
   postedDate: string;
 }
 
+interface HeroSlide {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  order: number;
+  active: boolean;
+  buttonText?: string;
+  buttonLink?: string;
+}
+
 interface DataContextType {
   services: Service[];
   projects: Project[];
@@ -78,8 +89,11 @@ interface DataContextType {
   partners: Partner[];
   certificates: Certificate[];
   jobs: Job[];
+  heroSlides: HeroSlide[];
   settings: SiteSettings;
   isLoading: boolean;
+  refreshData: () => Promise<void>;
+  refreshHeroSlides: () => Promise<void>;
   addService: (service: Service) => void;
   updateService: (service: Service) => void;
   deleteService: (id: string) => void;
@@ -104,6 +118,9 @@ interface DataContextType {
   addJob: (job: Job) => void;
   updateJob: (job: Job) => void;
   deleteJob: (id: string) => void;
+  addHeroSlide: (slide: HeroSlide) => void;
+  updateHeroSlide: (slide: HeroSlide) => void;
+  deleteHeroSlide: (id: string) => void;
   updateSettings: (settings: SiteSettings) => void;
 }
 
@@ -119,6 +136,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([]);
   const [settings, setSettings] = useState<SiteSettings>({
     siteName: 'BatinoGroup',
     email: 'info@batinogroup.az',
@@ -131,54 +149,74 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  // Load data function
+  const loadData = async () => {
+    try {
+      // Check if running in browser
+      if (typeof window === 'undefined') {
+        setIsLoading(false);
+        return;
+      }
+
+      const [
+        servicesData,
+        projectsData,
+        teamData,
+        messagesData,
+        newsData,
+        partnersData,
+        certificatesData,
+        jobsData,
+        heroSlidesData,
+        settingsData,
+      ] = await Promise.all([
+        getDocuments('services'),
+        getDocuments('projects'),
+        getDocuments('team'),
+        getDocuments('messages'),
+        getDocuments('news'),
+        getDocuments('partners'),
+        getDocuments('certificates'),
+        getDocuments('jobs'),
+        getDocuments('hero-slides'),
+        getDocuments('settings'),
+      ]);
+
+      setServices(servicesData as any);
+      setProjects(projectsData as any);
+      setTeam(teamData as any);
+      setMessages(messagesData as any);
+      setNews(newsData as any);
+      setPartners(partnersData as any);
+      setCertificates(certificatesData as any);
+      setJobs(jobsData as any);
+      setHeroSlides((heroSlidesData as HeroSlide[]).sort((a, b) => a.order - b.order));
+      if (settingsData.length > 0) setSettings(settingsData[0] as any);
+    } catch (error) {
+      console.error('Error loading data from Firebase:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Refresh all data
+  const refreshData = async () => {
+    setIsLoading(true);
+    await loadData();
+  };
+
+  // Refresh only hero slides
+  const refreshHeroSlides = async () => {
+    try {
+      const heroSlidesData = await getDocuments('hero-slides');
+      setHeroSlides((heroSlidesData as HeroSlide[]).sort((a, b) => a.order - b.order));
+    } catch (error) {
+      console.error('Error refreshing hero slides:', error);
+    }
+  };
+
   // Load from Firebase on mount
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        // Check if running in browser
-        if (typeof window === 'undefined') {
-          setIsLoading(false);
-          return;
-        }
-
-        const [
-          servicesData,
-          projectsData,
-          teamData,
-          messagesData,
-          newsData,
-          partnersData,
-          certificatesData,
-          jobsData,
-          settingsData,
-        ] = await Promise.all([
-          getDocuments('services'),
-          getDocuments('projects'),
-          getDocuments('team'),
-          getDocuments('messages'),
-          getDocuments('news'),
-          getDocuments('partners'),
-          getDocuments('certificates'),
-          getDocuments('jobs'),
-          getDocuments('settings'),
-        ]);
-
-        setServices(servicesData as any);
-        setProjects(projectsData as any);
-        setTeam(teamData as any);
-        setMessages(messagesData as any);
-        setNews(newsData as any);
-        setPartners(partnersData as any);
-        setCertificates(certificatesData as any);
-        setJobs(jobsData as any);
-        if (settingsData.length > 0) setSettings(settingsData[0] as any);
-      } catch (error) {
-        console.error('Error loading data from Firebase:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     loadData();
   }, []);
 
@@ -425,6 +463,34 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Hero Slide functions
+  const addHeroSlide = async (slide: HeroSlide) => {
+    try {
+      const newSlide = await addDocument('hero-slides', slide);
+      setHeroSlides([...heroSlides, newSlide as HeroSlide].sort((a, b) => a.order - b.order));
+    } catch (error) {
+      console.error('Error adding hero slide:', error);
+    }
+  };
+
+  const updateHeroSlide = async (slide: HeroSlide) => {
+    try {
+      await updateDocument('hero-slides', slide.id, slide);
+      setHeroSlides(heroSlides.map(s => s.id === slide.id ? slide : s).sort((a, b) => a.order - b.order));
+    } catch (error) {
+      console.error('Error updating hero slide:', error);
+    }
+  };
+
+  const deleteHeroSlide = async (id: string) => {
+    try {
+      await deleteDocument('hero-slides', id);
+      setHeroSlides(heroSlides.filter(s => s.id !== id));
+    } catch (error) {
+      console.error('Error deleting hero slide:', error);
+    }
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -437,8 +503,11 @@ export function DataProvider({ children }: { children: ReactNode }) {
         partners,
         certificates,
         jobs,
+        heroSlides,
         settings,
         isLoading,
+        refreshData,
+        refreshHeroSlides,
         addService,
         updateService,
         deleteService,
@@ -463,6 +532,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
         addJob,
         updateJob,
         deleteJob,
+        addHeroSlide,
+        updateHeroSlide,
+        deleteHeroSlide,
         updateSettings,
       }}
     >

@@ -17,13 +17,13 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
     const { getCategoriesByMenuType, getSubCategories } = useProducts();
     const { language } = useLanguage();
 
-    // Firebase-dən kateqoriyaları al
+    // Get categories from Firebase
     const getMainCategories = () => {
         const categories = getCategoriesByMenuType(menuType);
         return categories.filter(category => category.type === 'main');
     };
 
-    // Seçilmiş kateqoriyaya aid alt kateqoriyaları al
+    // Get subcategories for selected category
     const getSelectedSubcategories = (categoryId: string) => {
         return getSubCategories(categoryId);
     };
@@ -32,10 +32,10 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
 
     if (!isOpen) return null;
 
-    // Firebase-dən əsas kateqoriyaları əldə et
+    // Get main categories from Firebase
     const mainCategories = getMainCategories();
     
-    // Əgər heç bir kateqoriya yoxdursa, mega menu göstərmə
+    // If no categories exist, don't show mega menu
     if (mainCategories.length === 0) {
         return null;
     }
@@ -61,12 +61,12 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
         >
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col lg:flex-row min-h-[400px]">
-                    {/* Sol tərəf - Kateqoriyalar */}
+                    {/* Left side - Categories */}
                     <div className="w-full lg:w-80 bg-gradient-to-br from-gray-50 to-gray-100 border-r-0 lg:border-r border-gray-200 border-b lg:border-b-0">
                         <div className="p-4 lg:p-6">
                             <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
                                 <span className="w-2 h-6 bg-blue-500 rounded-full mr-3"></span>
-                                Kateqoriyalar
+                                Categories
                             </h3>
                             <ul className="space-y-1">
                                 {mainCategories.map((category) => (
@@ -93,7 +93,7 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
                         </div>
                     </div>
 
-                    {/* Sağ tərəf - Alt kateqoriyalar */}
+                    {/* Right side - Subcategories */}
                     <div className="flex-1 relative overflow-hidden min-h-[300px] lg:min-h-[400px]">
                         {selectedCategory && (
                             <div 
@@ -146,13 +146,13 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
                                                 </div>
                                             ) : (
                                                 <div className="text-center py-8 lg:py-12">
-                                                    <p className="text-gray-500 text-sm lg:text-base">Bu kateqoriyada alt kateqoriya yoxdur</p>
+                                                    <p className="text-gray-500 text-sm lg:text-base">No subcategories in this category</p>
                                                     <Link
                                                         href={`${getBaseUrl(menuType)}/category/${category.id}`}
                                                         className="inline-block mt-4 px-4 lg:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm lg:text-base"
                                                         onClick={onClose}
                                                     >
-                                                        Kateqoriyaya keç
+                                                        Go to Category
                                                     </Link>
                                                 </div>
                                             )}
@@ -168,10 +168,10 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
                                     <div className="w-12 h-12 lg:w-16 lg:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                         <ChevronRight className="w-6 h-6 lg:w-8 lg:h-8 text-gray-400" />
                                     </div>
-                                    <p className="text-gray-500 text-base lg:text-lg">Kateqoriya seçin</p>
+                                    <p className="text-gray-500 text-base lg:text-lg">Select a Category</p>
                                     <p className="text-gray-400 text-xs lg:text-sm mt-1">
-                                        <span className="hidden lg:inline">Sol tərəfdən kateqoriya üzərinə gəlin</span>
-                                        <span className="lg:hidden">Kateqoriya üzərinə toxunun</span>
+                                        <span className="hidden lg:inline">Hover over a category from the left</span>
+                                        <span className="lg:hidden">Touch a category</span>
                                     </p>
                                 </div>
                             </div>
