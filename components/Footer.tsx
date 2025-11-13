@@ -36,8 +36,6 @@ export default function Footer() {
                 width={120}
                 height={50}
                 className="object-contain group-hover:scale-110 transition-transform brightness-0 invert"
-                onLoad={() => console.log('Footer logo loaded:', settings.logo)}
-                onError={(e) => console.error('Footer logo error:', e, 'URL:', settings.logo)}
               />
             </Link>
             <p className="text-gray-400 mb-6 leading-relaxed">

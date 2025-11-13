@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { X, Image as ImageIcon } from 'lucide-react';
+import { X, Image as ImageIcon, Upload, Check } from 'lucide-react';
 import { uploadFile } from '@/lib/firebaseHelpers';
 
 interface LogoUploadProps {
@@ -12,11 +12,17 @@ interface LogoUploadProps {
 export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    // Reset states
+    setUploadSuccess(false);
+    setUploadProgress(0);
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
@@ -30,31 +36,63 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
       return;
     }
 
-    // Create preview
+    // Create preview immediately
     const reader = new FileReader();
     reader.onload = (e) => {
       setPreviewUrl(e.target?.result as string);
     };
     reader.readAsDataURL(file);
 
-    // Upload file
+    // Start upload process
     setIsUploading(true);
+    
+    // Simulate progress for better UX
+    const progressInterval = setInterval(() => {
+      setUploadProgress(prev => {
+        if (prev >= 90) {
+          clearInterval(progressInterval);
+          return 90;
+        }
+        return prev + Math.random() * 20;
+      });
+    }, 200);
+
     try {
       console.log('Starting logo upload...');
       const logoUrl = await uploadFile(file, 'logos');
       console.log('Logo upload successful:', logoUrl);
       
-      onLogoChange(logoUrl);
-      setPreviewUrl(null); // Clear preview after successful upload
+      // Complete progress
+      clearInterval(progressInterval);
+      setUploadProgress(100);
       
-      // Firebase URL və ya local URL-ə görə fərqli mesaj
-      if (logoUrl.startsWith('blob:')) {
-        alert('Logo yükləndi! (Development rejimi - Firebase konfigurasiya edilməyib)');
-      } else {
-        alert('Logo uğurla Firebase-ə yükləndi!');
-      }
+      // Show success state
+      setUploadSuccess(true);
+      
+      // Update logo
+      onLogoChange(logoUrl);
+      
+      // Success message
+      setTimeout(() => {
+        if (logoUrl.startsWith('data:')) {
+          alert('Logo yükləndi! (Development rejimi - Base64 formatında saxlanıldı)');
+        } else if (logoUrl.startsWith('blob:')) {
+          alert('Logo yükləndi! (Development rejimi - Local URL)');
+        } else {
+          alert('Logo uğurla Firebase-ə yükləndi!');
+        }
+        
+        // Reset states after success
+        setTimeout(() => {
+          setPreviewUrl(null);
+          setUploadSuccess(false);
+          setUploadProgress(0);
+        }, 1500);
+      }, 500);
+      
     } catch (error) {
       console.error('Logo yükləmə xətası:', error);
+      clearInterval(progressInterval);
       
       // Xəta növünə görə fərqli mesajlar
       const errorMessage = error instanceof Error ? error.message : 'Naməlum xəta';
@@ -63,7 +101,9 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
       } else {
         alert(`Logo yükləmədə xəta: ${errorMessage}`);
       }
+      
       setPreviewUrl(null);
+      setUploadProgress(0);
     } finally {
       setIsUploading(false);
       // Clear file input
@@ -75,8 +115,35 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
 
   const handleRemovePreview = () => {
     setPreviewUrl(null);
+    setUploadProgress(0);
+    setUploadSuccess(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const files = e.dataTransfer.files;
+    if (files && files[0]) {
+      // Create a synthetic event to reuse handleFileSelect
+      const syntheticEvent = {
+        target: { files }
+      } as React.ChangeEvent<HTMLInputElement>;
+      
+      handleFileSelect(syntheticEvent);
     }
   };
 
@@ -86,32 +153,78 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
     <div className="space-y-4">
       <label className="block text-sm font-medium text-slate-700">Sayt Loqosu</label>
       
-
-      
-      {/* Current/Preview Logo */}
+      {/* Current/Preview Logo with Loading State */}
       {displayLogo && (
         <div className="relative inline-block">
-          <div className="w-32 h-20 border-2 border-slate-200 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+          <div className="w-40 h-24 border-2 border-slate-200 rounded-lg overflow-hidden bg-white flex items-center justify-center relative">
             <img 
               src={displayLogo} 
               alt="Logo" 
-              className="max-w-full max-h-full object-contain"
+              className={`max-w-full max-h-full object-contain transition-all duration-300 ${
+                isUploading ? 'opacity-70' : 'opacity-100'
+              }`}
             />
+            
+            {/* Loading Overlay */}
+            {isUploading && (
+              <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                <div className="bg-white rounded-lg p-3 shadow-lg">
+                  <div className="flex flex-col items-center gap-2">
+                    {uploadSuccess ? (
+                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                        <Check className="w-5 h-5 text-white" />
+                      </div>
+                    ) : (
+                      <div className="relative w-8 h-8">
+                        <div className="absolute inset-0 border-2 border-gray-200 rounded-full"></div>
+                        <div 
+                          className="absolute inset-0 border-2 border-blue-600 rounded-full border-t-transparent animate-spin"
+                          style={{
+                            transform: `rotate(${uploadProgress * 3.6}deg)`
+                          }}
+                        ></div>
+                      </div>
+                    )}
+                    <div className="text-xs font-medium text-gray-700">
+                      {uploadSuccess ? 'Tamamlandı!' : `${Math.round(uploadProgress)}%`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          {previewUrl && (
+          
+          {/* Remove Button */}
+          {previewUrl && !isUploading && (
             <button
               type="button"
               onClick={handleRemovePreview}
-              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
             >
               <X className="w-3 h-3" />
             </button>
+          )}
+          
+          {/* Success Indicator */}
+          {uploadSuccess && (
+            <div className="absolute -top-2 -left-2 w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg">
+              <Check className="w-3 h-3" />
+            </div>
           )}
         </div>
       )}
 
       {/* Upload Area */}
-      <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-slate-400 transition-colors">
+      <div 
+        className={`border-2 border-dashed rounded-lg p-6 text-center transition-all duration-300 ${
+          isUploading 
+            ? 'border-blue-400 bg-blue-50' 
+            : 'border-slate-300 hover:border-slate-400 hover:bg-slate-50'
+        }`}
+        onDragOver={handleDragOver}
+        onDragEnter={handleDragEnter}
+        onDrop={handleDrop}
+      >
         <input
           ref={fileInputRef}
           type="file"
@@ -121,12 +234,19 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
           disabled={isUploading}
         />
         
-        <div className="space-y-2">
-          <div className="mx-auto w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
+        <div className="space-y-3">
+          <div className="mx-auto w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center relative overflow-hidden">
             {isUploading ? (
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+              <div className="relative">
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
+                <Upload className="absolute inset-0 w-4 h-4 text-blue-600 m-auto" />
+              </div>
+            ) : uploadSuccess ? (
+              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                <Check className="w-5 h-5 text-white" />
+              </div>
             ) : (
-              <ImageIcon className="w-6 h-6 text-slate-400" />
+              <ImageIcon className="w-7 h-7 text-slate-400" />
             )}
           </div>
           
@@ -135,13 +255,30 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploading}
-              className="text-blue-600 hover:text-blue-700 font-medium disabled:opacity-50"
+              className={`font-medium transition-colors ${
+                isUploading 
+                  ? 'text-blue-600 cursor-not-allowed' 
+                  : 'text-blue-600 hover:text-blue-700'
+              }`}
             >
-              {isUploading ? 'Yüklənir...' : 'Logo seçin'}
+              {isUploading 
+                ? `Yüklənir... ${Math.round(uploadProgress)}%` 
+                : uploadSuccess 
+                  ? 'Uğurla yükləndi!' 
+                  : 'Logo seçin və ya buraya sürükləyin'
+              }
             </button>
-            <p className="text-xs text-slate-500 mt-1">
-              PNG, JPG, GIF (maksimum 5MB)
+            <p className="text-xs text-slate-500 mt-2">
+              PNG, JPG, GIF formatları • Maksimum 5MB
             </p>
+            {isUploading && (
+              <div className="mt-3 w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${uploadProgress}%` }}
+                ></div>
+              </div>
+            )}
           </div>
         </div>
       </div>

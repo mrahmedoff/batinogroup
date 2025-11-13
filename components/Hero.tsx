@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Shield, Award, Users, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useData } from '@/contexts/DataContext';
+import { settings } from 'firebase/analytics';
 
 export default function Hero() {
   const { t, language } = useLanguage();
@@ -99,6 +100,7 @@ export default function Hero() {
     return (
       <section className="relative h-[700px] flex items-center overflow-hidden bg-gray-900">
         <div className="absolute inset-0 bg-black/30 z-10" />
+        
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white w-full">
           <div className="max-w-3xl">
             <div className="animate-pulse">

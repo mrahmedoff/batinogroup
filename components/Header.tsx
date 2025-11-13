@@ -65,8 +65,6 @@ export default function Header() {
                             width={120}
                             height={50}
                             className="object-contain"
-                            onLoad={() => console.log('Header logo loaded:', settings.logo)}
-                            onError={(e) => console.error('Header logo error:', e, 'URL:', settings.logo)}
                         />
                     </Link>
 
