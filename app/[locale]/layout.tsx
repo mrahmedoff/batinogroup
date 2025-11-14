@@ -7,7 +7,6 @@ import { ProductProvider } from "@/contexts/ProductContext";
 
 import FirebaseStatus from "@/components/FirebaseStatus";
 import FirebaseDebugClient from "@/components/FirebaseDebugClient";
-import BatinoLoader from "@/components/BatinoLoader";
 
 export const metadata: Metadata = {
   title: "BatinoGroup - Təchizat Həlləri və Mühəndislik",
@@ -26,7 +25,6 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className="font-sans antialiased">
-        <BatinoLoader />
         <AuthProvider>
           <LanguageProvider>
             <DataProvider>

@@ -60,7 +60,7 @@ interface Job {
   title: string;
   department: string;
   location: string;
-  type: 'Tam ştat' | 'Part-time' | 'Müqavilə';
+  type: 'Full-time' | 'Part-time' | 'Contract';
   salary: string;
   description: string;
   requirements: string[];
@@ -191,7 +191,25 @@ export function DataProvider({ children }: { children: ReactNode }) {
       setNews(newsData as any);
       setPartners(partnersData as any);
       setCertificates(certificatesData as any);
-      setJobs(jobsData as any);
+      
+      // Filter out invalid jobs
+      console.log('Raw jobs loaded:', jobsData.length, 'jobs found');
+      
+      const validJobs = jobsData.filter((job: any) => {
+        if (!job || !job.id || Object.keys(job).length <= 1) {
+          console.warn('Filtering out invalid job:', job);
+          return false;
+        }
+        return true;
+      });
+      
+      console.log('Valid jobs after filtering:', validJobs.length);
+      
+      if (validJobs.length !== jobsData.length) {
+        console.warn(`Filtered out ${jobsData.length - validJobs.length} invalid jobs`);
+      }
+      
+      setJobs(validJobs as any);
       setHeroSlides((heroSlidesData as HeroSlide[]).sort((a, b) => a.order - b.order));
       if (settingsData.length > 0) setSettings(settingsData[0] as any);
     } catch (error) {
@@ -340,21 +358,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   const updateSettings = async (newSettings: SiteSettings) => {
     try {
-      console.log('Updating settings:', newSettings);
-      console.log('Logo URL being saved:', newSettings.logo);
-      
       // Settings-də yalnız 1 document olmalıdır
       const settingsDocs = await getDocuments('settings');
       if (settingsDocs.length > 0) {
         await updateDocument('settings', settingsDocs[0].id, newSettings);
-        console.log('Settings updated in Firebase');
       } else {
         await addDocument('settings', newSettings);
-        console.log('Settings added to Firebase');
       }
-      
       setSettings(newSettings);
-      console.log('Settings state updated:', newSettings);
     } catch (error) {
       console.error('Error updating settings:', error);
     }
@@ -448,6 +459,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const addJob = async (job: Job) => {
     try {
       const newJob = await addDocument('jobs', job);
+      console.log('New job added:', newJob.id);
       setJobs([...jobs, newJob as Job]);
     } catch (error) {
       console.error('Error adding job:', error);
@@ -465,10 +477,19 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   const deleteJob = async (id: string) => {
     try {
+      // Validate ID
+      if (!id || id.trim() === '' || id === 'undefined' || id === 'null') {
+        throw new Error('Job ID is required and must be valid');
+      }
+      
+      console.log('Deleting job:', id);
       await deleteDocument('jobs', id);
       setJobs(jobs.filter(j => j.id !== id));
+      console.log('Job deleted successfully');
+      
     } catch (error) {
       console.error('Error deleting job:', error);
+      throw error;
     }
   };
 

@@ -9,7 +9,7 @@ interface Job {
   title: string;
   department: string;
   location: string;
-  type: 'Tam ştat' | 'Part-time' | 'Müqavilə';
+  type: 'Full-time' | 'Part-time' | 'Contract';
   salary: string;
   description: string;
   requirements: string[];
@@ -24,9 +24,19 @@ export default function CareersAdmin() {
   const [editingJob, setEditingJob] = useState<Job | null>(null);
   const [filter, setFilter] = useState<'Hamısı' | 'Dərc edilib' | 'Qaralama'>('Hamısı');
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
+    if (!id || id.trim() === '') {
+      alert('Xəta: İş ID-si yoxdur. Səhifəni yeniləyin və yenidən cəhd edin.');
+      return;
+    }
+
     if (confirm('Bu vakansiyanı silmək istədiyinizdən əminsiniz?')) {
-      deleteJob(id);
+      try {
+        await deleteJob(id);
+      } catch (error) {
+        console.error('Delete failed:', error);
+        alert('Vakansiya silinərkən xəta baş verdi: ' + (error as Error).message);
+      }
     }
   };
 
@@ -139,7 +149,27 @@ export default function CareersAdmin() {
       </div>
 
       <div className="space-y-4">
-        {filteredJobs.map((job) => (
+        {filteredJobs.length === 0 ? (
+          <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+            <div className="text-slate-400 mb-4">
+              <Briefcase className="w-16 h-16 mx-auto" strokeWidth={1} />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">Heç bir vakansiya tapılmadı</h3>
+            <p className="text-slate-500 mb-4">
+              {jobs.length === 0 
+                ? "Hələ heç bir vakansiya yaradılmayıb. Başlamaq üçün 'İlk Vakansiya Yarat' düyməsini basın."
+                : "Hazırkı filtrə uyğun vakansiya yoxdur. Yuxarıdakı filtri dəyişdirməyi cəhd edin."
+              }
+            </p>
+            <button 
+              onClick={handleAdd}
+              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              İlk Vakansiya Yarat
+            </button>
+          </div>
+        ) : (
+          filteredJobs.map((job) => (
           <div key={job.id} className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
@@ -196,7 +226,13 @@ export default function CareersAdmin() {
                 Redaktə
               </button>
               <button 
-                onClick={() => handleDelete(job.id)}
+                onClick={() => {
+                  if (!job.id || job.id.trim() === '') {
+                    alert('Xəta: İş ID-si yoxdur. Səhifəni yeniləyin və yenidən cəhd edin.');
+                    return;
+                  }
+                  handleDelete(job.id);
+                }}
                 className="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors inline-flex items-center gap-1"
               >
                 <Trash2 className="w-4 h-4" strokeWidth={2} />
@@ -204,7 +240,8 @@ export default function CareersAdmin() {
               </button>
             </div>
           </div>
-        ))}
+          ))
+        )}
       </div>
 
       {isModalOpen && (
@@ -227,8 +264,8 @@ function JobModal({ job, onClose, onSave }: {
     id: '',
     title: '',
     department: '',
-    location: 'Bakı, Azərbaycan',
-    type: 'Tam ştat',
+    location: 'Baku, Azerbaijan',
+    type: 'Full-time',
     salary: '',
     description: '',
     requirements: [''],
@@ -288,25 +325,25 @@ function JobModal({ job, onClose, onSave }: {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Vəzifə</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Position</label>
               <input
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                placeholder="Layihə Meneceri"
+                placeholder="Project Manager"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Şöbə</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Department</label>
               <input
                 type="text"
                 value={formData.department}
                 onChange={(e) => setFormData({...formData, department: e.target.value})}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                placeholder="Layihə İdarəetməsi"
+                placeholder="Project Management"
                 required
               />
             </div>
@@ -314,7 +351,7 @@ function JobModal({ job, onClose, onSave }: {
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Yer</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Location</label>
               <input
                 type="text"
                 value={formData.location}
@@ -325,20 +362,20 @@ function JobModal({ job, onClose, onSave }: {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Tip</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Type</label>
               <select
                 value={formData.type}
                 onChange={(e) => setFormData({...formData, type: e.target.value as any})}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               >
-                <option value="Tam ştat">Tam ştat</option>
+                <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
-                <option value="Müqavilə">Müqavilə</option>
+                <option value="Contract">Contract</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Maaş</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Salary</label>
               <input
                 type="text"
                 value={formData.salary}
@@ -351,7 +388,7 @@ function JobModal({ job, onClose, onSave }: {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Təsvir</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({...formData, description: e.target.value})}
@@ -364,13 +401,13 @@ function JobModal({ job, onClose, onSave }: {
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium text-slate-700">Tələblər</label>
+              <label className="block text-sm font-medium text-slate-700">Requirements</label>
               <button
                 type="button"
                 onClick={addRequirement}
                 className="text-sm text-blue-600 hover:text-blue-700 font-medium"
               >
-                + Əlavə et
+                + Add
               </button>
             </div>
             <div className="space-y-2">
@@ -381,7 +418,7 @@ function JobModal({ job, onClose, onSave }: {
                     value={req}
                     onChange={(e) => updateRequirement(index, e.target.value)}
                     className="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                    placeholder="Tələb daxil edin"
+                    placeholder="Enter requirement"
                   />
                   {formData.requirements.length > 1 && (
                     <button
@@ -399,13 +436,13 @@ function JobModal({ job, onClose, onSave }: {
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium text-slate-700">Vəzifə Öhdəlikləri</label>
+              <label className="block text-sm font-medium text-slate-700">Job Responsibilities</label>
               <button
                 type="button"
                 onClick={addResponsibility}
                 className="text-sm text-blue-600 hover:text-blue-700 font-medium"
               >
-                + Əlavə et
+                + Add
               </button>
             </div>
             <div className="space-y-2">
@@ -416,7 +453,7 @@ function JobModal({ job, onClose, onSave }: {
                     value={resp}
                     onChange={(e) => updateResponsibility(index, e.target.value)}
                     className="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                    placeholder="Öhdəlik daxil edin"
+                    placeholder="Enter responsibility"
                   />
                   {formData.responsibilities.length > 1 && (
                     <button
@@ -441,7 +478,7 @@ function JobModal({ job, onClose, onSave }: {
               className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
             />
             <label htmlFor="published" className="text-sm font-medium text-slate-700">
-              Dərhal dərc et
+              Publish immediately
             </label>
           </div>
 
@@ -450,14 +487,14 @@ function JobModal({ job, onClose, onSave }: {
               type="submit"
               className="flex-1 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Yadda saxla
+              Save
             </button>
             <button
               type="button"
               onClick={onClose}
               className="flex-1 px-4 py-2 bg-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-300 transition-colors"
             >
-              Ləğv et
+              Cancel
             </button>
           </div>
         </form>

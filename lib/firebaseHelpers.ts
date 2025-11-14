@@ -58,8 +58,11 @@ export const deleteDocument = async (collectionName: string, id: string) => {
     console.warn('Firebase not configured, skipping deleteDocument');
     return;
   }
+  
   try {
+    console.log('Deleting document:', collectionName, id);
     await deleteDoc(doc(db, collectionName, id));
+    console.log('Document deleted from Firebase');
   } catch (error) {
     console.error('Error deleting document:', error);
     throw error;
@@ -67,10 +70,7 @@ export const deleteDocument = async (collectionName: string, id: string) => {
 };
 
 export const getDocuments = async (collectionName: string) => {
-  console.log('=== getDocuments ===');
-  console.log('Collection:', collectionName);
-  console.log('Firebase configured:', isFirebaseConfigured);
-  console.log('DB instance:', !!db);
+  console.log('Loading collection:', collectionName);
   
   if (!isFirebaseConfigured || !db) {
     console.warn('Firebase not configured, returning empty array');
@@ -78,16 +78,49 @@ export const getDocuments = async (collectionName: string) => {
   }
   
   try {
-    console.log('Attempting to query collection...');
-    const q = query(collection(db, collectionName), orderBy('createdAt', 'desc'));
-    const querySnapshot = await getDocs(q);
+    // First try with orderBy, if it fails, try without it
+    let querySnapshot;
+    try {
+      const q = query(collection(db, collectionName), orderBy('createdAt', 'desc'));
+      querySnapshot = await getDocs(q);
+    } catch (orderError) {
+      console.warn('OrderBy failed, using simple query');
+      querySnapshot = await getDocs(collection(db, collectionName));
+    }
     
-    const docs = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const docs = querySnapshot.docs.map(doc => {
+      const docData = doc.data();
+      const docId = doc.id;
+      
+      // Debug log for jobs collection
+      if (collectionName === 'jobs') {
+        console.log('Job document:', { id: docId, title: (docData as any).title, hasData: Object.keys(docData).length > 0 });
+      }
+      
+      // Check if document has valid data
+      if (!docId) {
+        console.error('❌ Document missing ID:', { docData, exists: doc.exists() });
+        return null; // Skip invalid documents
+      }
+      
+      if (!docData || Object.keys(docData).length === 0) {
+        console.error('❌ Document has no data:', { id: docId, exists: doc.exists() });
+        return null; // Skip empty documents
+      }
+      
+      const data = {
+        id: docId,
+        ...docData,
+      };
+      
+      if (collectionName === 'jobs') {
+        console.log('Job loaded:', { id: data.id, title: (data as any).title });
+      }
+      
+      return data;
+    }).filter(doc => doc !== null); // Remove null entries
     
-    console.log('Query successful, found', docs.length, 'documents');
+    console.log('Loaded', docs.length, collectionName);
     return docs;
   } catch (error) {
     console.error('Error getting documents:', error);

@@ -46,82 +46,7 @@ export default function CareerPage() {
         </div>
       </section>
 
-      {/* Why Join Us with Images */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">{t.whyJoinUs}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 relative overflow-hidden">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: 'url(https://images.unsplash.com/photo-1552581234-26160f608093?w=600&q=80)'
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                    <Briefcase className="w-6 h-6 text-blue-600" />
-                  </div>
-                </div>
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold mb-3">{t.careerDevelopment}</h3>
-                <p className="text-gray-600">
-                  {t.careerDevelopmentDesc}
-                </p>
-              </div>
-            </div>
 
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 relative overflow-hidden">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: 'url(https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=600&q=80)'
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-blue-600" />
-                  </div>
-                </div>
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold mb-3">{t.flexibleSchedule}</h3>
-                <p className="text-gray-600">
-                  {t.flexibleScheduleDesc}
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="h-48 relative overflow-hidden">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80)'
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-blue-600" />
-                  </div>
-                </div>
-              </div>
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold mb-3">{t.modernOffice}</h3>
-                <p className="text-gray-600">
-                  {t.modernOfficeDesc}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Open Positions */}
       <section className="py-20 bg-gray-50">
@@ -136,15 +61,15 @@ export default function CareerPage() {
           {publishedJobs.length === 0 ? (
             <div className="bg-white p-12 rounded-xl shadow-lg text-center">
               <Briefcase className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Hal-hazırda açıq vakansiya yoxdur</h3>
-              <p className="text-gray-600">Yeni vakansiyalar haqqında məlumat almaq üçün bizimlə əlaqə saxlayın.</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">No open positions currently</h3>
+              <p className="text-gray-600">Contact us to get information about new job opportunities.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-1 space-y-4">
-                {publishedJobs.map((job) => (
+                {publishedJobs.map((job, index) => (
                   <div
-                    key={job.id}
+                    key={job.id || `job-${index}`}
                     onClick={() => setSelectedJob(job)}
                     className={`bg-white p-6 rounded-xl shadow cursor-pointer hover:shadow-lg transition-all ${
                       selectedJob?.id === job.id ? 'ring-2 ring-blue-600' : ''
@@ -211,7 +136,7 @@ export default function CareerPage() {
                         <ul className="space-y-2">
                           {selectedJob.requirements.map((req: string, index: number) => (
                             req && (
-                              <li key={index} className="flex items-start gap-2 text-gray-600">
+                              <li key={`req-${index}`} className="flex items-start gap-2 text-gray-600">
                                 <span className="text-blue-600 mt-1">•</span>
                                 {req}
                               </li>
@@ -223,11 +148,11 @@ export default function CareerPage() {
 
                     {selectedJob.responsibilities && selectedJob.responsibilities.length > 0 && selectedJob.responsibilities[0] !== '' && (
                       <div className="mb-8">
-                        <h3 className="font-bold mb-3">Vəzifə Öhdəlikləri</h3>
+                        <h3 className="font-bold mb-3">Job Responsibilities</h3>
                         <ul className="space-y-2">
                           {selectedJob.responsibilities.map((resp: string, index: number) => (
                             resp && (
-                              <li key={index} className="flex items-start gap-2 text-gray-600">
+                              <li key={`resp-${index}`} className="flex items-start gap-2 text-gray-600">
                                 <span className="text-blue-600 mt-1">•</span>
                                 {resp}
                               </li>
@@ -272,15 +197,15 @@ export default function CareerPage() {
             addMessage({
               name: data.fullName,
               email: data.email,
-              subject: `Vakansiya müraciəti: ${selectedJob.title}`,
+              subject: `Job Application: ${selectedJob.title}`,
               message: `
-Vakansiya: ${selectedJob.title}
-Telefon: ${data.phone}
-CV Faylı: ${data.cvFileName}
+Position: ${selectedJob.title}
+Phone: ${data.phone}
+CV File: ${data.cvFileName}
 CV Link: ${data.cv}
 
-Əlavə məlumat: 
-${data.coverLetter || 'Yoxdur'}
+Additional Information: 
+${data.coverLetter || 'None'}
               `.trim()
             });
             setApplicationSuccess(true);
@@ -326,14 +251,14 @@ function ApplicationModal({
       // Validate file type
       const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
       if (!allowedTypes.includes(file.type)) {
-        setUploadError('Yalnız PDF və Word (.doc, .docx) faylları qəbul edilir');
+        setUploadError('Only PDF and Word (.doc, .docx) files are accepted');
         return;
       }
 
       // Validate file size (max 15MB)
       const maxSize = 15 * 1024 * 1024;
       if (file.size > maxSize) {
-        setUploadError('Fayl ölçüsü 15MB-dan çox ola bilməz');
+        setUploadError('File size cannot exceed 15MB');
         return;
       }
 
@@ -346,7 +271,7 @@ function ApplicationModal({
     e.preventDefault();
     
     if (!cvFile) {
-      setUploadError('CV faylı seçin');
+      setUploadError('Please select a CV file');
       return;
     }
 
@@ -365,7 +290,7 @@ function ApplicationModal({
       });
     } catch (error) {
       console.error('Upload error:', error);
-      setUploadError(error instanceof Error ? error.message : 'CV yüklənərkən xəta baş verdi');
+      setUploadError(error instanceof Error ? error.message : 'Error occurred while uploading CV');
       setIsUploading(false);
     }
   };
@@ -377,9 +302,9 @@ function ApplicationModal({
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-10 h-10 text-green-600" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Müraciətiniz qəbul edildi!</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Your application has been received!</h3>
           <p className="text-gray-600">
-            Tezliklə sizinlə əlaqə saxlayacağıq. Təşəkkür edirik!
+            We will contact you soon. Thank you!
           </p>
         </div>
       </div>
@@ -391,7 +316,7 @@ function ApplicationModal({
       <div className="bg-white rounded-xl p-6 max-w-2xl w-full my-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Müraciət Et</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Apply Now</h2>
             <p className="text-sm text-gray-600 mt-1">{job.title}</p>
           </div>
           <button
@@ -406,14 +331,14 @@ function ApplicationModal({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Ad Soyad <span className="text-red-500">*</span>
+                Full Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 value={formData.fullName}
                 onChange={(e) => setFormData({...formData, fullName: e.target.value})}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                placeholder="Adınız və soyadınız"
+                placeholder="Your full name"
                 required
               />
             </div>
@@ -435,7 +360,7 @@ function ApplicationModal({
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Telefon <span className="text-red-500">*</span>
+              Phone <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
@@ -473,13 +398,13 @@ function ApplicationModal({
                 ) : (
                   <>
                     <Upload className="w-5 h-5 text-gray-400" />
-                    <span className="text-sm text-gray-600">CV faylını seçin və ya buraya sürüşdürün</span>
+                    <span className="text-sm text-gray-600">Select CV file or drag it here</span>
                   </>
                 )}
               </label>
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              PDF, DOC və ya DOCX formatında, maksimum 15MB
+              PDF, DOC or DOCX format, maximum 15MB
             </p>
             {uploadError && (
               <p className="text-xs text-red-600 mt-1 flex items-center gap-1">
@@ -491,21 +416,21 @@ function ApplicationModal({
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Əlavə məlumat (Cover Letter)
+              Additional Information (Cover Letter)
             </label>
             <textarea
               value={formData.coverLetter}
               onChange={(e) => setFormData({...formData, coverLetter: e.target.value})}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
               rows={4}
-              placeholder="Özünüz haqqında qısa məlumat, niyə bu vəzifə üçün uyğun olduğunuzu yazın..."
+              placeholder="Brief information about yourself, why you are suitable for this position..."
             />
           </div>
 
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-800">
-              <strong>Qeyd:</strong> Müraciətiniz qəbul edildikdən sonra, HR departamentimiz sizinlə əlaqə saxlayacaq. 
-              Bütün məlumatlarınız məxfi saxlanılır.
+              <strong>Note:</strong> After your application is received, our HR department will contact you. 
+              All your information is kept confidential.
             </p>
           </div>
 
@@ -518,12 +443,12 @@ function ApplicationModal({
               {isUploading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  CV yüklənir...
+                  Uploading CV...
                 </>
               ) : (
                 <>
                   <Send className="w-5 h-5" />
-                  Müraciəti Göndər
+                  Submit Application
                 </>
               )}
             </button>
@@ -533,7 +458,7 @@ function ApplicationModal({
               disabled={isUploading}
               className="px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50"
             >
-              Ləğv et
+              Cancel
             </button>
           </div>
         </form>
