@@ -36,12 +36,16 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             hasMegaMenu: true,
             megaMenuType: 'services' as const
         },
-
         {
             title: t.media,
             href: `/${language}/media`,
             hasMegaMenu: true,
             megaMenuType: 'media' as const
+        },
+        {
+            title: t.career,
+            href: `/${language}/career`,
+            hasMegaMenu: false
         },
     ];
 
@@ -75,7 +79,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 return;
             }
         }
-        // Əgər mega menu yoxdursa, birbaşa keçid et
+        // Əgər mega menu yoxdursa və ya kateqoriya yoxdursa, birbaşa keçid et
+        window.location.href = item.href;
         onClose();
     };
 
@@ -141,18 +146,33 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                             // Ana menyu
                             <div className="p-4">
                                 <nav className="space-y-2">
-                                    {menuItems.map((item) => (
-                                        <button
-                                            key={item.title}
-                                            onClick={() => handleMenuItemClick(item)}
-                                            className="w-full flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-gray-50 to-gray-100 hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 border border-transparent transition-all duration-200 transform hover:scale-105"
-                                        >
-                                            <span className="font-medium text-gray-900">{item.title}</span>
-                                            {item.hasMegaMenu && getCategoriesByMenuType(item.megaMenuType).length > 0 && (
-                                                <ChevronRight className="w-5 h-5 text-blue-500" />
-                                            )}
-                                        </button>
-                                    ))}
+                                    {menuItems.map((item) => {
+                                        const hasSubMenu = item.hasMegaMenu && item.megaMenuType && getCategoriesByMenuType(item.megaMenuType).length > 0;
+                                        
+                                        if (hasSubMenu) {
+                                            return (
+                                                <button
+                                                    key={item.title}
+                                                    onClick={() => handleMenuItemClick(item)}
+                                                    className="w-full flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-gray-50 to-gray-100 hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 border border-transparent transition-all duration-200 transform hover:scale-105"
+                                                >
+                                                    <span className="font-medium text-gray-900">{item.title}</span>
+                                                    <ChevronRight className="w-5 h-5 text-blue-500" />
+                                                </button>
+                                            );
+                                        } else {
+                                            return (
+                                                <Link
+                                                    key={item.title}
+                                                    href={item.href}
+                                                    onClick={onClose}
+                                                    className="w-full flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-gray-50 to-gray-100 hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 border border-transparent transition-all duration-200 transform hover:scale-105"
+                                                >
+                                                    <span className="font-medium text-gray-900">{item.title}</span>
+                                                </Link>
+                                            );
+                                        }
+                                    })}
                                     
                                     {/* Contact Link */}
                                     <Link
@@ -170,6 +190,23 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         {selectedMenuType && !selectedCategory && (
                             // Kateqoriyalar
                             <div className="p-4 animate-slide-in-right">
+                                {/* Əsas səhifəyə keçid */}
+                                <div className="mb-4">
+                                    <Link
+                                        href={getBaseUrl(selectedMenuType)}
+                                        onClick={onClose}
+                                        className="w-full flex items-center justify-center p-4 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white transition-all duration-200 transform hover:scale-105"
+                                    >
+                                        <span className="font-medium">
+                                            {selectedMenuType === 'about' && t.aboutUs}
+                                            {selectedMenuType === 'products' && t.products}
+                                            {selectedMenuType === 'services' && t.ourActivity}
+                                            {selectedMenuType === 'media' && t.media}
+                                            {' səhifəsinə keç'}
+                                        </span>
+                                    </Link>
+                                </div>
+                                
                                 <div className="space-y-2">
                                     {getMainCategories(selectedMenuType).map((category) => (
                                         <button
