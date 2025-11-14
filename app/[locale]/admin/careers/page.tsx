@@ -93,12 +93,14 @@ export default function CareersAdmin() {
                   const snapshot = await getDocs(collection(db, 'jobs'));
                   console.log('Firebase jobs count:', snapshot.size);
                   
-                  snapshot.forEach((doc, index) => {
+                  let index = 0;
+                  snapshot.forEach((doc) => {
                     console.log(`Firebase Job ${index}:`, {
                       id: doc.id,
                       exists: doc.exists(),
                       data: doc.data()
                     });
+                    index++;
                   });
                 } catch (error) {
                   console.error('Firebase test error:', error);
