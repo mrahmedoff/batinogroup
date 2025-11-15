@@ -7,22 +7,12 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { DataProvider } from '@/contexts/DataContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import AdminSidebar from '@/components/admin/AdminSidebar';
-import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <AuthProvider>
@@ -45,11 +35,6 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
       router.push('/admin/login');
     }
   }, [user, loading, router, pathname]);
-
-  // Show loading while checking auth
-  if (loading) {
-    return <LoadingSpinner />;
-  }
 
   // If not logged in and not on login page, show nothing (will redirect)
   if (!user && pathname !== '/admin/login') {

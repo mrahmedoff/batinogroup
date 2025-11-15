@@ -4,23 +4,12 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminSidebar from '@/components/admin/AdminSidebar';
-import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <LoadingSpinner />;
-  }
-
   return <AdminLayoutContent>{children}</AdminLayoutContent>;
 }
 
@@ -42,10 +31,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
     }
   }, [user, loading, router, pathname]);
 
-  // Show loading while checking auth
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+
 
   // Extract locale from pathname for proper path checking
   const pathSegments = pathname.split('/');

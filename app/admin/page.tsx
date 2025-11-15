@@ -19,17 +19,6 @@ import {
 export default function AdminDashboard() {
   const { services, projects, team, messages, news, partners, certificates, jobs, isLoading } = useData();
 
-  if (isLoading) {
-    return (
-      <div className="p-8 flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-600">Yüklənir...</p>
-        </div>
-      </div>
-    );
-  }
-
   const stats = [
     { 
       title: 'Xidmətlər', 
