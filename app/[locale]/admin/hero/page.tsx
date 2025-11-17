@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Save, X, Upload, Eye } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Upload, Eye, Image as ImageIcon } from 'lucide-react';
 import { useData } from '@/contexts/DataContext';
+import { uploadImage } from '@/lib/uploadImage';
 
 interface HeroSlide {
   id: string;
@@ -30,6 +31,9 @@ export default function HeroAdminPage() {
     buttonText: 'Learn More',
     buttonLink: '/about'
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [isUploading, setIsUploading] = useState(false);
 
   // Load hero slides from Firebase
   useEffect(() => {
@@ -74,13 +78,23 @@ export default function HeroAdminPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsUploading(true);
 
     try {
+      let imageUrl = formData.image;
+
+      // If a new file is selected, upload it
+      if (selectedFile) {
+        console.log('Uploading new image...');
+        imageUrl = await uploadImage(selectedFile, 'hero-slides');
+        console.log('Image uploaded successfully:', imageUrl);
+      }
+
       // Clean form data
       const cleanFormData = {
         title: formData.title,
         description: formData.description,
-        image: formData.image,
+        image: imageUrl,
         order: formData.order || slides.length + 1,
         active: formData.active,
         buttonText: formData.buttonText,
@@ -106,27 +120,19 @@ export default function HeroAdminPage() {
       console.log('API Response:', result);
 
       if (response.ok) {
-        alert(editingSlide ? 'Slide updated successfully!' : 'Slide created successfully!');
+        alert(editingSlide ? 'Slide yeniləndi!' : 'Slide yaradıldı!');
         await loadSlides();
         await refreshHeroSlides();
         localStorage.setItem('heroSlidesUpdated', Date.now().toString());
-        setIsModalOpen(false);
-        setEditingSlide(null);
-        setFormData({
-          title: '',
-          description: '',
-          image: '',
-          order: 1,
-          active: true,
-          buttonText: 'Learn More',
-          buttonLink: '/about'
-        });
+        closeModal();
       } else {
-        alert('Error: ' + (result.error || 'Failed to save slide') + '\nDetails: ' + (result.details || ''));
+        alert('Xəta: ' + (result.error || 'Slide saxlanılmadı') + '\nTəfərrüatlar: ' + (result.details || ''));
       }
     } catch (error) {
       console.error('Error saving slide:', error);
-      alert('Error saving slide: ' + error);
+      alert('Slide saxlanılarkən xəta: ' + error);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -142,11 +148,62 @@ export default function HeroAdminPage() {
       buttonLink: slide.buttonLink
     };
     setFormData(cleanSlideData);
+    setPreviewUrl(slide.image || '');
+    setSelectedFile(null);
     setIsModalOpen(true);
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEditingSlide(null);
+    setFormData({
+      title: '',
+      description: '',
+      image: '',
+      order: 1,
+      active: true,
+      buttonText: 'Learn More',
+      buttonLink: '/about'
+    });
+    setSelectedFile(null);
+    setPreviewUrl('');
+    if (previewUrl && previewUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(previewUrl);
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      alert('Yalnız JPEG, PNG və WebP formatları dəstəklənir');
+      return;
+    }
+
+    // Validate file size (5MB max)
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      alert('Şəkil ölçüsü 5MB-dan böyük ola bilməz');
+      return;
+    }
+
+    setSelectedFile(file);
+    
+    // Clean up previous preview URL
+    if (previewUrl && previewUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    
+    // Create new preview URL
+    const newPreviewUrl = URL.createObjectURL(file);
+    setPreviewUrl(newPreviewUrl);
+  };
+
   const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this slide?')) {
+    if (confirm('Bu slide-ı silmək istədiyinizdən əminsiniz?')) {
       try {
         console.log('=== DELETE OPERATION ===');
         console.log('Deleting slide with id:', id);
@@ -165,19 +222,19 @@ export default function HeroAdminPage() {
 
         if (response.ok) {
           console.log('✅ Delete successful');
-          alert('Slide deleted successfully!');
+          alert('Slide uğurla silindi!');
           await loadSlides(true);
           await refreshHeroSlides();
           localStorage.setItem('heroSlidesUpdated', Date.now().toString());
         } else {
           console.log('❌ Delete failed:', result.error);
           setSlides(originalSlides);
-          alert('Error deleting slide: ' + (result.error || 'Unknown error'));
+          alert('Slide silinərkən xəta: ' + (result.error || 'Naməlum xəta'));
         }
       } catch (error) {
         console.error('❌ Delete error:', error);
         setSlides(slides);
-        alert('Error deleting slide: ' + error);
+        alert('Slide silinərkən xəta: ' + error);
       }
     }
   };
@@ -211,11 +268,11 @@ export default function HeroAdminPage() {
         await refreshHeroSlides();
         localStorage.setItem('heroSlidesUpdated', Date.now().toString());
       } else {
-        alert('Error toggling slide: ' + (result.error || 'Unknown error'));
+        alert('Slide statusu dəyişdirilərkən xəta: ' + (result.error || 'Naməlum xəta'));
       }
     } catch (error) {
       console.error('Error toggling slide:', error);
-      alert('Error toggling slide: ' + error);
+      alert('Slide statusu dəyişdirilərkən xəta: ' + error);
     }
   };
 
@@ -230,13 +287,13 @@ export default function HeroAdminPage() {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Hero Slides Management</h1>
+        <h1 className="text-2xl font-bold">Hero Slide İdarəsi</h1>
         <div className="flex gap-2">
           <button
             onClick={() => loadSlides(true)}
             className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 flex items-center gap-2"
           >
-            Refresh
+            Yenilə
           </button>
           <button
             onClick={() => {
@@ -250,12 +307,14 @@ export default function HeroAdminPage() {
                 buttonText: 'Learn More',
                 buttonLink: '/about'
               });
+              setSelectedFile(null);
+              setPreviewUrl('');
               setIsModalOpen(true);
             }}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
-            Add New Slide
+            Yeni Slide
           </button>
         </div>
       </div>
@@ -292,10 +351,10 @@ export default function HeroAdminPage() {
               <p className="text-gray-600 text-sm mb-3 line-clamp-3">{slide.description}</p>
 
               <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                <span>Order: {slide.order}</span>
+                <span>Sıra: {slide.order}</span>
                 <span className={`px-2 py-1 rounded ${slide.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                   }`}>
-                  {slide.active ? 'Active' : 'Inactive'}
+                  {slide.active ? 'Aktiv' : 'Qeyri-aktiv'}
                 </span>
               </div>
 
@@ -309,14 +368,14 @@ export default function HeroAdminPage() {
                   className="flex-1 px-3 py-2 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 flex items-center justify-center gap-1"
                 >
                   <Edit className="w-4 h-4" />
-                  Edit
+                  Redaktə
                 </button>
                 <button
                   onClick={() => handleDelete(slide.id)}
                   className="flex-1 px-3 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200 flex items-center justify-center gap-1"
                 >
                   <Trash2 className="w-4 h-4" />
-                  Delete
+                  Sil
                 </button>
               </div>
             </div>
@@ -327,13 +386,27 @@ export default function HeroAdminPage() {
       {slides.length === 0 && (
         <div className="text-center py-12">
           <Upload className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No slides yet</h3>
-          <p className="text-gray-600 mb-4">Create your first hero slide to get started.</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Hələ slide yoxdur</h3>
+          <p className="text-gray-600 mb-4">Başlamaq üçün ilk hero slide yaradın.</p>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setEditingSlide(null);
+              setFormData({
+                title: '',
+                description: '',
+                image: '',
+                order: 1,
+                active: true,
+                buttonText: 'Learn More',
+                buttonLink: '/about'
+              });
+              setSelectedFile(null);
+              setPreviewUrl('');
+              setIsModalOpen(true);
+            }}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
-            Add First Slide
+            İlk Slide Yarat
           </button>
         </div>
       )}
@@ -345,10 +418,10 @@ export default function HeroAdminPage() {
             <div className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold">
-                  {editingSlide ? 'Edit Slide' : 'Add New Slide'}
+                  {editingSlide ? 'Slide Redaktə Et' : 'Yeni Slide Əlavə Et'}
                 </h2>
                 <button
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={closeModal}
                   className="p-2 hover:bg-gray-100 rounded-full"
                 >
                   <X className="w-5 h-5" />
@@ -357,44 +430,74 @@ export default function HeroAdminPage() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Title</label>
+                  <label className="block text-sm font-medium mb-2">Başlıq</label>
                   <input
                     type="text"
                     required
                     value={formData.title || ''}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter slide title"
+                    placeholder="Slide başlığını daxil edin"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Description</label>
+                  <label className="block text-sm font-medium mb-2">Təsvir</label>
                   <textarea
                     required
                     value={formData.description || ''}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     rows={3}
-                    placeholder="Enter slide description"
+                    placeholder="Slide təsvirini daxil edin"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Image URL</label>
-                  <input
-                    type="url"
-                    required
-                    value={formData.image || ''}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="https://example.com/image.jpg"
-                  />
+                  <label className="block text-sm font-medium mb-2">Şəkil</label>
+                  
+                  {/* Image Preview */}
+                  {previewUrl && (
+                    <div className="mb-4">
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-full h-48 object-cover rounded-lg border"
+                      />
+                    </div>
+                  )}
+
+                  {/* File Upload */}
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      onChange={handleFileSelect}
+                      className="hidden"
+                      id="image-upload"
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className="cursor-pointer flex flex-col items-center"
+                    >
+                      <ImageIcon className="w-12 h-12 text-gray-400 mb-2" />
+                      <span className="text-sm font-medium text-gray-700 mb-1">
+                        {selectedFile ? selectedFile.name : 'Şəkil seçin'}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        JPEG, PNG, WebP (maksimum 5MB)
+                      </span>
+                    </label>
+                  </div>
+
+                  {!editingSlide && !selectedFile && (
+                    <p className="text-sm text-red-600 mt-2">* Şəkil seçmək məcburidir</p>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Order</label>
+                    <label className="block text-sm font-medium mb-2">Sıra</label>
                     <input
                       type="number"
                       min="1"
@@ -411,26 +514,26 @@ export default function HeroAdminPage() {
                       onChange={(e) => setFormData({ ...formData, active: e.target.value === 'true' })}
                       className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
-                      <option value="true">Active</option>
-                      <option value="false">Inactive</option>
+                      <option value="true">Aktiv</option>
+                      <option value="false">Qeyri-aktiv</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Button Text (Optional)</label>
+                    <label className="block text-sm font-medium mb-2">Düymə Mətni (İstəyə bağlı)</label>
                     <input
                       type="text"
                       value={formData.buttonText || ''}
                       onChange={(e) => setFormData({ ...formData, buttonText: e.target.value })}
                       className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Learn More"
+                      placeholder="Ətraflı"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Button Link (Optional)</label>
+                    <label className="block text-sm font-medium mb-2">Düymə Linki (İstəyə bağlı)</label>
                     <input
                       type="text"
                       value={formData.buttonLink || ''}
@@ -444,17 +547,28 @@ export default function HeroAdminPage() {
                 <div className="flex gap-3 pt-4">
                   <button
                     type="submit"
-                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
+                    disabled={isUploading || (!editingSlide && !selectedFile)}
+                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    <Save className="w-4 h-4" />
-                    {editingSlide ? 'Update Slide' : 'Create Slide'}
+                    {isUploading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Yüklənir...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4" />
+                        {editingSlide ? 'Slide Yenilə' : 'Slide Yarat'}
+                      </>
+                    )}
                   </button>
                   <button
                     type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                    onClick={closeModal}
+                    disabled={isUploading}
+                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
                   >
-                    Cancel
+                    Ləğv et
                   </button>
                 </div>
               </form>
