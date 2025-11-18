@@ -6,48 +6,48 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 function CertificatesPage() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const certificates = [
     {
       title: 'ISO 9001:2015',
       category: t.qualityCertificates,
-      description: language === 'az' ? 'Keyfiyyət İdarəetmə Sistemi' : 'Quality Management System',
+      description: 'Quality Management System',
       year: '2020',
       image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80'
     },
     {
       title: 'ISO 14001:2015',
       category: t.qualityCertificates,
-      description: language === 'az' ? 'Ətraf Mühit İdarəetmə Sistemi' : 'Environmental Management System',
+      description: 'Environmental Management System',
       year: '2020',
       image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80'
     },
     {
       title: 'ISO 45001:2018',
       category: t.qualityCertificates,
-      description: language === 'az' ? 'İş Sağlamlığı və Təhlükəsizliyi' : 'Occupational Health and Safety',
+      description: 'Occupational Health and Safety',
       year: '2021',
       image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80'
     },
     {
       title: 'OHSAS 18001',
       category: t.industryCertificates,
-      description: language === 'az' ? 'Peşə Sağlamlığı və Təhlükəsizliyi' : 'Occupational Health and Safety',
+      description: 'Occupational Health and Safety',
       year: '2019',
       image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80'
     },
     {
       title: 'API Certification',
       category: t.industryCertificates,
-      description: language === 'az' ? 'Neft Sənayesi Sertifikatı' : 'Oil Industry Certification',
+      description: 'Oil Industry Certification',
       year: '2021',
       image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=600&q=80'
     },
     {
       title: 'CE Marking',
       category: t.industryCertificates,
-      description: language === 'az' ? 'Avropa Uyğunluq Sertifikatı' : 'European Conformity Certificate',
+      description: 'European Conformity Certificate',
       year: '2020',
       image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80'
     }
@@ -119,7 +119,7 @@ function CertificatesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                {language === 'az' ? 'Keyfiyyət Öhdəliyimiz' : 'Our Quality Commitment'}
+                Our Quality Commitment
               </h2>
             </div>
 
@@ -127,36 +127,30 @@ function CertificatesPage() {
               <div className="text-center p-8">
                 <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold mb-3">
-                  {language === 'az' ? 'Beynəlxalq Standartlar' : 'International Standards'}
+                  International Standards
                 </h3>
                 <p className="text-gray-600">
-                  {language === 'az' 
-                    ? 'Bütün fəaliyyətlərimizdə beynəlxalq keyfiyyət standartlarına riayət edirik'
-                    : 'We comply with international quality standards in all our activities'}
+                  We comply with international quality standards in all our activities
                 </p>
               </div>
 
               <div className="text-center p-8">
                 <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold mb-3">
-                  {language === 'az' ? 'Davamlı Təkmilləşdirmə' : 'Continuous Improvement'}
+                  Continuous Improvement
                 </h3>
                 <p className="text-gray-600">
-                  {language === 'az'
-                    ? 'Proseslərimizi daim təkmilləşdirir və yeniləyirik'
-                    : 'We constantly improve and update our processes'}
+                  We constantly improve and update our processes
                 </p>
               </div>
 
               <div className="text-center p-8">
                 <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold mb-3">
-                  {language === 'az' ? 'Müştəri Məmnuniyyəti' : 'Customer Satisfaction'}
+                  Customer Satisfaction
                 </h3>
                 <p className="text-gray-600">
-                  {language === 'az'
-                    ? 'Müştəri məmnuniyyəti bizim əsas prioritetimizdir'
-                    : 'Customer satisfaction is our top priority'}
+                  Customer satisfaction is our top priority
                 </p>
               </div>
             </div>
