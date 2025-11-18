@@ -324,5 +324,5 @@ export const translations = {
     menu: 'Menu',
     noSubcategories: 'No subcategories in this category',
     goToCategory: 'Go to Category',
-    languageSelector: 'Language / Dil',
+    languageSelector: 'Language',
 };

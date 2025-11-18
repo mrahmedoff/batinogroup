@@ -15,79 +15,67 @@ function NewsPage() {
   const displayNews = newsData.map(news => ({
     id: news.id,
     slug: news.slug,
-    title: news.title[language],
-    excerpt: news.excerpt[language],
-    category: news.category[language],
+    title: news.title.az,
+    excerpt: news.excerpt.az,
+    category: news.category.az,
     categorySlug: news.categorySlug,
     date: news.date,
     image: news.image,
-    author: news.author[language],
+    author: news.author.az,
     readTime: news.readTime
   }));
 
   const oldNewsData = [
     {
       id: 1,
-      title: language === 'az' ? 'Yeni Layihə: SOCAR ilə Əməkdaşlıq' : 'New Project: Cooperation with SOCAR',
-      excerpt: language === 'az' 
-        ? 'BatinoGroup SOCAR ilə yeni strateji layihəyə başladı. Layihə neft və qaz sektorunda...'
-        : 'BatinoGroup started a new strategic project with SOCAR. The project in oil and gas sector...',
-      category: language === 'az' ? 'Şirkət Xəbərləri' : 'Company News',
+      title: 'New Project: Cooperation with SOCAR',
+      excerpt: 'BatinoGroup started a new strategic project with SOCAR. The project in oil and gas sector...',
+      category: 'Company News',
       date: '2024-01-15',
       image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80',
       categorySlug: 'company'
     },
     {
       id: 2,
-      title: language === 'az' ? 'ISO 45001 Sertifikatı Alındı' : 'ISO 45001 Certificate Received',
-      excerpt: language === 'az'
-        ? 'Şirkətimiz beynəlxalq təhlükəsizlik standartı ISO 45001 sertifikatını əldə etdi...'
-        : 'Our company received the international safety standard ISO 45001 certificate...',
-      category: language === 'az' ? 'Şirkət Xəbərləri' : 'Company News',
+      title: 'ISO 45001 Certificate Received',
+      excerpt: 'Our company received the international safety standard ISO 45001 certificate...',
+      category: 'Company News',
       date: '2024-01-10',
       image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
       categorySlug: 'company'
     },
     {
       id: 3,
-      title: language === 'az' ? 'Energetika Sektorunda Yeni Texnologiyalar' : 'New Technologies in Energy Sector',
-      excerpt: language === 'az'
-        ? 'Enerji sektorunda rəqəmsal transformasiya və yeni texnologiyaların tətbiqi...'
-        : 'Digital transformation and implementation of new technologies in energy sector...',
-      category: language === 'az' ? 'Sənaye Xəbərləri' : 'Industry News',
+      title: 'New Technologies in Energy Sector',
+      excerpt: 'Digital transformation and implementation of new technologies in energy sector...',
+      category: 'Industry News',
       date: '2024-01-08',
       image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80',
       categorySlug: 'industry'
     },
     {
       id: 4,
-      title: language === 'az' ? 'Bakıda Yeni Ofis Açıldı' : 'New Office Opened in Baku',
-      excerpt: language === 'az'
-        ? 'BatinoGroup Bakıda yeni müasir ofis binasını istifadəyə verdi. Ofis 200 işçi üçün...'
-        : 'BatinoGroup opened a new modern office building in Baku. The office for 200 employees...',
-      category: language === 'az' ? 'Şirkət Xəbərləri' : 'Company News',
+      title: 'New Office Opened in Baku',
+      excerpt: 'BatinoGroup opened a new modern office building in Baku. The office for 200 employees...',
+      category: 'Company News',
       date: '2024-01-05',
       image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
       categorySlug: 'company'
     },
     {
       id: 5,
-      title: language === 'az' ? 'Təhlükəsizlik Həftəsi Keçirildi' : 'Safety Week Held',
-      excerpt: language === 'az'
-        ? 'Şirkətimizdə təhlükəsizlik həftəsi çərçivəsində müxtəlif təlim və seminarlar...'
-        : 'Various trainings and seminars within the framework of safety week in our company...',
-      category: language === 'az' ? 'Mətbuat Relizləri' : 'Press Releases',
+      title: 'Safety Week Held',
+      excerpt: 'Various trainings and seminars within the framework of safety week in our company...',
+      category: 'Press Releases',
       date: '2024-01-03',
       image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80',
       categorySlug: 'press'
     },
     {
       id: 6,
-      title: language === 'az' ? 'Beynəlxalq Sənaye Sərgisində İştirak' : 'Participation in International Industry Exhibition',
-      excerpt: language === 'az'
-        ? 'BatinoGroup Türkiyədə keçirilən beynəlxalq sənaye sərgisində iştirak etdi...'
-        : 'BatinoGroup participated in the international industry exhibition held in Turkey...',
-      category: language === 'az' ? 'Sənaye Xəbərləri' : 'Industry News',
+      title: 'Participation in International Industry Exhibition',
+      excerpt: 'BatinoGroup participated in the international industry exhibition held in Turkey...',
+      category: 'Industry News',
       date: '2024-01-01',
       image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
       categorySlug: 'industry'
@@ -175,7 +163,7 @@ function NewsPage() {
                       <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
-                          <span>{new Date(news.date).toLocaleDateString(language === 'az' ? 'az-AZ' : 'en-US')}</span>
+                          <span>{new Date(news.date).toLocaleDateString('en-US')}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="w-4 h-4" />
@@ -211,12 +199,10 @@ function NewsPage() {
         <section className="py-20 bg-gradient-to-r from-blue-900 to-cyan-900 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              {language === 'az' ? 'Xəbərlərdən Xəbərdar Olun' : 'Stay Updated'}
+              Stay Updated
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              {language === 'az'
-                ? 'Email ünvanınızı daxil edərək ən son xəbərlərdən xəbərdar ola bilərsiniz'
-                : 'Enter your email address to stay informed about the latest news'}
+              Enter your email address to stay informed about the latest news
             </p>
             <div className="max-w-md mx-auto flex gap-4">
               <input 
@@ -225,7 +211,7 @@ function NewsPage() {
                 className="flex-1 px-6 py-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button className="px-8 py-4 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 transition-colors">
-                {language === 'az' ? 'Abunə Ol' : 'Subscribe'}
+                Subscribe
               </button>
             </div>
           </div>

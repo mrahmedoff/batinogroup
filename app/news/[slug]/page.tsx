@@ -58,19 +58,19 @@ export default function NewsDetailPage() {
               {t.backToNews}
             </Link>
             <span className="inline-block px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-full mb-4">
-              {news.category[language]}
+              {news.category.az}
             </span>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              {news.title[language]}
+              {news.title.az}
             </h1>
             <div className="flex flex-wrap items-center gap-6 text-sm">
               <div className="flex items-center gap-2">
                 <User className="w-5 h-5" />
-                <span>{news.author[language]}</span>
+                <span>{news.author.az}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5" />
-                <span>{new Date(news.date).toLocaleDateString(language === 'az' ? 'az-AZ' : 'en-US', { 
+                <span>{new Date(news.date).toLocaleDateString('en-US', { 
                   year: 'numeric', 
                   month: 'long', 
                   day: 'numeric' 
@@ -88,7 +88,7 @@ export default function NewsDetailPage() {
         <section className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="prose prose-lg max-w-none">
-              {news.content[language].split('\n\n').map((paragraph, index) => (
+              {news.content.az.split('\n\n').map((paragraph, index) => (
                 <p key={index} className="text-gray-700 leading-relaxed mb-6">
                   {paragraph}
                 </p>
@@ -135,13 +135,13 @@ export default function NewsDetailPage() {
                     </div>
                     <div className="p-6">
                       <span className="text-sm text-blue-600 font-semibold">
-                        {item.category[language]}
+                        {item.category.az}
                       </span>
                       <h3 className="text-lg font-bold mt-2 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                        {item.title[language]}
+                        {item.title.az}
                       </h3>
                       <p className="text-gray-600 text-sm line-clamp-2">
-                        {item.excerpt[language]}
+                        {item.excerpt.az}
                       </p>
                     </div>
                   </Link>

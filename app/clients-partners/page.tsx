@@ -46,25 +46,25 @@ function ClientsPartnersPage() {
               <div>
                 <div className="text-4xl font-bold mb-2">50+</div>
                 <div className="text-indigo-200">
-                  {language === 'az' ? 'Aktiv Müştəri' : 'Active Clients'}
+                  Active Clients
                 </div>
               </div>
               <div>
                 <div className="text-4xl font-bold mb-2">200+</div>
                 <div className="text-indigo-200">
-                  {language === 'az' ? 'Tamamlanmış Layihə' : 'Completed Projects'}
+                  Completed Projects
                 </div>
               </div>
               <div>
                 <div className="text-4xl font-bold mb-2">15+</div>
                 <div className="text-indigo-200">
-                  {language === 'az' ? 'İl Təcrübə' : 'Years Experience'}
+                  Years Experience
                 </div>
               </div>
               <div>
                 <div className="text-4xl font-bold mb-2">98%</div>
                 <div className="text-indigo-200">
-                  {language === 'az' ? 'Müştəri Məmnuniyyəti' : 'Client Satisfaction'}
+                  Client Satisfaction
                 </div>
               </div>
             </div>
@@ -77,9 +77,7 @@ function ClientsPartnersPage() {
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.ourClients}</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                {language === 'az' 
-                  ? 'Etibarlı müştərilərimizlə uzunmüddətli əməkdaşlıq' 
-                  : 'Long-term cooperation with our trusted clients'}
+                Long-term cooperation with our trusted clients
               </p>
             </div>
 
@@ -99,7 +97,7 @@ function ClientsPartnersPage() {
                 ))
               ) : (
                 <div className="col-span-4 text-center py-12 text-gray-500">
-                  {language === 'az' ? 'Hələ ki müştəri yoxdur' : 'No clients yet'}
+                  No clients yet
                 </div>
               )}
             </div>
@@ -112,9 +110,7 @@ function ClientsPartnersPage() {
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.strategicPartners}</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                {language === 'az'
-                  ? 'Dünya brendləri ilə strateji tərəfdaşlıq'
-                  : 'Strategic partnership with world brands'}
+                Strategic partnership with world brands
               </p>
             </div>
 
@@ -134,7 +130,7 @@ function ClientsPartnersPage() {
                 ))
               ) : (
                 <div className="col-span-4 text-center py-12 text-gray-500">
-                  {language === 'az' ? 'Hələ ki tərəfdaş yoxdur' : 'No partners yet'}
+                  No partners yet
                 </div>
               )}
             </div>
@@ -143,36 +139,30 @@ function ClientsPartnersPage() {
               <div className="text-center p-8 bg-blue-50 rounded-xl">
                 <Building2 className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold mb-3">
-                  {language === 'az' ? 'Güclü Əlaqələr' : 'Strong Relationships'}
+                  Strong Relationships
                 </h3>
                 <p className="text-gray-600">
-                  {language === 'az'
-                    ? 'Uzunmüddətli və etibarlı əməkdaşlıq'
-                    : 'Long-term and reliable cooperation'}
+                  Long-term and reliable cooperation
                 </p>
               </div>
 
               <div className="text-center p-8 bg-green-50 rounded-xl">
                 <Award className="w-12 h-12 text-green-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold mb-3">
-                  {language === 'az' ? 'Qarşılıqlı Uğur' : 'Mutual Success'}
+                  Mutual Success
                 </h3>
                 <p className="text-gray-600">
-                  {language === 'az'
-                    ? 'Hər iki tərəf üçün faydalı nəticələr'
-                    : 'Beneficial results for both parties'}
+                  Beneficial results for both parties
                 </p>
               </div>
 
               <div className="text-center p-8 bg-purple-50 rounded-xl">
                 <TrendingUp className="w-12 h-12 text-purple-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold mb-3">
-                  {language === 'az' ? 'Birgə İnkişaf' : 'Joint Development'}
+                  Joint Development
                 </h3>
                 <p className="text-gray-600">
-                  {language === 'az'
-                    ? 'Birlikdə böyümə və inkişaf'
-                    : 'Growing and developing together'}
+                  Growing and developing together
                 </p>
               </div>
             </div>
@@ -186,9 +176,7 @@ function ClientsPartnersPage() {
               {t.becomePartner}
             </h2>
             <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
-              {language === 'az'
-                ? 'Bizimlə əməkdaşlıq etmək və uğurlu layihələr həyata keçirmək üçün əlaqə saxlayın'
-                : 'Contact us to collaborate and implement successful projects'}
+              Contact us to collaborate and implement successful projects
             </p>
             <Link 
               href="/contact"
