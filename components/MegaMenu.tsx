@@ -14,7 +14,7 @@ interface MegaMenuProps {
 
 export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const { getCategoriesByMenuType, getSubCategories } = useProducts();
+    const { getCategoriesByMenuType, getSubCategories, categoriesLoading, categoriesError } = useProducts();
     const { t } = useLanguage();
 
     // Get categories from Firebase
@@ -38,6 +38,29 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
 
     // Get main categories from Firebase for other menu types
     const mainCategories = getMainCategories();
+    
+    // Show loading state if still loading
+    if (categoriesLoading) {
+        return (
+            <div className="absolute top-full left-0 w-full bg-white shadow-2xl border-t border-gray-200 z-50">
+                <div className="max-w-7xl mx-auto p-8 text-center">
+                    <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading categories...</p>
+                </div>
+            </div>
+        );
+    }
+    
+    // Show error state if there's an error
+    if (categoriesError) {
+        return (
+            <div className="absolute top-full left-0 w-full bg-white shadow-2xl border-t border-gray-200 z-50">
+                <div className="max-w-7xl mx-auto p-8 text-center">
+                    <p className="text-red-600">Error loading categories: {categoriesError}</p>
+                </div>
+            </div>
+        );
+    }
     
     // If no categories exist, don't show mega menu
     if (mainCategories.length === 0) {

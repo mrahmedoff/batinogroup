@@ -19,7 +19,7 @@ export default function Header() {
     const [activeMegaMenu, setActiveMegaMenu] = useState<'products' | 'about' | 'services' | 'projects' | 'media' | null>(null);
 
     const { t } = useLanguage();
-    const { getCategoriesByMenuType } = useProducts();
+    const { getCategoriesByMenuType, categoriesLoading } = useProducts();
     const { settings } = useData();
 
     const menuItems = [
@@ -75,13 +75,10 @@ export default function Header() {
                                 className="relative"
                                 onMouseEnter={() => {
                                     if (item.hasMegaMenu && item.megaMenuType) {
-                                        // Veri kontrolü yap
-                                        const hasData = getCategoriesByMenuType(item.megaMenuType).length > 0;
-                                        if (hasData) {
-                                            setIsMegaMenuOpen(true);
-                                            setActiveMegaMenu(item.megaMenuType);
-                                            setOpenDropdown(null);
-                                        }
+                                        // Always show mega menu, let it handle loading state
+                                        setIsMegaMenuOpen(true);
+                                        setActiveMegaMenu(item.megaMenuType);
+                                        setOpenDropdown(null);
                                     } else {
                                         setOpenDropdown(item.title);
                                         setIsMegaMenuOpen(false);
@@ -104,9 +101,8 @@ export default function Header() {
                                             return <ChevronDown className="w-4 h-4" />;
                                         }
                                         if (item.hasMegaMenu && item.megaMenuType) {
-                                            // Veri kontrolü
-                                            const hasData = getCategoriesByMenuType(item.megaMenuType).length > 0;
-                                            return hasData ? <ChevronDown className="w-4 h-4" /> : null;
+                                            // Show chevron if has mega menu (loading will be handled in MegaMenu)
+                                            return <ChevronDown className="w-4 h-4" />;
                                         }
                                         return null;
                                     })()}

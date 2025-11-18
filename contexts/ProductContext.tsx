@@ -133,6 +133,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         unsubscribeCategories = subscribeToCategoriesChanges(
           (newCategories) => {
             console.log('Categories updated:', newCategories.length);
+            console.log('Categories data:', newCategories);
             setCategories(newCategories);
             setCategoriesLoading(false);
             setCategoriesError(null);
@@ -232,7 +233,9 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
 
   // Helper functions
   const getCategoriesByMenuType = (menuType: string): Category[] => {
-    return categories.filter(cat => cat.menuType === menuType && cat.status === 'active');
+    const filtered = categories.filter(cat => cat.menuType === menuType && cat.status === 'active');
+    console.log(`Categories for menuType '${menuType}':`, filtered);
+    return filtered;
   };
 
   const getProductsByCategory = (category: string): Product[] => {
