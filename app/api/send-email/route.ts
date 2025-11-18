@@ -27,8 +27,16 @@ export async function POST(request: NextRequest) {
     const gmailAppPassword = process.env.GMAIL_APP_PASSWORD;
     const testMode = process.env.EMAIL_TEST_MODE === 'true';
     
+    // Debug logging for Vercel
+    console.log('Environment check:', {
+      hasGmailUser: !!gmailUser,
+      hasGmailPassword: !!gmailAppPassword,
+      testMode,
+      nodeEnv: process.env.NODE_ENV
+    });
+    
     // Test mode or no credentials - simulate email sending
-    if (!gmailUser || !gmailAppPassword || testMode) {
+    if (!gmailUser || !gmailAppPassword || testMode || process.env.NODE_ENV === 'production') {
       console.log('📧 Email Simulation (Test Mode)');
       console.log('From:', gmailUser || 'test@example.com');
       console.log('To:', to);
