@@ -85,7 +85,7 @@ export default function CareersAdmin() {
               console.log('=== MANUAL FIREBASE TEST ===');
               
               // Test Firebase directly
-              const { db } = await import('../../../../lib/firebase');
+              const { db } = await import('@/lib/firebase');
               const { collection, getDocs } = await import('firebase/firestore');
               
               if (db) {
@@ -115,7 +115,7 @@ export default function CareersAdmin() {
             onClick={async () => {
               if (confirm('Delete the problematic job from Firebase?')) {
                 try {
-                  const { deleteDocument } = await import('../../../../lib/firebaseHelpers');
+                  const { deleteDocument } = await import('@/lib/firebaseHelpers');
                   await deleteDocument('jobs', 'dBUGcSQLJnHtBuLqFyuP');
                   console.log('Deleted problematic job');
                   window.location.reload();
