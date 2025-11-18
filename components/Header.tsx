@@ -18,39 +18,39 @@ export default function Header() {
     const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
     const [activeMegaMenu, setActiveMegaMenu] = useState<'products' | 'about' | 'services' | 'projects' | 'media' | null>(null);
 
-    const { language, t } = useLanguage();
+    const { t } = useLanguage();
     const { getCategoriesByMenuType } = useProducts();
     const { settings } = useData();
 
     const menuItems = [
         {
             title: t.aboutUs,
-            href: `/${language}/about`,
+            href: '/about',
             hasMegaMenu: true,
             megaMenuType: 'about' as const
         },
         {
             title: t.products,
-            href: `/${language}/products`,
+            href: '/products',
             hasMegaMenu: true,
             megaMenuType: 'products' as const
         },
         {
             title: t.ourActivity,
-            href: `/${language}/services`,
+            href: '/services',
             hasMegaMenu: true,
             megaMenuType: 'services' as const
         },
 
         {
             title: t.media,
-            href: `/${language}/media`,
+            href: '/media',
             hasMegaMenu: true,
             megaMenuType: 'media' as const
         },
         {
             title: t.career,
-            href: `/${language}/career`
+            href: '/career'
         },
     ];
 
@@ -58,7 +58,7 @@ export default function Header() {
         <header className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-20">
-                    <Link href={`/${language}`} className="flex items-center">
+                    <Link href="/" className="flex items-center">
                         <img
                             src={settings.logo || "/batinologo.png"}
                             alt={settings.siteName || "Batino Group Logo"}
@@ -75,7 +75,7 @@ export default function Header() {
                                 className="relative"
                                 onMouseEnter={() => {
                                     if (item.hasMegaMenu && item.megaMenuType) {
-                                        // Yalnız məlumat varsa mega menu aç
+                                        // Veri kontrolü yap
                                         const hasData = getCategoriesByMenuType(item.megaMenuType).length > 0;
                                         if (hasData) {
                                             setIsMegaMenuOpen(true);
@@ -104,6 +104,7 @@ export default function Header() {
                                             return <ChevronDown className="w-4 h-4" />;
                                         }
                                         if (item.hasMegaMenu && item.megaMenuType) {
+                                            // Veri kontrolü
                                             const hasData = getCategoriesByMenuType(item.megaMenuType).length > 0;
                                             return hasData ? <ChevronDown className="w-4 h-4" /> : null;
                                         }
@@ -134,7 +135,7 @@ export default function Header() {
                             </div>
                         ))}
 
-                        <Link href={`/${language}/contact`} className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors">
+                        <Link href="/contact" className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors">
                             <Phone className="w-5 h-5" />
                         </Link>
                     </nav>

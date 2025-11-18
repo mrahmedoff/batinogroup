@@ -1,0 +1,52 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#f8fafc"/>
+  <rect x="50" y="50" width="700" height="500" fill="white" stroke="#e2e8f0" stroke-width="2" rx="12"/>
+  
+  <!-- Conference table -->
+  <ellipse cx="400" cy="350" rx="250" ry="80" fill="#e2e8f0"/>
+  
+  <!-- People around table -->
+  <g fill="#3b82f6" opacity="0.7">
+    <!-- Person 1 -->
+    <circle cx="200" cy="280" r="25"/>
+    <rect x="185" y="305" width="30" height="60" rx="15"/>
+    
+    <!-- Person 2 -->
+    <circle cx="350" cy="250" r="25"/>
+    <rect x="335" y="275" width="30" height="60" rx="15"/>
+    
+    <!-- Person 3 -->
+    <circle cx="450" cy="250" r="25"/>
+    <rect x="435" y="275" width="30" height="60" rx="15"/>
+    
+    <!-- Person 4 -->
+    <circle cx="600" cy="280" r="25"/>
+    <rect x="585" y="305" width="30" height="60" rx="15"/>
+    
+    <!-- Person 5 -->
+    <circle cx="300" cy="420" r="25"/>
+    <rect x="285" y="445" width="30" height="60" rx="15"/>
+    
+    <!-- Person 6 -->
+    <circle cx="500" cy="420" r="25"/>
+    <rect x="485" y="445" width="30" height="60" rx="15"/>
+  </g>
+  
+  <!-- Presentation screen -->
+  <rect x="250" y="100" width="300" height="180" fill="#1e40af" rx="8"/>
+  <rect x="270" y="120" width="260" height="140" fill="white" rx="4"/>
+  
+  <!-- Chart on screen -->
+  <g stroke="#3b82f6" stroke-width="3" fill="none">
+    <polyline points="300,220 350,200 400,180 450,160 500,140"/>
+  </g>
+  <g fill="#3b82f6">
+    <circle cx="300" cy="220" r="4"/>
+    <circle cx="350" cy="200" r="4"/>
+    <circle cx="400" cy="180" r="4"/>
+    <circle cx="450" cy="160" r="4"/>
+    <circle cx="500" cy="140" r="4"/>
+  </g>
+  
+  <text x="400" y="550" text-anchor="middle" fill="#64748b" font-family="Arial, sans-serif" font-size="24" font-weight="600">Team Collaboration</text>
+</svg>

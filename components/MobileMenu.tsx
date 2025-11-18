@@ -15,36 +15,36 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedMenuType, setSelectedMenuType] = useState<'products' | 'about' | 'services' | 'projects' | 'media' | null>(null);
     const { getCategoriesByMenuType, getSubCategories } = useProducts();
-    const { language, setLanguage, t } = useLanguage();
+    const { t } = useLanguage();
 
     const menuItems = [
         {
             title: t.aboutUs,
-            href: `/${language}/about`,
+            href: '/about',
             hasMegaMenu: true,
             megaMenuType: 'about' as const
         },
         {
             title: t.products,
-            href: `/${language}/products`,
+            href: '/products',
             hasMegaMenu: true,
             megaMenuType: 'products' as const
         },
         {
             title: t.ourActivity,
-            href: `/${language}/services`,
+            href: '/services',
             hasMegaMenu: true,
             megaMenuType: 'services' as const
         },
         {
             title: t.media,
-            href: `/${language}/media`,
+            href: '/media',
             hasMegaMenu: true,
             megaMenuType: 'media' as const
         },
         {
             title: t.career,
-            href: `/${language}/career`,
+            href: '/career',
             hasMegaMenu: false
         },
     ];
@@ -62,12 +62,12 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
     const getBaseUrl = (menuType: string) => {
         switch (menuType) {
-            case 'products': return `/${language}/products`;
-            case 'about': return `/${language}/about`;
-            case 'services': return `/${language}/services`;
-            case 'projects': return `/${language}/projects`;
-            case 'media': return `/${language}/media`;
-            default: return `/${language}`;
+            case 'products': return '/products';
+            case 'about': return '/about';
+            case 'services': return '/services';
+            case 'projects': return '/projects';
+            case 'media': return '/media';
+            default: return '/';
         }
     };
 
@@ -176,7 +176,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                     
                                     {/* Contact Link */}
                                     <Link
-                                        href={`/${language}/contact`}
+                                        href="/contact"
                                         onClick={onClose}
                                         className="w-full flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 hover:border-green-200 border border-transparent transition-all duration-200 transform hover:scale-105"
                                     >

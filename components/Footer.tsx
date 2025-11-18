@@ -19,7 +19,7 @@ import {
 
 export default function Footer() {
   const { settings } = useData();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
 
   return (
@@ -29,7 +29,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="lg:col-span-1">
-            <Link href={`/${language}`} className="inline-block mb-6 group">
+            <Link href="/" className="inline-block mb-6 group">
               <img
                 src={settings.logo || "/batinologo.png"}
                 alt={settings.siteName || "Batino Group Logo"}
@@ -55,37 +55,37 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href={`/${language}/about`} className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
+                <Link href="/about" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   {t.about}
                 </Link>
               </li>
               <li>
-                <Link href={`/${language}/services`} className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
+                <Link href="/services" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   {t.services}
                 </Link>
               </li>
               <li>
-                <Link href={`/${language}/projects`} className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
+                <Link href="/projects" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   {t.projects}
                 </Link>
               </li>
               <li>
-                <Link href={`/${language}/media`} className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
+                <Link href="/media" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   {t.media}
                 </Link>
               </li>
               <li>
-                <Link href={`/${language}/career`} className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
+                <Link href="/career" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   {t.career}
                 </Link>
               </li>
               <li>
-                <Link href={`/${language}/contact`} className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
+                <Link href="/contact" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   {t.contact}
                 </Link>
@@ -226,10 +226,10 @@ export default function Footer() {
               &copy; 2025 {settings.siteName}. {t.allRightsReserved}.
             </p>
             <div className="flex gap-6 text-sm text-gray-400">
-              <Link href={`/${language}/privacy`} className="hover:text-white transition-colors">
+              <Link href="/privacy" className="hover:text-white transition-colors">
                 {t.privacyPolicy}
               </Link>
-              <Link href={`/${language}/terms`} className="hover:text-white transition-colors">
+              <Link href="/terms" className="hover:text-white transition-colors">
                 {t.termsOfUse}
               </Link>
             </div>

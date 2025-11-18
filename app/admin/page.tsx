@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useData } from '@/contexts/DataContext';
+import { useProducts } from '@/contexts/ProductContext';
 import { 
   Settings, 
   FolderKanban, 
@@ -13,60 +14,74 @@ import {
   Image,
   Handshake,
   Cog,
-  Upload
+  Package,
+  FolderTree,
+  Monitor
 } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { services, projects, team, messages, news, partners, certificates, jobs, isLoading } = useData();
+  const { products, categories } = useProducts();
+
+  if (isLoading) {
+    return (
+      <div className="p-8 flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-600">Yüklənir...</p>
+        </div>
+      </div>
+    );
+  }
 
   const stats = [
+    { 
+      title: 'Məhsullar', 
+      count: products.length,
+      icon: Package,
+      href: '/admin/products',
+      color: 'blue'
+    },
+    { 
+      title: 'Kateqoriyalar', 
+      count: categories.length,
+      icon: FolderTree,
+      href: '/admin/categories',
+      color: 'purple'
+    },
     { 
       title: 'Xidmətlər', 
       count: services.length, 
       icon: Settings,
       href: '/admin/services',
-      color: 'blue'
+      color: 'green'
     },
     { 
       title: 'Layihələr', 
       count: projects.length, 
       icon: FolderKanban,
       href: '/admin/projects',
-      color: 'purple'
+      color: 'orange'
     },
     { 
       title: 'Komanda', 
       count: team.length, 
       icon: Users,
       href: '/admin/team',
-      color: 'green'
+      color: 'teal'
     },
     { 
       title: 'Mesajlar', 
       count: messages.filter(m => !m.read).length, 
       icon: Mail,
       href: '/admin/messages',
-      color: 'orange'
+      color: 'red'
     },
     { 
       title: 'Xəbərlər', 
       count: news.length, 
       icon: Newspaper,
       href: '/admin/news',
-      color: 'red'
-    },
-    { 
-      title: 'Tərəfdaşlar', 
-      count: partners.length, 
-      icon: Handshake,
-      href: '/admin/partners',
-      color: 'teal'
-    },
-    { 
-      title: 'Sertifikatlar', 
-      count: certificates.length, 
-      icon: Award,
-      href: '/admin/certificates',
       color: 'yellow'
     },
     { 
@@ -74,11 +89,33 @@ export default function AdminDashboard() {
       count: jobs.length, 
       icon: Briefcase,
       href: '/admin/careers',
-      color: 'indigo'
+      color: 'pink'
     },
   ];
 
   const quickLinks = [
+    {
+      title: 'Hero Slides',
+      description: 'Ana səhifə slider idarəsi',
+      icon: Monitor,
+      href: '/admin/hero',
+      color: 'blue'
+    },
+    {
+      title: 'Məhsul İdarəsi',
+      description: 'Məhsul və materialları idarə edin',
+      icon: Package,
+      href: '/admin/products',
+      color: 'green'
+    },
+    {
+      title: 'Kateqoriya İdarəsi',
+      description: 'Menu kateqoriyalarını idarə edin',
+      icon: FolderTree,
+      href: '/admin/categories',
+      color: 'purple'
+    },
+
     {
       title: 'Karyera',
       description: 'CV müraciətlərini idarə edin',
@@ -94,18 +131,18 @@ export default function AdminDashboard() {
       color: 'yellow'
     },
     {
-      title: 'Logo Dəyişdir',
-      description: 'Sayt logosunu yeniləyin',
-      icon: Upload,
-      href: '/admin/settings#logo',
-      color: 'blue'
-    },
-    {
       title: 'Xəbərlər',
       description: 'Xəbər və məqalələr',
       icon: Newspaper,
       href: '/admin/news',
       color: 'red'
+    },
+    {
+      title: 'Media',
+      description: 'Şəkil və video idarəsi',
+      icon: Image,
+      href: '/admin/media',
+      color: 'pink'
     },
     {
       title: 'Tərəfdaşlar',
@@ -172,37 +209,19 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {quickLinks.map((link) => {
             const IconComponent = link.icon;
-            const isLogoLink = link.title === 'Logo Dəyişdir';
             return (
               <Link
                 key={link.title}
                 href={link.href}
-                className={`bg-white rounded-lg p-3 sm:p-4 border transition-all active:scale-95 group ${
-                  isLogoLink 
-                    ? 'border-blue-200 bg-gradient-to-br from-blue-50 to-white hover:shadow-lg hover:border-blue-300' 
-                    : 'border-slate-200 hover:shadow-md hover:border-slate-300'
-                }`}
+                className="bg-white rounded-lg p-3 sm:p-4 border border-slate-200 hover:shadow-md transition-all hover:border-slate-300 active:scale-95 group"
               >
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${colorClasses[link.color as keyof typeof colorClasses]} group-hover:scale-110 transition-transform ${
-                    isLogoLink ? 'shadow-md' : ''
-                  }`}>
+                  <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${colorClasses[link.color as keyof typeof colorClasses]} group-hover:scale-110 transition-transform`}>
                     <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
-                      <h3 className={`text-sm sm:text-base font-semibold ${
-                        isLogoLink ? 'text-blue-900' : 'text-slate-900'
-                      }`}>{link.title}</h3>
-                      {isLogoLink && (
-                        <span className="px-1.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded">
-                          YENİ
-                        </span>
-                      )}
-                    </div>
-                    <p className={`text-xs line-clamp-1 ${
-                      isLogoLink ? 'text-blue-600' : 'text-slate-500'
-                    }`}>{link.description}</p>
+                    <h3 className="text-sm sm:text-base font-semibold text-slate-900 mb-0.5 sm:mb-1">{link.title}</h3>
+                    <p className="text-xs text-slate-500 line-clamp-1">{link.description}</p>
                   </div>
                 </div>
               </Link>

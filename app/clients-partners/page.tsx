@@ -1,6 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useData } from '@/contexts/DataContext';
 import { Handshake, Building2, Award, TrendingUp } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -8,24 +9,11 @@ import Link from 'next/link';
 
 function ClientsPartnersPage() {
   const { t, language } = useLanguage();
+  const { partners: allPartners } = useData();
 
-  const clients = [
-    { id: 1, name: 'SOCAR', logo: 'https://via.placeholder.com/200x80/1e40af/ffffff?text=SOCAR' },
-    { id: 2, name: 'BP', logo: 'https://via.placeholder.com/200x80/059669/ffffff?text=BP' },
-    { id: 3, name: 'Azerenerji', logo: 'https://via.placeholder.com/200x80/dc2626/ffffff?text=Azerenerji' },
-    { id: 4, name: 'Azercell', logo: 'https://via.placeholder.com/200x80/7c3aed/ffffff?text=Azercell' },
-    { id: 5, name: 'Bakcell', logo: 'https://via.placeholder.com/200x80/ea580c/ffffff?text=Bakcell' },
-    { id: 6, name: 'Aztelekom', logo: 'https://via.placeholder.com/200x80/0891b2/ffffff?text=Aztelekom' },
-    { id: 7, name: 'TANAP', logo: 'https://via.placeholder.com/200x80/16a34a/ffffff?text=TANAP' },
-    { id: 8, name: 'Azerishiq', logo: 'https://via.placeholder.com/200x80/ca8a04/ffffff?text=Azerishiq' },
-  ];
-
-  const partners = [
-    { id: 1, name: 'Siemens', logo: 'https://via.placeholder.com/200x80/0ea5e9/ffffff?text=Siemens' },
-    { id: 2, name: 'ABB', logo: 'https://via.placeholder.com/200x80/ef4444/ffffff?text=ABB' },
-    { id: 3, name: 'Schneider Electric', logo: 'https://via.placeholder.com/200x80/10b981/ffffff?text=Schneider' },
-    { id: 4, name: 'General Electric', logo: 'https://via.placeholder.com/200x80/3b82f6/ffffff?text=GE' },
-  ];
+  // Filter clients and partners from Firebase data
+  const clients = allPartners.filter(p => p.type === 'Müştəri');
+  const partners = allPartners.filter(p => p.type === 'Tərəfdaş');
 
   return (
     <>
@@ -96,18 +84,24 @@ function ClientsPartnersPage() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {clients.map((client) => (
-                <div 
-                  key={client.id}
-                  className="flex items-center justify-center p-8 bg-white rounded-xl hover:shadow-lg transition-shadow group"
-                >
-                  <img 
-                    src={client.logo} 
-                    alt={client.name}
-                    className="max-w-full h-auto opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
-                  />
+              {clients.length > 0 ? (
+                clients.map((client) => (
+                  <div 
+                    key={client.id}
+                    className="flex items-center justify-center p-8 bg-white rounded-xl hover:shadow-lg transition-shadow group"
+                  >
+                    <img 
+                      src={client.logo} 
+                      alt={client.name}
+                      className="max-w-full h-auto opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-4 text-center py-12 text-gray-500">
+                  {language === 'az' ? 'Hələ ki müştəri yoxdur' : 'No clients yet'}
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </section>
@@ -125,18 +119,24 @@ function ClientsPartnersPage() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-              {partners.map((partner) => (
-                <div 
-                  key={partner.id}
-                  className="flex items-center justify-center p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow group"
-                >
-                  <img 
-                    src={partner.logo} 
-                    alt={partner.name}
-                    className="max-w-full h-auto opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
-                  />
+              {partners.length > 0 ? (
+                partners.map((partner) => (
+                  <div 
+                    key={partner.id}
+                    className="flex items-center justify-center p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow group"
+                  >
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name}
+                      className="max-w-full h-auto opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-4 text-center py-12 text-gray-500">
+                  {language === 'az' ? 'Hələ ki tərəfdaş yoxdur' : 'No partners yet'}
                 </div>
-              ))}
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

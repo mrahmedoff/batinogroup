@@ -1,0 +1,75 @@
+<svg width="1000" height="600" viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1000" height="600" fill="#f1f5f9"/>
+  
+  <!-- Sky -->
+  <rect width="1000" height="200" fill="url(#skyGradient)"/>
+  
+  <!-- Ground -->
+  <rect y="500" width="1000" height="100" fill="#64748b"/>
+  
+  <!-- Main building -->
+  <rect x="200" y="250" width="300" height="250" fill="#475569" stroke="#334155" stroke-width="2"/>
+  
+  <!-- Building windows -->
+  <g fill="#1e40af" opacity="0.8">
+    <rect x="220" y="280" width="40" height="60" rx="4"/>
+    <rect x="280" y="280" width="40" height="60" rx="4"/>
+    <rect x="340" y="280" width="40" height="60" rx="4"/>
+    <rect x="400" y="280" width="40" height="60" rx="4"/>
+    
+    <rect x="220" y="360" width="40" height="60" rx="4"/>
+    <rect x="280" y="360" width="40" height="60" rx="4"/>
+    <rect x="340" y="360" width="40" height="60" rx="4"/>
+    <rect x="400" y="360" width="40" height="60" rx="4"/>
+  </g>
+  
+  <!-- Smokestacks -->
+  <rect x="150" y="150" width="30" height="200" fill="#64748b"/>
+  <rect x="520" y="180" width="25" height="170" fill="#64748b"/>
+  <rect x="580" y="160" width="35" height="190" fill="#64748b"/>
+  
+  <!-- Smoke -->
+  <g fill="#94a3b8" opacity="0.6">
+    <ellipse cx="165" cy="130" rx="20" ry="15"/>
+    <ellipse cx="170" cy="110" rx="25" ry="18"/>
+    <ellipse cx="175" cy="90" rx="30" ry="20"/>
+    
+    <ellipse cx="532" cy="160" rx="15" ry="12"/>
+    <ellipse cx="537" cy="145" rx="20" ry="15"/>
+    
+    <ellipse cx="597" cy="140" rx="18" ry="14"/>
+    <ellipse cx="602" cy="120" rx="23" ry="17"/>
+  </g>
+  
+  <!-- Storage tanks -->
+  <ellipse cx="700" cy="400" rx="60" ry="100" fill="#6b7280"/>
+  <ellipse cx="800" cy="420" rx="50" ry="80" fill="#6b7280"/>
+  
+  <!-- Pipes -->
+  <g stroke="#475569" stroke-width="8" fill="none">
+    <path d="M 500 350 Q 600 320 700 340"/>
+    <path d="M 500 380 Q 650 360 750 380"/>
+  </g>
+  
+  <!-- Conveyor belt -->
+  <rect x="50" y="450" width="400" height="20" fill="#374151" rx="10"/>
+  <g fill="#4b5563">
+    <rect x="70" y="440" width="15" height="40"/>
+    <rect x="120" y="440" width="15" height="40"/>
+    <rect x="170" y="440" width="15" height="40"/>
+    <rect x="220" y="440" width="15" height="40"/>
+    <rect x="270" y="440" width="15" height="40"/>
+    <rect x="320" y="440" width="15" height="40"/>
+    <rect x="370" y="440" width="15" height="40"/>
+    <rect x="420" y="440" width="15" height="40"/>
+  </g>
+  
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#93c5fd;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <text x="500" y="550" text-anchor="middle" fill="#374151" font-family="Arial, sans-serif" font-size="28" font-weight="bold">Industrial Facility</text>
+</svg>

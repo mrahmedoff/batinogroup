@@ -15,7 +15,7 @@ interface MegaMenuProps {
 export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const { getCategoriesByMenuType, getSubCategories } = useProducts();
-    const { language } = useLanguage();
+    const { t } = useLanguage();
 
     // Get categories from Firebase
     const getMainCategories = () => {
@@ -30,9 +30,13 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
 
 
 
+
+
     if (!isOpen) return null;
 
-    // Get main categories from Firebase
+
+
+    // Get main categories from Firebase for other menu types
     const mainCategories = getMainCategories();
     
     // If no categories exist, don't show mega menu
@@ -42,12 +46,12 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
 
     const getBaseUrl = (menuType: string) => {
         switch (menuType) {
-            case 'products': return `/${language}/products`;
-            case 'about': return `/${language}/about`;
-            case 'services': return `/${language}/services`;
-            case 'projects': return `/${language}/projects`;
-            case 'media': return `/${language}/media`;
-            default: return `/${language}`;
+            case 'products': return '/products';
+            case 'about': return '/about';
+            case 'services': return '/services';
+            case 'projects': return '/projects';
+            case 'media': return '/media';
+            default: return '/';
         }
     };
 

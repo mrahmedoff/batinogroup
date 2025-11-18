@@ -7,7 +7,7 @@ import { ArrowRight, MapPin, Calendar } from 'lucide-react';
 
 export default function Projects() {
   const { projects } = useData();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const projectImages = [
     'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80',
@@ -78,7 +78,7 @@ export default function Projects() {
 
         <div className="text-center">
           <Link 
-            href={`/${language}/projects`}
+            href="/projects"
             className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
           >
             {t.viewAllProjects}

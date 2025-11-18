@@ -90,6 +90,7 @@ export default function AdminSidebar() {
       title: 'SİSTEM',
       items: [
         { label: 'Mesajlar', href: '/admin/messages', icon: Mail, badge: unreadCount },
+        { label: 'Hakkımızda Resimleri', href: '/az/admin/about-images', icon: Image },
         { label: 'Parametrlər', href: '/admin/settings', icon: Sliders },
       ]
     }

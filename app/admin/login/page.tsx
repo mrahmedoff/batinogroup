@@ -3,19 +3,21 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { Lock, Mail, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
       await login(email, password);
@@ -35,6 +37,8 @@ export default function AdminLoginPage() {
       } else {
         setError('Giriş zamanı xəta baş verdi');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,6 +73,7 @@ export default function AdminLoginPage() {
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                   placeholder="admin@batinogroup.az"
                   required
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -89,11 +94,13 @@ export default function AdminLoginPage() {
                   className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                   placeholder="••••••••"
                   required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  disabled={isLoading}
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
@@ -118,10 +125,20 @@ export default function AdminLoginPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all flex items-center justify-center gap-2"
+              disabled={isLoading}
+              className="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              <Lock className="w-5 h-5" />
-              Daxil ol
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Giriş edilir...
+                </>
+              ) : (
+                <>
+                  <Lock className="w-5 h-5" />
+                  Daxil ol
+                </>
+              )}
             </button>
           </form>
 

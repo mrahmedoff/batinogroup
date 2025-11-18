@@ -8,7 +8,7 @@ import { useData } from '@/contexts/DataContext';
 import { settings } from 'firebase/analytics';
 
 export default function Hero() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { heroSlides, isLoading, refreshHeroSlides } = useData();
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -22,7 +22,7 @@ export default function Hero() {
       title: t.heroSlide1Title,
       description: t.heroSlide1Desc,
       buttonText: t.learnMore,
-      buttonLink: `/${language}/about`,
+      buttonLink: '/about',
       order: 1,
       active: true
     },
@@ -32,7 +32,7 @@ export default function Hero() {
       title: t.heroSlide2Title,
       description: t.heroSlide2Desc,
       buttonText: t.learnMore,
-      buttonLink: `/${language}/about`,
+      buttonLink: '/about',
       order: 2,
       active: true
     },
@@ -42,7 +42,7 @@ export default function Hero() {
       title: t.heroSlide3Title,
       description: t.heroSlide3Desc,
       buttonText: t.learnMore,
-      buttonLink: `/${language}/about`,
+      buttonLink: '/about',
       order: 3,
       active: true
     }
@@ -150,7 +150,7 @@ export default function Hero() {
                 <div className="flex flex-wrap gap-4">
                   {slides[currentSlide].buttonText && slides[currentSlide].buttonLink && (
                     <Link 
-                      href={slides[currentSlide].buttonLink || `/${language}/about`}
+                      href={slides[currentSlide].buttonLink || '/about'}
                       className="px-8 py-4 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 transition-all inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
                       {slides[currentSlide].buttonText || t.learnMore}
@@ -158,7 +158,7 @@ export default function Hero() {
                     </Link>
                   )}
                   <Link 
-                    href={`/${language}/contact`}
+                    href="/contact"
                     className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-900 transition-all inline-flex items-center gap-2"
                   >
                     {t.contactUs}

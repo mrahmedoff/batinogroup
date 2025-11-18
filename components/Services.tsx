@@ -22,7 +22,7 @@ const serviceImages = [
 
 export default function Services() {
   const { services } = useData();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <section id="services" className="py-20 bg-white">
@@ -77,7 +77,7 @@ export default function Services() {
 
         <div className="text-center mt-12">
           <Link 
-            href={`/${language}/services`}
+            href="/services"
             className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
           >
             {t.learnMore}

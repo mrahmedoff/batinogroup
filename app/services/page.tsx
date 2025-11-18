@@ -1,162 +1,207 @@
 'use client';
 
-import { useData } from '@/contexts/DataContext';
+import { useProducts } from '@/contexts/ProductContext';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { CheckCircle, ArrowRight, Settings, Zap, Wrench, Headphones } from 'lucide-react';
-import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Link from 'next/link';
+import { Wrench, Zap, Building, Factory, ArrowRight, CheckCircle } from 'lucide-react';
 
 export default function ServicesPage() {
-  const { services } = useData();
-  const { t } = useLanguage();
+  const { getCategoriesByMenuType } = useProducts();
+  const { language, t } = useLanguage();
+  
+  // Services menu tipindəki kateqoriyaları al
+  const serviceCategories = getCategoriesByMenuType('services').filter(cat => cat.type === 'main');
+
+  const defaultServices = [
+    {
+      id: 'construction',
+      name: 'Construction Services',
+      description: 'Full-scale construction solutions from design to completion with modern technology and experienced team.',
+      icon: Building,
+      href: `/${language}/services/construction`,
+      items: ['Civil Construction', 'Industrial Construction', 'Infrastructure Development', 'Project Management'],
+      features: ['Design & Planning', 'Quality Assurance', 'Timely Delivery', '24/7 Support']
+    },
+    {
+      id: 'oil-gas',
+      name: 'Oil & Gas Solutions',
+      description: 'Specialized services for upstream and downstream operations with 15+ years of industry experience.',
+      icon: Factory,
+      href: `/${language}/services/oil-gas`,
+      items: ['Upstream Services', 'Downstream Operations', 'Pipeline Construction', 'Refinery Services'],
+      features: ['Safety First', 'Advanced Technology', 'Expert Team', 'Global Standards']
+    },
+    {
+      id: 'energy',
+      name: 'Energy & Utilities',
+      description: 'Advanced energy solutions and utility infrastructure for sustainable and efficient operations.',
+      icon: Zap,
+      href: `/${language}/services/energy`,
+      items: ['Power Generation', 'Renewable Energy', 'Electrical Systems', 'Grid Infrastructure'],
+      features: ['Renewable Focus', 'Smart Solutions', 'Energy Efficiency', 'Future Ready']
+    },
+    {
+      id: 'maintenance',
+      name: 'Maintenance & Support',
+      description: 'Comprehensive maintenance services to ensure optimal performance and longevity of your systems.',
+      icon: Wrench,
+      href: `/${language}/services/maintenance`,
+      items: ['Preventive Maintenance', 'Emergency Repairs', 'System Upgrades', 'Technical Support'],
+      features: ['24/7 Availability', 'Rapid Response', 'Skilled Technicians', 'Cost Effective']
+    }
+  ];
+
+  const servicesToShow = serviceCategories.length > 0 ? serviceCategories : defaultServices;
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-50">
       <Header />
-      <div className="pt-20">
-        {/* Hero Section with Image */}
-        <section className="relative h-[500px] flex items-center">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/95 to-blue-800/90 z-10" />
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1920&q=80)'
-            }}
-          />
-          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{t.services}</h1>
-            <p className="text-xl text-blue-100 max-w-3xl">
-              {t.servicesHeroDesc}
+      <main className="pt-32">
+        {/* Hero Section */}
+        <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-5xl font-bold mb-6">
+              Our Services
+            </h1>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+              Comprehensive construction, oil & gas, and energy solutions tailored to meet 
+              your industrial and infrastructure needs with excellence and reliability.
             </p>
           </div>
-        </section>
+        </div>
 
-        {/* Services Grid with Images */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => {
-                const images = [
-                  'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&q=80',
-                  'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80',
-                  'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&q=80',
-                  'https://images.unsplash.com/photo-1581092918484-8313e1f7e8c7?w=600&q=80',
-                ];
-
-                // Icon mapping
-                const iconMap: Record<string, any> = {
-                  Settings: () => <Settings className="w-12 h-12 text-white" />,
-                  Zap: () => <Zap className="w-12 h-12 text-white" />,
-                  Wrench: () => <Wrench className="w-12 h-12 text-white" />,
-                  Headphones: () => <Headphones className="w-12 h-12 text-white" />,
-                };
-
-                const IconComponent = iconMap[service.icon] || iconMap.Settings;
-
-                return (
-                  <div
-                    key={service.id}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group"
-                  >
-                    <div className="relative h-48 overflow-hidden">
-                      <div
-                        className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300"
-                        style={{
-                          backgroundImage: `url(${images[index % images.length]})`
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                      <div className="absolute bottom-4 left-4">
-                        <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <IconComponent />
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          {/* Services Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            {servicesToShow.map((service, index) => {
+              const IconComponent = 'icon' in service ? service.icon : Building;
+              
+              return (
+                <div key={service.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group border border-gray-100">
+                  <div className="p-8">
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="flex-shrink-0">
+                        <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                          <IconComponent className="w-7 h-7 text-blue-600 group-hover:text-white transition-colors" />
                         </div>
                       </div>
+                      
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                          {service.name}
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          {service.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="p-8">
-                      <h3 className="text-2xl font-bold mb-4 group-hover:text-blue-600 transition-colors">
-                        {service.title}
-                      </h3>
-                      <p className="text-gray-600 mb-6 leading-relaxed">
-                        {service.description}
-                      </p>
-                      <button className="text-blue-600 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
-                        {t.learnMore}
-                        <ArrowRight className="w-5 h-5" />
-                      </button>
-                    </div>
+                    
+                    {/* Service Items */}
+                    {'items' in service && service.items && (
+                      <div className="mb-6">
+                        <h4 className="text-sm font-semibold text-gray-700 mb-3">Service Areas:</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {service.items.map((item, itemIndex) => (
+                            <div key={itemIndex} className="flex items-center gap-2 text-sm text-gray-600">
+                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Features */}
+                    {'features' in service && service.features && (
+                      <div className="mb-6">
+                        <h4 className="text-sm font-semibold text-gray-700 mb-3">Key Features:</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {service.features.map((feature, featureIndex) => (
+                            <div key={featureIndex} className="flex items-center gap-2 text-sm text-green-600">
+                              <CheckCircle className="w-4 h-4" />
+                              {feature}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    <Link 
+                      href={'href' in service ? service.href : `/${language}/services/${service.id}`}
+                      className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium group-hover:underline"
+                    >
+                      <span>Learn More</span>
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </div>
-                );
-              })}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Why Choose Us Section */}
+          <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-12">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose BatinoGroup?</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                We deliver exceptional results through our commitment to quality, innovation, and customer satisfaction
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-white">15+</span>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Years Experience</h3>
+                <p className="text-gray-600 text-sm">Proven track record in industrial services</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Quality Assured</h3>
+                <p className="text-gray-600 text-sm">ISO certified processes and standards</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Wrench className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Expert Team</h3>
+                <p className="text-gray-600 text-sm">Skilled professionals with industry expertise</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-xl font-bold text-white">24/7</span>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Support</h3>
+                <p className="text-gray-600 text-sm">Round-the-clock customer service</p>
+              </div>
             </div>
           </div>
-        </section>
 
-        {/* Why Choose Us with Image */}
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-12">{t.whyChooseUs}</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="relative h-[400px] rounded-xl overflow-hidden shadow-2xl">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: 'url(https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80)'
-                  }}
-                />
-              </div>
-              <div className="grid grid-cols-1 gap-6">
-                <div className="flex gap-4 bg-white p-6 rounded-xl shadow">
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-bold mb-2">{t.professionalTeam}</h3>
-                    <p className="text-gray-600">{t.professionalTeamDetail}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4 bg-white p-6 rounded-xl shadow">
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-bold mb-2">{t.qualityWork}</h3>
-                    <p className="text-gray-600">{t.qualityWorkDetail}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4 bg-white p-6 rounded-xl shadow">
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-bold mb-2">{t.timelyDelivery}</h3>
-                    <p className="text-gray-600">{t.timelyDeliveryDetail}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4 bg-white p-6 rounded-xl shadow">
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-bold mb-2">{t.support247}</h3>
-                    <p className="text-gray-600">{t.support247Detail}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-20 bg-blue-900 text-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-6">{t.readyForProject}</h2>
-            <p className="text-xl text-blue-100 mb-8">
-              {t.readyForProjectDesc}
+          {/* CTA Section */}
+          <div className="text-center mt-16">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Ready to Start Your Project?</h2>
+            <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+              Contact us today to discuss your requirements and get a customized solution for your business needs.
             </p>
-            <Link
-              href="/#contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+            <Link 
+              href={`/${language}/contact`}
+              className="inline-block px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
-              {t.contactUs}
-              <ArrowRight className="w-5 h-5" />
+              Get In Touch
             </Link>
           </div>
-        </section>
-      </div>
+        </div>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
