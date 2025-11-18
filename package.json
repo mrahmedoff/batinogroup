@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-env.js && next build",
+    "build:force": "next build",
     "start": "next start",
     "lint": "eslint",
+    "check-env": "node scripts/check-env.js",
+    "deploy-check": "node scripts/deploy-check.js",
     "firebase:deploy": "firebase deploy",
     "firebase:deploy:rules": "firebase deploy --only firestore:rules,storage:rules"
   },
