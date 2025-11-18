@@ -109,9 +109,18 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         console.log('Firebase configured:', isFirebaseConfigured);
         
         if (!isFirebaseConfigured) {
-          console.error('Firebase not configured! Please check your environment variables.');
-          setError('Firebase not configured');
-          setCategoriesError('Firebase not configured');
+          console.error('Firebase not configured! Environment variables missing.');
+          console.log('Available env vars:', {
+            NEXT_PUBLIC_FIREBASE_API_KEY: !!process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+            NEXT_PUBLIC_FIREBASE_PROJECT_ID: !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+          });
+          
+          const errorMsg = process.env.NODE_ENV === 'production' 
+            ? 'Service temporarily unavailable' 
+            : 'Firebase not configured';
+            
+          setError(errorMsg);
+          setCategoriesError(errorMsg);
           setProducts([]);
           setCategories([]);
           setLoading(false);
