@@ -146,8 +146,8 @@ export default function Header() {
             </div>
 
             {activeMegaMenu && (
-                <MegaMenu 
-                    isOpen={isMegaMenuOpen} 
+                <MegaMenu
+                    isOpen={isMegaMenuOpen}
                     onClose={() => {
                         setIsMegaMenuOpen(false);
                         setActiveMegaMenu(null);
@@ -157,9 +157,9 @@ export default function Header() {
             )}
 
             {/* Mobile Menu */}
-            <MobileMenu 
-                isOpen={isMenuOpen} 
-                onClose={() => setIsMenuOpen(false)} 
+            <MobileMenu
+                isOpen={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
             />
         </header>
     );

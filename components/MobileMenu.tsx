@@ -98,11 +98,11 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     return (
         <div className="fixed inset-0 z-50 md:hidden">
             {/* Backdrop */}
-            <div 
+            <div
                 className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in-backdrop"
                 onClick={onClose}
             />
-            
+
             {/* Menu Panel */}
             <div className="absolute inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl animate-slide-in-from-right">
                 <div className="flex flex-col h-full">
@@ -120,8 +120,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                             <h2 className="text-lg font-bold text-gray-900">
                                 {selectedCategory ? (
                                     (() => {
-                                        const category = selectedMenuType ? 
-                                            getMainCategories(selectedMenuType).find(cat => cat.id === selectedCategory) : 
+                                        const category = selectedMenuType ?
+                                            getMainCategories(selectedMenuType).find(cat => cat.id === selectedCategory) :
                                             null;
                                         return category?.name || t.subcategories;
                                     })()
@@ -148,7 +148,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 <nav className="space-y-2">
                                     {menuItems.map((item) => {
                                         const hasSubMenu = item.hasMegaMenu && item.megaMenuType && getCategoriesByMenuType(item.megaMenuType).length > 0;
-                                        
+
                                         if (hasSubMenu) {
                                             return (
                                                 <button
@@ -173,7 +173,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                             );
                                         }
                                     })}
-                                    
+
                                     {/* Contact Link */}
                                     <Link
                                         href="/contact"
@@ -206,7 +206,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                         </span>
                                     </Link>
                                 </div>
-                                
+
                                 <div className="space-y-2">
                                     {getMainCategories(selectedMenuType).map((category) => (
                                         <button
@@ -235,7 +235,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                                 {(() => {
                                     const category = getMainCategories(selectedMenuType).find(cat => cat.id === selectedCategory);
                                     const subcategories = getSelectedSubcategories(selectedCategory);
-                                    
+
                                     if (!category) return null;
 
                                     return (

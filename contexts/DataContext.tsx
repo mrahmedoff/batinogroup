@@ -191,10 +191,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
       setNews(newsData as any);
       setPartners(partnersData as any);
       setCertificates(certificatesData as any);
-      
+
       // Filter out invalid jobs
       console.log('Raw jobs loaded:', jobsData.length, 'jobs found');
-      
+
       const validJobs = jobsData.filter((job: any) => {
         if (!job || !job.id || Object.keys(job).length <= 1) {
           console.warn('Filtering out invalid job:', job);
@@ -202,13 +202,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
         }
         return true;
       });
-      
+
       console.log('Valid jobs after filtering:', validJobs.length);
-      
+
       if (validJobs.length !== jobsData.length) {
         console.warn(`Filtered out ${jobsData.length - validJobs.length} invalid jobs`);
       }
-      
+
       setJobs(validJobs as any);
       setHeroSlides((heroSlidesData as HeroSlide[]).sort((a, b) => a.order - b.order));
       if (settingsData.length > 0) setSettings(settingsData[0] as any);
@@ -481,12 +481,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
       if (!id || id.trim() === '' || id === 'undefined' || id === 'null') {
         throw new Error('Job ID is required and must be valid');
       }
-      
+
       console.log('Deleting job:', id);
       await deleteDocument('jobs', id);
       setJobs(jobs.filter(j => j.id !== id));
       console.log('Job deleted successfully');
-      
+
     } catch (error) {
       console.error('Error deleting job:', error);
       throw error;
