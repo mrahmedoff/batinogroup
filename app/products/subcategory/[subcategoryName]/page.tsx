@@ -5,93 +5,33 @@ import { useProducts } from '@/contexts/ProductContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { ArrowLeft, Package, Search, Image as ImageIcon } from 'lucide-react';
-import { useState, useMemo } from 'react';
+import { ArrowLeft, Image as ImageIcon } from 'lucide-react';
 
 export default function SubcategoryPage() {
   const params = useParams();
   const subcategoryName = decodeURIComponent(params.subcategoryName as string);
-  
-  const { 
-    categories, 
-    products, 
-    loading 
+
+  const {
+    categories,
+    products,
+    loading
   } = useProducts();
-  
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('name');
 
   // Alt kateqoriyaya aid məhsulları tap
   const subcategoryProducts = products.filter(
     product => product.subcategory === subcategoryName && product.status === 'active'
   );
-  
+
   // Alt kateqoriyanı tap
-  const subcategory = categories.find(cat => 
+  const subcategory = categories.find(cat =>
     cat.type === 'sub' && cat.name === subcategoryName
   );
-  
+
   // Ana kateqoriyanı tap
-  const parentCategory = subcategory ? categories.find(cat => 
+  const parentCategory = subcategory ? categories.find(cat =>
     cat.id === subcategory.parentId
   ) : null;
 
-  // Filtrlənmiş və sıralanmış məhsullar
-  const filteredProducts = useMemo(() => {
-    let filtered = subcategoryProducts.filter(product => {
-      return product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    });
-
-    // Sıralama
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'name':
-          return a.name.localeCompare(b.name);
-        case 'newest':
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        default:
-          return 0;
-      }
-    });
-
-    return filtered;
-  }, [subcategoryProducts, searchTerm, sortBy]);
-
-  // Description mətnini formatlamaq üçün funksiya
-  const renderDescription = (description: string) => {
-    const parts = description.split('\n\n');
-    
-    return (
-      <div className="product-description">
-        {parts.map((part, index) => {
-          if (part.includes('•')) {
-            // Bullet point-li hissə
-            const lines = part.split('\n').filter(line => line.trim());
-            return (
-              <ul key={index} className="product-list mb-4">
-                {lines.map((line, lineIndex) => {
-                  if (line.startsWith('•')) {
-                    const text = line.substring(1).trim();
-                    return (
-                      <li key={lineIndex}>{text}</li>
-                    );
-                  }
-                  return null;
-                })}
-              </ul>
-            );
-          } else {
-            // Adi mətn
-            return (
-              <p key={index} className="mb-4">
-                {part}
-              </p>
-            );
-          }
-        })}
-      </div>
-    );
-  };
 
   if (loading) {
     return (
@@ -123,7 +63,7 @@ export default function SubcategoryPage() {
             <span>/</span>
             {parentCategory && (
               <>
-                <Link 
+                <Link
                   href={`/products/category/${parentCategory.id}`}
                   className="hover:text-blue-600 transition-colors"
                 >
@@ -135,65 +75,24 @@ export default function SubcategoryPage() {
             <span className="text-gray-700">{subcategoryName}</span>
           </nav>
 
-          {/* Alt kateqoriya başlığı və təsviri */}
-          <div className="mb-12">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">{subcategoryName}</h1>
-            
-            {/* Subkateqoriya təsviri - Referans şəkildəki kimi */}
-            {subcategory && subcategory.description && (
-              <div className="mb-8">
-                {renderDescription(subcategory.description)}
-              </div>
-            )}
-            
-            <div className="text-sm text-gray-500 mb-2">
+          {/* Alt kateqoriya başlığı */}
+          <div className="mb-8">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">{subcategoryName}</h1>
+            <div className="text-sm text-gray-500">
               {subcategoryProducts.length} məhsul mövcuddur
             </div>
           </div>
 
-          {/* Filtrlər və axtarış */}
-          <div className="bg-white rounded-xl border border-slate-200 p-6 mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Axtarış */}
-              <div className="relative">
-                <Search className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Məhsul axtar..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                />
-              </div>
-
-              {/* Sıralama */}
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              >
-                <option value="name">Ada görə (A-Z)</option>
-                <option value="newest">Ən yenilər</option>
-              </select>
-
-              {/* Nəticə sayı */}
-              <div className="flex items-center gap-2 text-sm text-slate-600">
-                <Package className="w-4 h-4" />
-                <span>{filteredProducts.length} məhsul tapıldı</span>
-              </div>
-            </div>
-          </div>
-
           {/* Məhsullar */}
-          {filteredProducts.length > 0 ? (
+          {subcategoryProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product) => (
+              {subcategoryProducts.map((product) => (
                 <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-slate-200 overflow-hidden">
                   {/* Məhsul şəkli */}
                   <div className="aspect-square bg-gray-100 flex items-center justify-center">
                     {product.image ? (
-                      <img 
-                        src={product.image} 
+                      <img
+                        src={product.image}
                         alt={product.name}
                         className="w-full h-full object-cover"
                       />
@@ -201,7 +100,7 @@ export default function SubcategoryPage() {
                       <ImageIcon className="w-12 h-12 text-gray-400" />
                     )}
                   </div>
-                  
+
                   <div className="p-6">
                     <h3 className="font-semibold text-slate-900">
                       {product.name}
@@ -212,31 +111,19 @@ export default function SubcategoryPage() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <Package className="w-16 h-16 text-slate-300 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-slate-900 mb-2">
                 Məhsul tapılmadı
               </h3>
-              <p className="text-slate-600 mb-6">
-                {searchTerm 
-                  ? 'Axtarış kriteriyalarınıza uyğun məhsul tapılmadı.'
-                  : 'Bu alt kateqoriyada hələ məhsul əlavə edilməyib.'
-                }
+              <p className="text-slate-600">
+                Bu alt kateqoriyada hələ məhsul əlavə edilməyib.
               </p>
-              {searchTerm && (
-                <button
-                  onClick={() => setSearchTerm('')}
-                  className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors"
-                >
-                  Axtarışı təmizlə
-                </button>
-              )}
             </div>
           )}
 
           {/* Geri qayıt düyməsi */}
           <div className="mt-12 text-center">
             {parentCategory ? (
-              <Link 
+              <Link
                 href={`/products/category/${parentCategory.id}`}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors"
               >
@@ -244,7 +131,7 @@ export default function SubcategoryPage() {
                 {parentCategory.name} kateqoriyasına qayıt
               </Link>
             ) : (
-              <Link 
+              <Link
                 href="/products"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors"
               >
