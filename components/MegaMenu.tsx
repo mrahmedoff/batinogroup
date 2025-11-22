@@ -38,7 +38,7 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
 
     // Get main categories from Firebase for other menu types
     const mainCategories = getMainCategories();
-
+    
     // Show loading state if still loading
     if (categoriesLoading) {
         return (
@@ -50,7 +50,7 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
             </div>
         );
     }
-
+    
     // Show error state if there's an error
     if (categoriesError) {
         return (
@@ -61,7 +61,7 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
             </div>
         );
     }
-
+    
     // If no categories exist, don't show mega menu
     if (mainCategories.length === 0) {
         return null;
@@ -99,17 +99,19 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
                                 {mainCategories.map((category) => (
                                     <li key={category.id}>
                                         <button
-                                            className={`w-full text-left flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 ${selectedCategory === category.id
-                                                ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-500 shadow-md'
-                                                : 'text-gray-700 hover:bg-white hover:text-gray-900 hover:shadow-md'
-                                                }`}
+                                            className={`w-full text-left flex items-center justify-between py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 ${
+                                                selectedCategory === category.id
+                                                    ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-500 shadow-md'
+                                                    : 'text-gray-700 hover:bg-white hover:text-gray-900 hover:shadow-md'
+                                            }`}
                                             onMouseEnter={() => setSelectedCategory(category.id)}
                                             onClick={() => setSelectedCategory(selectedCategory === category.id ? null : category.id)}
                                         >
                                             <span className="font-medium">{category.name}</span>
-                                            <ChevronRight
-                                                className={`w-4 h-4 transition-transform duration-200 ${selectedCategory === category.id ? 'rotate-90 text-blue-500' : 'text-gray-400'
-                                                    }`}
+                                            <ChevronRight 
+                                                className={`w-4 h-4 transition-transform duration-200 ${
+                                                    selectedCategory === category.id ? 'rotate-90 text-blue-500' : 'text-gray-400'
+                                                }`} 
                                             />
                                         </button>
                                     </li>
@@ -121,14 +123,14 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
                     {/* Right side - Subcategories */}
                     <div className="flex-1 relative overflow-hidden min-h-[300px] lg:min-h-[400px]">
                         {selectedCategory && (
-                            <div
-                                className="absolute inset-0 p-4 lg:p-6 animate-slide-in-right overflow-y-auto"
+                            <div 
+                                className="absolute inset-0 p-4 lg:p-6 animate-slide-in-right"
                                 key={selectedCategory}
                             >
                                 {(() => {
                                     const category = mainCategories.find(cat => cat.id === selectedCategory);
                                     const subcategories = getSelectedSubcategories(selectedCategory);
-
+                                    
                                     if (!category) return null;
 
                                     return (
@@ -186,7 +188,7 @@ export default function MegaMenu({ isOpen, onClose, menuType }: MegaMenuProps) {
                                 })()}
                             </div>
                         )}
-
+                        
                         {!selectedCategory && (
                             <div className="flex items-center justify-center h-full">
                                 <div className="text-center p-4">
