@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { 
+import {
   LayoutDashboard, Settings, FolderKanban, Users, Image, Mail, Sliders, Home,
   Newspaper, Handshake, Award, Briefcase, ChevronDown, ChevronRight, LogOut, User, Menu, X,
   Package, FolderTree
@@ -27,7 +27,7 @@ export default function AdminSidebar() {
   const [expandedMenus, setExpandedMenus] = useState<string[]>(['content']);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+
   const unreadCount = messages.filter(m => !m.read).length;
 
   const handleLogout = async () => {
@@ -35,10 +35,7 @@ export default function AdminSidebar() {
       setIsLoggingOut(true);
       try {
         await logout();
-        // Extract locale from current pathname
-        const pathSegments = pathname.split('/');
-        const locale = pathSegments[1] || 'az';
-        router.push(`/${locale}/admin/login`);
+        router.push('/admin/login');
       } catch (error) {
         console.error('Logout error:', error);
         setIsLoggingOut(false);
@@ -47,8 +44,8 @@ export default function AdminSidebar() {
   };
 
   const toggleMenu = (label: string) => {
-    setExpandedMenus(prev => 
-      prev.includes(label) 
+    setExpandedMenus(prev =>
+      prev.includes(label)
         ? prev.filter(item => item !== label)
         : [...prev, label]
     );
@@ -90,7 +87,7 @@ export default function AdminSidebar() {
       title: 'SİSTEM',
       items: [
         { label: 'Mesajlar', href: '/admin/messages', icon: Mail, badge: unreadCount },
-        { label: 'Hakkımızda Resimleri', href: '/az/admin/about-images', icon: Image },
+        { label: 'Hakkımızda Resimleri', href: '/admin/about-images', icon: Image },
         { label: 'Parametrlər', href: '/admin/settings', icon: Sliders },
       ]
     }
@@ -138,133 +135,130 @@ export default function AdminSidebar() {
           </Link>
         </div>
 
-      {/* Menu Sections */}
-      <div className="flex-1 py-4 overflow-y-auto">
-        {menuSections.map((section, sectionIdx) => (
-          <div key={section.title} className={sectionIdx > 0 ? 'mt-6' : ''}>
-            <div className="px-6 mb-2">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                {section.title}
-              </span>
-            </div>
-            <nav className="px-3 space-y-1">
-              {section.items.map((item) => {
-                const isActive = pathname === item.href;
-                const IconComponent = item.icon;
-                const hasSubmenu = 'submenu' in item && Array.isArray(item.submenu) && item.submenu.length > 0;
-                const isExpanded = expandedMenus.includes(item.label);
+        {/* Menu Sections */}
+        <div className="flex-1 py-4 overflow-y-auto">
+          {menuSections.map((section, sectionIdx) => (
+            <div key={section.title} className={sectionIdx > 0 ? 'mt-6' : ''}>
+              <div className="px-6 mb-2">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  {section.title}
+                </span>
+              </div>
+              <nav className="px-3 space-y-1">
+                {section.items.map((item) => {
+                  const isActive = pathname === item.href;
+                  const IconComponent = item.icon;
+                  const hasSubmenu = 'submenu' in item && Array.isArray(item.submenu) && item.submenu.length > 0;
+                  const isExpanded = expandedMenus.includes(item.label);
 
-                if (hasSubmenu && 'submenu' in item && Array.isArray(item.submenu)) {
-                  return (
-                    <div key={item.label}>
-                      <button
-                        onClick={() => toggleMenu(item.label)}
-                        className={`w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                          isExpanded
-                            ? 'bg-slate-50 text-slate-900'
-                            : 'text-slate-600 hover:bg-slate-50'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <IconComponent className="w-5 h-5" strokeWidth={2} />
-                          <span className="text-sm font-medium">{item.label}</span>
-                        </div>
-                        {isExpanded ? (
-                          <ChevronDown className="w-4 h-4" strokeWidth={2} />
-                        ) : (
-                          <ChevronRight className="w-4 h-4" strokeWidth={2} />
+                  if (hasSubmenu && 'submenu' in item && Array.isArray(item.submenu)) {
+                    return (
+                      <div key={item.label}>
+                        <button
+                          onClick={() => toggleMenu(item.label)}
+                          className={`w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg transition-colors ${isExpanded
+                              ? 'bg-slate-50 text-slate-900'
+                              : 'text-slate-600 hover:bg-slate-50'
+                            }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <IconComponent className="w-5 h-5" strokeWidth={2} />
+                            <span className="text-sm font-medium">{item.label}</span>
+                          </div>
+                          {isExpanded ? (
+                            <ChevronDown className="w-4 h-4" strokeWidth={2} />
+                          ) : (
+                            <ChevronRight className="w-4 h-4" strokeWidth={2} />
+                          )}
+                        </button>
+                        {isExpanded && (
+                          <div className="ml-8 mt-1 space-y-1">
+                            {item.submenu.map((subitem) => {
+                              const isSubActive = pathname === subitem.href;
+                              return (
+                                <Link
+                                  key={subitem.href}
+                                  href={subitem.href}
+                                  className={`block px-3 py-2 text-sm rounded-lg transition-colors ${isSubActive
+                                      ? 'text-blue-600 bg-blue-50 font-medium'
+                                      : 'text-slate-600 hover:bg-slate-50'
+                                    }`}
+                                >
+                                  {subitem.label}
+                                </Link>
+                              );
+                            })}
+                          </div>
                         )}
-                      </button>
-                      {isExpanded && (
-                        <div className="ml-8 mt-1 space-y-1">
-                          {item.submenu.map((subitem) => {
-                            const isSubActive = pathname === subitem.href;
-                            return (
-                              <Link
-                                key={subitem.href}
-                                href={subitem.href}
-                                className={`block px-3 py-2 text-sm rounded-lg transition-colors ${
-                                  isSubActive
-                                    ? 'text-blue-600 bg-blue-50 font-medium'
-                                    : 'text-slate-600 hover:bg-slate-50'
-                                }`}
-                              >
-                                {subitem.label}
-                              </Link>
-                            );
-                          })}
-                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href!}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg transition-colors ${isActive
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-slate-600 hover:bg-slate-50'
+                        }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <IconComponent className="w-5 h-5" strokeWidth={2} />
+                        <span className="text-sm font-medium">{item.label}</span>
+                      </div>
+                      {item.badge !== undefined && item.badge > 0 && (
+                        <span className="px-2 py-0.5 text-xs font-semibold text-white bg-red-500 rounded-full">
+                          {item.badge}
+                        </span>
                       )}
-                    </div>
+                    </Link>
                   );
-                }
+                })}
+              </nav>
+            </div>
+          ))}
+        </div>
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href!}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                      isActive
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'text-slate-600 hover:bg-slate-50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <IconComponent className="w-5 h-5" strokeWidth={2} />
-                      <span className="text-sm font-medium">{item.label}</span>
-                    </div>
-                    {item.badge !== undefined && item.badge > 0 && (
-                      <span className="px-2 py-0.5 text-xs font-semibold text-white bg-red-500 rounded-full">
-                        {item.badge}
-                      </span>
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom Section */}
-      <div className="p-4 border-t border-slate-200 space-y-2">
-        {/* User Info */}
-        {user && (
-          <div className="px-3 py-2 bg-slate-50 rounded-lg">
-            <div className="flex items-center gap-2 mb-1">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-slate-900 truncate">
-                  {user.email}
-                </p>
-                <p className="text-xs text-slate-500">Admin</p>
+        {/* Bottom Section */}
+        <div className="p-4 border-t border-slate-200 space-y-2">
+          {/* User Info */}
+          {user && (
+            <div className="px-3 py-2 bg-slate-50 rounded-lg">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <User className="w-4 h-4 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-slate-900 truncate">
+                    {user.email}
+                  </p>
+                  <p className="text-xs text-slate-500">Admin</p>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <Link
-          href="/"
-          className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors"
-        >
-          <Home className="w-5 h-5" strokeWidth={2} />
-          <span className="text-sm font-medium">Sayta qayıt</span>
-        </Link>
+          <Link
+            href="/"
+            className="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors"
+          >
+            <Home className="w-5 h-5" strokeWidth={2} />
+            <span className="text-sm font-medium">Sayta qayıt</span>
+          </Link>
 
-        <button
-          onClick={handleLogout}
-          disabled={isLoggingOut}
-          className="w-full flex items-center gap-3 px-3 py-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
-        >
-          <LogOut className="w-5 h-5" strokeWidth={2} />
-          <span className="text-sm font-medium">
-            {isLoggingOut ? 'Çıxış edilir...' : 'Çıxış'}
-          </span>
-        </button>
-      </div>
+          <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="w-full flex items-center gap-3 px-3 py-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+          >
+            <LogOut className="w-5 h-5" strokeWidth={2} />
+            <span className="text-sm font-medium">
+              {isLoggingOut ? 'Çıxış edilir...' : 'Çıxış'}
+            </span>
+          </button>
+        </div>
       </aside>
     </>
   );
