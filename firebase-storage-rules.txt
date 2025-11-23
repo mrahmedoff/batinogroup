@@ -1,7 +1,7 @@
 // Firebase Storage Security Rules
-// Bu rules-ları Firebase Console-da tətbiq edin
+// Apply these rules in Firebase Console
 
-// Development üçün (hər kəs yükləyə bilər):
+// For Development (anyone can upload):
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
@@ -11,7 +11,7 @@ service firebase.storage {
   }
 }
 
-// Production üçün (yalnız authenticated users):
+// For Production (only authenticated users):
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {

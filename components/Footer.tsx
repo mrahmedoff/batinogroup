@@ -10,11 +10,8 @@ import {
   Facebook,
   Linkedin,
   Instagram,
-  Twitter,
-  Youtube,
   Clock,
-  ArrowRight,
-  Send
+  ArrowRight
 } from 'lucide-react';
 
 export default function Footer() {
@@ -66,24 +63,14 @@ export default function Footer() {
                   {t.services}
                 </Link>
               </li>
-              <li>
-                <Link href="/projects" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
-                  <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {t.projects}
-                </Link>
-              </li>
+
               <li>
                 <Link href="/media" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   {t.media}
                 </Link>
               </li>
-              <li>
-                <Link href="/career" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
-                  <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  {t.career}
-                </Link>
-              </li>
+
               <li>
                 <Link href="/contact" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-2 group">
                   <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -178,42 +165,16 @@ export default function Footer() {
               >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-sky-500 transition-all hover:scale-110 group"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-red-600 transition-all hover:scale-110 group"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-5 h-5" />
-              </a>
             </div>
 
-            {/* Newsletter */}
-            <div className="bg-gray-800 rounded-lg p-4">
-              <p className="text-sm text-gray-400 mb-3">
-                {t.stayUpdated}
+            {/* VOEN */}
+            <div className="border-t border-gray-700 pt-4 mt-30">
+              <p className="text-gray-400 text-sm">
+                <span className="text-gray-500">TIN:</span> {settings.voen}
               </p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder={t.email}
-                  className="flex-1 px-3 py-2 bg-gray-700 rounded text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <button className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 transition-colors">
-                  <Send className="w-4 h-4" />
-                </button>
-              </div>
             </div>
+
+
           </div>
         </div>
       </div>

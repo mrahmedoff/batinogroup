@@ -60,7 +60,7 @@ export default function Projects() {
                 <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
                   <div className="flex items-center gap-1">
                     <MapPin className="w-3 h-3" />
-                    <span>Bakı</span>
+                    <span>Baku</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3 h-3" />

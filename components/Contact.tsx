@@ -121,7 +121,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">{t.address}</h3>
-                  <p className="text-gray-600">Bakı, Azərbaycan</p>
+                  <p className="text-gray-600">Baku, Azerbaijan</p>
                 </div>
               </div>
             </div>

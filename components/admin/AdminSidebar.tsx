@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard, Settings, FolderKanban, Users, Image, Mail, Sliders, Home,
-  Newspaper, Handshake, Award, Briefcase, ChevronDown, ChevronRight, LogOut, User, Menu, X,
+  Newspaper, Handshake, Award, ChevronDown, ChevronRight, LogOut, User, Menu, X,
   Package, FolderTree
 } from 'lucide-react';
 import { useState } from 'react';
@@ -80,15 +80,15 @@ export default function AdminSidebar() {
         { label: 'Komanda', href: '/admin/team', icon: Users },
         { label: 'Tərəfdaşlar', href: '/admin/partners', icon: Handshake },
         { label: 'Sertifikatlar', href: '/admin/certificates', icon: Award },
-        { label: 'Vakansiyalar', href: '/admin/careers', icon: Briefcase },
+
       ]
     },
     {
       title: 'SİSTEM',
       items: [
-        { label: 'Mesajlar', href: '/admin/messages', icon: Mail, badge: unreadCount },
+        { label: 'Messages', href: '/admin/messages', icon: Mail, badge: unreadCount },
         { label: 'Hakkımızda Resimleri', href: '/admin/about-images', icon: Image },
-        { label: 'Parametrlər', href: '/admin/settings', icon: Sliders },
+        { label: 'Settings', href: '/admin/settings', icon: Sliders },
       ]
     }
   ];

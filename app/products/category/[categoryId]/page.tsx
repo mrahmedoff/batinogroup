@@ -36,7 +36,7 @@ export default function CategoryPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center">
               <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-slate-600">Kateqoriya yüklənir...</p>
+              <p className="text-slate-600">Loading category...</p>
             </div>
           </div>
         </main>
@@ -52,14 +52,14 @@ export default function CategoryPage() {
         <main className="pt-32">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-slate-900 mb-4">Kateqoriya tapılmadı</h1>
-              <p className="text-slate-600 mb-8">Axtardığınız kateqoriya mövcud deyil.</p>
+              <h1 className="text-2xl font-bold text-slate-900 mb-4">Category Not Found</h1>
+              <p className="text-slate-600 mb-8">The category you are looking for does not exist.</p>
               <Link
                 href="/products"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Məhsullara qayıt
+                Back to Products
               </Link>
             </div>
           </div>
@@ -77,27 +77,27 @@ export default function CategoryPage() {
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-slate-600 mb-8">
             <Link href="/products" className="hover:text-blue-600 transition-colors">
-              Məhsullar
+              Products
             </Link>
             <span>/</span>
             <span className="text-slate-900 font-medium">{category.name}</span>
           </nav>
 
-          {/* Kateqoriya başlığı */}
+          {/* Category header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-slate-900 mb-2">{category.name}</h1>
             <p className="text-sm text-slate-600">
-              {categoryProducts.length} məhsul mövcuddur
+              {categoryProducts.length} products available
             </p>
           </div>
 
 
-          {/* Məhsullar */}
+          {/* Products */}
           {categoryProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {categoryProducts.map((product) => (
                 <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-slate-200 overflow-hidden">
-                  {/* Məhsul şəkli */}
+                  {/* Product Image */}
                   <div className="aspect-square bg-gray-100 flex items-center justify-center">
                     {product.image ? (
                       <img
@@ -125,10 +125,10 @@ export default function CategoryPage() {
           ) : (
             <div className="text-center py-16">
               <h3 className="text-lg font-medium text-slate-900 mb-2">
-                Məhsul tapılmadı
+                No Products Found
               </h3>
               <p className="text-slate-600">
-                Bu kateqoriyada hələ məhsul əlavə edilməyib.
+                No products have been added to this category yet.
               </p>
             </div>
           )}

@@ -11,15 +11,15 @@ export default function LeadershipPage() {
   const leaders = [
     {
       id: 1,
-      name: 'Elçin Məmmədov',
+      name: 'Elchin Mammadov',
       position: t.ceo,
       image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80',
       email: 'elchin@batinogroup.az',
       linkedin: '#',
-      experience: language === 'az' ? '20+ il təcrübə' : '20+ years experience',
+      experience: language === 'az' ? '20+ years experience' : '20+ years experience',
       education: language === 'az' ? 'MBA, Harvard Business School' : 'MBA, Harvard Business School',
       bio: language === 'az' 
-        ? 'Neft və qaz sənayesində 20 ildən çox təcrübəyə malik. BatinoGroup-u 2010-cu ildə qurmuş və şirkəti regionun aparıcı mühəndislik şirkətlərindən birinə çevirməyə nail olmuşdur.'
+        ? 'Has more than 20 years of experience in the oil and gas industry. Founded BatinoGroup in 2010 and has managed to turn the company into one of the leading engineering companies in the region.'
         : 'Over 20 years of experience in the oil and gas industry. Founded BatinoGroup in 2010 and successfully transformed it into one of the leading engineering companies in the region.'
     },
     {
@@ -29,10 +29,10 @@ export default function LeadershipPage() {
       image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80',
       email: 'leyla@batinogroup.az',
       linkedin: '#',
-      experience: language === 'az' ? '15+ il təcrübə' : '15+ years experience',
-      education: language === 'az' ? 'PhD, Mühəndislik' : 'PhD, Engineering',
+      experience: language === 'az' ? '15+ years experience' : '15+ years experience',
+      education: language === 'az' ? 'PhD, Engineering' : 'PhD, Engineering',
       bio: language === 'az'
-        ? 'Texnologiya və innovasiya sahəsində ekspert. Şirkətdə rəqəmsal transformasiya və texnoloji inkişaf strategiyalarının həyata keçirilməsində aparıcı rol oynayır.'
+        ? 'Expert in technology and innovation. Plays a leading role in implementing digital transformation and technological development strategies in the company.'
         : 'Expert in technology and innovation. Plays a leading role in implementing digital transformation and technological development strategies in the company.'
     },
     {
@@ -42,10 +42,10 @@ export default function LeadershipPage() {
       image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80',
       email: 'rashad@batinogroup.az',
       linkedin: '#',
-      experience: language === 'az' ? '18+ il təcrübə' : '18+ years experience',
+      experience: language === 'az' ? '18+ years experience' : '18+ years experience',
       education: language === 'az' ? 'Maliyyə, London School of Economics' : 'Finance, London School of Economics',
       bio: language === 'az'
-        ? 'Maliyyə idarəetməsi və strateji planlaşdırma sahəsində geniş təcrübəyə malikdir. Şirkətin maliyyə sabitliyini və inkişafını təmin edir.'
+        ? 'Has extensive experience in financial management and strategic planning. Ensures the financial stability and growth of the company.'
         : 'Has extensive experience in financial management and strategic planning. Ensures the financial stability and growth of the company.'
     },
     {
@@ -55,10 +55,10 @@ export default function LeadershipPage() {
       image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80',
       email: 'nigar@batinogroup.az',
       linkedin: '#',
-      experience: language === 'az' ? '16+ il təcrübə' : '16+ years experience',
-      education: language === 'az' ? 'Əməliyyat İdarəetməsi, MIT' : 'Operations Management, MIT',
+      experience: language === 'az' ? '16+ years experience' : '16+ years experience',
+      education: language === 'az' ? 'Operations Management, MIT' : 'Operations Management, MIT',
       bio: language === 'az'
-        ? 'Layihə idarəetməsi və əməliyyat proseslərinin optimallaşdırılması sahəsində mütəxəssisdir. Şirkətin gündəlik fəaliyyətinin səmərəli idarə olunmasını təmin edir.'
+        ? 'Specialist in project management and optimization of operational processes. Ensures efficient management of the company\'s daily operations.'
         : 'Specialist in project management and optimization of operational processes. Ensures efficient management of the company\'s daily operations.'
     }
   ];
@@ -169,7 +169,7 @@ export default function LeadershipPage() {
                 </h3>
                 <p className="text-gray-600">
                   {language === 'az' 
-                    ? 'Gələcəyə baxış və innovativ həllər' 
+                    ? 'Future vision and innovative solutions' 
                     : 'Future vision and innovative solutions'}
                 </p>
               </div>

@@ -48,10 +48,6 @@ export default function Header() {
             hasMegaMenu: true,
             megaMenuType: 'media' as const
         },
-        {
-            title: t.career,
-            href: '/career'
-        },
     ];
 
     return (

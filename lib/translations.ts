@@ -23,7 +23,7 @@ export const translations = {
     photoGallery: 'Photo Gallery',
     videoGallery: 'Video Gallery',
     press: 'Press',
-    career: 'Career',
+
     contact: 'Contact',
     
     // Footer
@@ -125,21 +125,7 @@ export const translations = {
     latestNews: 'Latest News',
     noCategoryMedia: 'No media found in this category',
     
-    // Career Page
-    careerHeroDesc: 'Join our team and develop your career with us',
-    whyJoinUs: 'Why Join Us?',
-    careerDevelopment: 'Career Development',
-    careerDevelopmentDesc: 'Professional development opportunities and training programs',
-    flexibleSchedule: 'Flexible Schedule',
-    flexibleScheduleDesc: 'Flexible working hours to maintain work-life balance',
-    modernOffice: 'Modern Office',
-    modernOfficeDesc: 'Comfortable and modern work environment',
-    openPositions: 'Open Positions',
-    jobDescription: 'Job Description',
-    requirements: 'Requirements',
-    apply: 'Apply',
-    selectPosition: 'Select a position',
-    fullTime: 'Full-time',
+
     
     // Contact Page
     contactHeroDesc: 'If you have any questions or project proposals, please contact us',

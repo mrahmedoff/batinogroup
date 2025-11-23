@@ -61,8 +61,8 @@ export default function CertificatesAdmin() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Sertifikatlar</h1>
-          <p className="text-sm text-slate-500 mt-1">Şirkət sertifikatlarını idarə edin</p>
+          <h1 className="text-2xl font-bold text-slate-900">Certificates</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage company certificates</p>
         </div>
         <button 
           onClick={handleAdd}

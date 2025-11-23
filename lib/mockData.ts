@@ -3,14 +3,14 @@ import { Service, Project, TeamMember } from '@/types';
 export const services: Service[] = [
   {
     id: '1',
-    title: 'Avtomatlaşdırma Sistemləri',
-    description: 'Sənaye avtomatlaşdırması və idarəetmə sistemləri',
+    title: 'Automation Systems',
+    description: 'Industrial automation and control systems',
     icon: 'Settings'
   },
   {
     id: '2',
-    title: 'Elektrik Təchizatı',
-    description: 'Elektrik avadanlıqları və təchizat həlləri',
+    title: 'Electrical Supply',
+    description: 'Electrical equipment and supply solutions',
     icon: 'Zap'
   },
   {
@@ -30,8 +30,8 @@ export const services: Service[] = [
 export const projects: Project[] = [
   {
     id: '1',
-    title: 'Neft-Qaz Sənayesi',
-    description: 'Avtomatlaşdırma sistemlərinin quraşdırılması',
+    title: 'Oil-Gas Industry',
+    description: 'Installation of automation systems',
     image: '/projects/project1.jpg',
     category: 'Sənaye'
   },

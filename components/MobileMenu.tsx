@@ -42,11 +42,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             hasMegaMenu: true,
             megaMenuType: 'media' as const
         },
-        {
-            title: t.career,
-            href: '/career',
-            hasMegaMenu: false
-        },
     ];
 
     // Firebase-dən kateqoriyaları al
@@ -79,7 +74,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 return;
             }
         }
-        // Əgər mega menu yoxdursa və ya kateqoriya yoxdursa, birbaşa keçid et
+        // If there's no mega menu or category, navigate directly
         window.location.href = item.href;
         onClose();
     };
@@ -240,7 +235,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
                                     return (
                                         <>
-                                            {/* Kateqoriya məlumatları */}
+                                            {/* Category information */}
                                             <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg">
                                                 <h3 className="font-bold text-gray-900 mb-2">{category.name}</h3>
                                                 {category.description && (

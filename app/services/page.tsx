@@ -20,7 +20,7 @@ export default function ServicesPage() {
       name: 'Construction Services',
       description: 'Full-scale construction solutions from design to completion with modern technology and experienced team.',
       icon: Building,
-      href: `/${language}/services/construction`,
+      href: `/services/construction`,
       items: ['Civil Construction', 'Industrial Construction', 'Infrastructure Development', 'Project Management'],
       features: ['Design & Planning', 'Quality Assurance', 'Timely Delivery', '24/7 Support']
     },
@@ -29,7 +29,7 @@ export default function ServicesPage() {
       name: 'Oil & Gas Solutions',
       description: 'Specialized services for upstream and downstream operations with 15+ years of industry experience.',
       icon: Factory,
-      href: `/${language}/services/oil-gas`,
+      href: `/services/oil-gas`,
       items: ['Upstream Services', 'Downstream Operations', 'Pipeline Construction', 'Refinery Services'],
       features: ['Safety First', 'Advanced Technology', 'Expert Team', 'Global Standards']
     },
@@ -38,7 +38,7 @@ export default function ServicesPage() {
       name: 'Energy & Utilities',
       description: 'Advanced energy solutions and utility infrastructure for sustainable and efficient operations.',
       icon: Zap,
-      href: `/${language}/services/energy`,
+      href: `/services/energy`,
       items: ['Power Generation', 'Renewable Energy', 'Electrical Systems', 'Grid Infrastructure'],
       features: ['Renewable Focus', 'Smart Solutions', 'Energy Efficiency', 'Future Ready']
     },
@@ -47,7 +47,7 @@ export default function ServicesPage() {
       name: 'Maintenance & Support',
       description: 'Comprehensive maintenance services to ensure optimal performance and longevity of your systems.',
       icon: Wrench,
-      href: `/${language}/services/maintenance`,
+      href: `/services/maintenance`,
       items: ['Preventive Maintenance', 'Emergency Repairs', 'System Upgrades', 'Technical Support'],
       features: ['24/7 Availability', 'Rapid Response', 'Skilled Technicians', 'Cost Effective']
     }
@@ -130,7 +130,7 @@ export default function ServicesPage() {
                     )}
                     
                     <Link 
-                      href={'href' in service ? service.href : `/${language}/services/${service.id}`}
+                      href={'href' in service ? service.href : `/services/${service.id}`}
                       className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium group-hover:underline"
                     >
                       <span>Learn More</span>
@@ -193,7 +193,7 @@ export default function ServicesPage() {
               Contact us today to discuss your requirements and get a customized solution for your business needs.
             </p>
             <Link 
-              href={`/${language}/contact`}
+              href="/contact"
               className="inline-block px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
               Get In Touch

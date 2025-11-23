@@ -51,7 +51,7 @@ export default function AdminLoginPage() {
             <Lock className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Panel</h1>
-          <p className="text-gray-600">BatinoGroup İdarəetmə Paneli</p>
+          <p className="text-gray-600">BatinoGroup Management Panel</p>
         </div>
 
         {/* Login Form */}
@@ -71,7 +71,7 @@ export default function AdminLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-                  placeholder="admin@batinogroup.az"
+                  placeholder="admin email"
                   required
                   disabled={isLoading}
                 />
@@ -142,14 +142,7 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
-          {/* Info */}
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-sm text-blue-800">
-                <strong>Qeyd:</strong> Admin panelə daxil olmaq üçün Firebase Authentication-da yaradılmış hesab lazımdır.
-              </p>
-            </div>
-          </div>
+
         </div>
 
         {/* Footer */}

@@ -50,8 +50,8 @@ export default function NewsAdmin() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Xəbərlər</h1>
-          <p className="text-sm text-slate-500 mt-1">Xəbərləri idarə edin və dərc edin</p>
+          <h1 className="text-2xl font-bold text-slate-900">News</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage and publish news</p>
         </div>
         <button 
           onClick={handleAdd}

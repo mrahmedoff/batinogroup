@@ -1,4 +1,4 @@
-// Firebase-ə test məlumatları əlavə etmək üçün script
+// Script to add test data to Firebase
 // Bu faylı development zamanı istifadə edin
 
 import { addCategory } from '@/lib/firebase/categories';
@@ -8,7 +8,7 @@ export const seedCategories = async () => {
   console.log('Adding sample categories...');
   
   try {
-    // Products menu üçün əsas kateqoriyalar
+    // Main categories for Products menu
     const sparePartsId = await addCategory({
       name: 'SPARE PARTS GROUP',
       type: 'main',
@@ -113,7 +113,7 @@ export const seedProducts = async (categoryIds: any) => {
   
   try {
     // Sample products
-    // Bearings Group məhsulları
+    // Bearings Group products
     await addProduct({
       name: 'SKF Bearing 6205',
       category: categoryIds.sparePartsId,
@@ -191,7 +191,7 @@ export const seedProducts = async (categoryIds: any) => {
       status: 'active'
     });
 
-    // Belts Group məhsulları
+    // Belts Group products
     await addProduct({
       name: 'Industrial V-Belt',
       category: categoryIds.sparePartsId,
@@ -263,7 +263,7 @@ export const seedProducts = async (categoryIds: any) => {
   }
 };
 
-// Bütün test məlumatlarını əlavə et
+// Add all test data
 export const seedAll = async () => {
   try {
     const categoryIds = await seedCategories();

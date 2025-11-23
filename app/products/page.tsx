@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default function ProductsPage() {
   const { products, getCategoriesByMenuType, getSubCategories, getProductsByCategory } = useProducts();
 
-  // Products menu tipindəki kateqoriyaları al
+  // Get categories for products menu type
   const productCategories = getCategoriesByMenuType('products').filter(cat => cat.type === 'main');
 
   return (
@@ -26,7 +26,7 @@ export default function ProductsPage() {
             </p>
           </div>
 
-          {/* Firebase-dən gələn kateqoriyalar */}
+          {/* Categories from Firebase */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
             {productCategories.length > 0 ? (
               productCategories.map((category) => {
@@ -41,7 +41,7 @@ export default function ProductsPage() {
                         {category.description}
                       </p>
 
-                      {/* Alt kateqoriyalar */}
+                      {/* Subcategories */}
                       {subcategories.length > 0 && (
                         <div className="mb-4">
                           <h4 className="text-sm font-semibold text-gray-700 mb-2">Subcategories:</h4>
@@ -56,13 +56,13 @@ export default function ProductsPage() {
                         </div>
                       )}
 
-                      {/* Məhsul sayı */}
+                      {/* Product count */}
                       <div className="mt-4 pt-4 border-t border-gray-200">
                         <p className="text-sm text-gray-600">
                           {categoryProducts.length} products available
                         </p>
                         <span className="inline-block mt-2 text-blue-600 hover:text-blue-800 text-sm font-medium group-hover:underline">
-                          Bütün məhsulları gör →
+                          View all products →
                         </span>
                       </div>
                     </Link>

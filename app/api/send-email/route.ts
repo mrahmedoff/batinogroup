@@ -94,8 +94,8 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('❌ Email sending error:', error);
     
-    let errorMessage = 'Email göndərilmədi';
-    let suggestion = 'Test mode istifadə etmək üçün .env.local faylına EMAIL_TEST_MODE=true əlavə edin';
+    let errorMessage = 'Email not sent';
+    let suggestion = 'Add EMAIL_TEST_MODE=true to .env.local file to use test mode';
     
     if (error.code === 'EAUTH') {
       errorMessage = 'Gmail authentication xətası. Email və App Password-u yoxlayın.';
@@ -163,7 +163,7 @@ function createHtmlEmail(message: string): string {
                     
                     <!-- Tagline -->
                     <p style="color: rgba(255, 255, 255, 0.9); margin: 12px 0 0 0; font-size: 14px; font-weight: 400; letter-spacing: 0.5px;">
-                      Təchizat Həlləri və Mühəndislik Xidmətləri
+                      Supply Solutions and Engineering Services
                     </p>
                   </td>
                 </tr>
@@ -185,7 +185,7 @@ function createHtmlEmail(message: string): string {
                   Hörmətli müştəri,
                 </p>
                 <p style="color: #64748b; font-size: 14px; margin: 0; line-height: 1.6;">
-                  Mesajınıza görə təşəkkür edirik. Aşağıda cavabımızı tapa bilərsiniz.
+                  Thank you for your message. You can find our response below.
                 </p>
               </div>
               
@@ -199,7 +199,7 @@ ${message}
               <!-- Call to Action -->
               <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #e2e8f0;">
                 <p style="color: #475569; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
-                  Əlavə suallarınız varsa, bizimlə əlaqə saxlamaqdan çəkinməyin:
+                  If you have additional questions, don't hesitate to contact us:
                 </p>
                 
                 <!-- Contact Buttons -->
@@ -229,14 +229,14 @@ ${message}
                   <!-- Contact Info -->
                   <td width="50%" style="padding-right: 20px; vertical-align: top;">
                     <h3 style="color: #1e293b; font-size: 16px; font-weight: 700; margin: 0 0 20px 0;">
-                      📍 Əlaqə Məlumatları
+                      📍 Contact Information
                     </h3>
                     <table cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td style="padding-bottom: 12px;">
                           <p style="color: #64748b; font-size: 14px; margin: 0; line-height: 1.6;">
-                            <strong style="color: #475569;">Ünvan:</strong><br>
-                            Bakı, Azərbaycan
+                            <strong style="color: #475569;">Address:</strong><br>
+                            Baku, Azerbaijan
                           </p>
                         </td>
                       </tr>

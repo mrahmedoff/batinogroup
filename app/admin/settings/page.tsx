@@ -7,32 +7,54 @@ import LogoUpload from '@/components/admin/LogoUpload';
 
 export default function SettingsAdmin() {
   const { settings, updateSettings } = useData();
-  const [formData, setFormData] = useState(settings);
+  const [formData, setFormData] = useState({
+    siteName: '',
+    email: '',
+    phone: '',
+    address: '',
+    facebook: '',
+    linkedin: '',
+    instagram: '',
+    logo: '',
+    voen: ''
+  });
 
   useEffect(() => {
-    setFormData(settings);
+    if (settings) {
+      setFormData({
+        siteName: settings.siteName || '',
+        email: settings.email || '',
+        phone: settings.phone || '',
+        address: settings.address || '',
+        facebook: settings.facebook || '',
+        linkedin: settings.linkedin || '',
+        instagram: settings.instagram || '',
+        logo: settings.logo || '',
+        voen: settings.voen || ''
+      });
+    }
   }, [settings]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateSettings(formData);
-    alert('Parametrlər yadda saxlanıldı!');
+    alert('Settings saved!');
   };
 
   const handleLogoChange = (logoUrl: string) => {
     const newFormData = {...formData, logo: logoUrl};
     setFormData(newFormData);
     
-    // Logo yüklənən kimi avtomatik saxla
+    // Auto save when logo is uploaded
     updateSettings(newFormData);
-    console.log('Logo avtomatik saxlanıldı:', logoUrl);
+    console.log('Logo automatically saved:', logoUrl);
   };
 
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Parametrlər</h1>
-        <p className="text-sm text-slate-500 mt-1">Sayt parametrlərini konfiqurasiya edin</p>
+        <h1 className="text-2xl font-bold text-slate-900">Settings</h1>
+        <p className="text-sm text-slate-500 mt-1">Configure site settings</p>
       </div>
 
       {/* Info Banner */}
@@ -40,10 +62,10 @@ export default function SettingsAdmin() {
         <div className="flex items-start gap-3">
           <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
           <div>
-            <h3 className="text-sm font-medium text-blue-900 mb-1">Logo Yükləmə Haqqında</h3>
+            <h3 className="text-sm font-medium text-blue-900 mb-1">About Logo Upload</h3>
             <p className="text-sm text-blue-700">
-              Logo yüklədikdən sonra avtomatik olaraq saytın header və footer hissələrində görünəcək. 
-              Ən yaxşı nəticə üçün 200x80 piksel ölçüsündə PNG formatında şəkil istifadə edin.
+              After uploading the logo, it will automatically appear in the header and footer sections of the site. 
+              Use a PNG format image with 200x80 pixel dimensions for best results.
             </p>
           </div>
         </div>
@@ -61,11 +83,11 @@ export default function SettingsAdmin() {
       <div className="bg-white rounded-xl p-6 max-w-2xl border border-slate-200">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <h2 className="text-lg font-bold text-slate-900 mb-4">Ümumi Məlumatlar</h2>
+            <h2 className="text-lg font-bold text-slate-900 mb-4">General Information</h2>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Sayt Adı</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Site Name</label>
                 <input
                   type="text"
                   value={formData.siteName}
@@ -95,7 +117,7 @@ export default function SettingsAdmin() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Ünvan</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Address</label>
                 <input
                   type="text"
                   value={formData.address}
@@ -103,11 +125,22 @@ export default function SettingsAdmin() {
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 />
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">VOEN</label>
+                <input
+                  type="text"
+                  value={formData.voen}
+                  onChange={(e) => setFormData({...formData, voen: e.target.value})}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  placeholder="1234567890"
+                />
+              </div>
             </div>
           </div>
 
           <div>
-            <h2 className="text-lg font-bold text-slate-900 mb-4">Sosial Şəbəkələr</h2>
+            <h2 className="text-lg font-bold text-slate-900 mb-4">Social Networks</h2>
             
             <div className="space-y-4">
               <div>

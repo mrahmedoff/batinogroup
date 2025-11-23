@@ -386,8 +386,8 @@ export default function HeroAdminPage() {
       {slides.length === 0 && (
         <div className="text-center py-12">
           <Upload className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Hələ slide yoxdur</h3>
-          <p className="text-gray-600 mb-4">Başlamaq üçün ilk hero slide yaradın.</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No slides yet</h3>
+          <p className="text-gray-600 mb-4">Create your first hero slide to get started.</p>
           <button
             onClick={() => {
               setEditingSlide(null);
@@ -482,7 +482,7 @@ export default function HeroAdminPage() {
                     >
                       <ImageIcon className="w-12 h-12 text-gray-400 mb-2" />
                       <span className="text-sm font-medium text-gray-700 mb-1">
-                        {selectedFile ? selectedFile.name : 'Şəkil seçin'}
+                        {selectedFile ? selectedFile.name : 'Select image'}
                       </span>
                       <span className="text-xs text-gray-500">
                         JPEG, PNG, WebP (maksimum 5MB)

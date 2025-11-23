@@ -12,7 +12,7 @@ export default function MessagesAdmin() {
   const [replyError, setReplyError] = useState('');
 
   const handleDelete = (id: string) => {
-    if (confirm('Bu mesajı silmək istədiyinizdən əminsiniz?')) {
+    if (confirm('Are you sure you want to delete this message?')) {
       deleteMessage(id);
       if (selectedMessage?.id === id) {
         setSelectedMessage(null);
@@ -27,14 +27,14 @@ export default function MessagesAdmin() {
     }
   };
 
-  const jobApplications = messages.filter(m => m.subject.includes('Vakansiya müraciəti'));
-  const regularMessages = messages.filter(m => !m.subject.includes('Vakansiya müraciəti'));
+  const jobApplications = messages.filter(m => m.subject.includes('Job Application'));
+  const regularMessages = messages.filter(m => !m.subject.includes('Job Application'));
 
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Mesajlar</h1>
-        <p className="text-sm text-slate-500 mt-1">Gələn mesajları və vakansiya müraciətlərini idarə edin</p>
+        <h1 className="text-2xl font-bold text-slate-900">Messages</h1>
+        <p className="text-sm text-slate-500 mt-1">Manage incoming messages and job applications</p>
       </div>
 
       {/* Stats */}
@@ -45,7 +45,7 @@ export default function MessagesAdmin() {
               <Mail className="w-6 h-6 text-blue-600" strokeWidth={2} />
             </div>
             <div>
-              <div className="text-sm text-slate-500 font-medium">Ümumi Mesajlar</div>
+              <div className="text-sm text-slate-500 font-medium">General Messages</div>
               <div className="text-2xl font-bold text-slate-900">{messages.length}</div>
             </div>
           </div>
@@ -57,7 +57,7 @@ export default function MessagesAdmin() {
               <Mail className="w-6 h-6 text-green-600" strokeWidth={2} />
             </div>
             <div>
-              <div className="text-sm text-slate-500 font-medium">Vakansiya Müraciətləri</div>
+              <div className="text-sm text-slate-500 font-medium">Job Applications</div>
               <div className="text-2xl font-bold text-slate-900">{jobApplications.length}</div>
             </div>
           </div>
@@ -81,11 +81,10 @@ export default function MessagesAdmin() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="p-4 border-b border-slate-200">
-            <h2 className="font-semibold text-slate-900">Gələn Mesajlar ({messages.length})</h2>
+            <h2 className="font-semibold text-slate-900">Incoming Messages ({messages.length})</h2>
           </div>
           <div className="divide-y divide-slate-200 max-h-[600px] overflow-y-auto">
             {messages.map((message) => {
-              const isJobApplication = message.subject.includes('Vakansiya müraciəti');
               return (
                 <div
                   key={message.id}
@@ -97,11 +96,6 @@ export default function MessagesAdmin() {
                   <div className="flex justify-between items-start mb-1">
                     <div className="flex-1">
                       <span className="font-semibold text-sm text-slate-900">{message.name}</span>
-                      {isJobApplication && (
-                        <span className="ml-2 inline-block px-2 py-0.5 text-xs font-semibold text-green-600 bg-green-50 rounded">
-                          Vakansiya
-                        </span>
-                      )}
                     </div>
                     {!message.read && (
                     <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
@@ -178,8 +172,8 @@ export default function MessagesAdmin() {
             <div className="flex items-center justify-center h-full min-h-[600px]">
               <div className="text-center">
                 <Inbox className="w-16 h-16 text-slate-300 mx-auto mb-4" strokeWidth={1.5} />
-                <p className="text-slate-600 font-medium">Mesaj seçin</p>
-                <p className="text-sm text-slate-400 mt-1">Oxumaq üçün soldan mesaj seçin</p>
+                <p className="text-slate-600 font-medium">Select message</p>
+                <p className="text-sm text-slate-400 mt-1">Select a message from the left to read</p>
               </div>
             </div>
           )}
@@ -299,7 +293,7 @@ function ReplyModal({
 
         {/* Original Message */}
         <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <div className="text-xs text-gray-500 mb-2">Orijinal mesaj:</div>
+          <div className="text-xs text-gray-500 mb-2">Original message:</div>
           <div className="text-sm text-gray-700">
             <div className="font-semibold mb-1">{message.subject}</div>
             <div className="text-xs text-gray-500 mb-2">{message.date}</div>
@@ -329,7 +323,7 @@ function ReplyModal({
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Mesajınız <span className="text-red-500">*</span>
+              Your message <span className="text-red-500">*</span>
             </label>
             <textarea
               value={replyMessage}

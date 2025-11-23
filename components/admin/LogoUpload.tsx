@@ -94,8 +94,8 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
       console.error('Logo yükləmə xətası:', error);
       clearInterval(progressInterval);
       
-      // Xəta növünə görə fərqli mesajlar
-      const errorMessage = error instanceof Error ? error.message : 'Naməlum xəta';
+      // Different messages based on error type
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       if (errorMessage.includes('unauthorized') || errorMessage.includes('permission')) {
         alert('Firebase icazə xətası! Firebase Storage Rules yoxlanmalıdır.');
       } else {
@@ -265,7 +265,7 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
                 ? `Yüklənir... ${Math.round(uploadProgress)}%` 
                 : uploadSuccess 
                   ? 'Uğurla yükləndi!' 
-                  : 'Logo seçin və ya buraya sürükləyin'
+                  : 'Select logo or drag here'
               }
             </button>
             <p className="text-xs text-slate-500 mt-2">
@@ -284,8 +284,8 @@ export default function LogoUpload({ currentLogo, onLogoChange }: LogoUploadProp
       </div>
 
       <div className="text-xs text-slate-500">
-        <p>• Ən yaxşı nəticə üçün 200x80 piksel ölçüsündə şəkil istifadə edin</p>
-        <p>• Şəffaf arxa fon (PNG) tövsiyə olunur</p>
+        <p>• Use 200x80 pixel size image for best results</p>
+        <p>• Transparent background (PNG) is recommended</p>
       </div>
     </div>
   );

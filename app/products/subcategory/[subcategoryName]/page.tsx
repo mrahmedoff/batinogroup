@@ -17,17 +17,17 @@ export default function SubcategoryPage() {
     loading
   } = useProducts();
 
-  // Alt kateqoriyaya aid məhsulları tap
+  // Find products belonging to subcategory
   const subcategoryProducts = products.filter(
     product => product.subcategory === subcategoryName && product.status === 'active'
   );
 
-  // Alt kateqoriyanı tap
+  // Find subcategory
   const subcategory = categories.find(cat =>
     cat.type === 'sub' && cat.name === subcategoryName
   );
 
-  // Ana kateqoriyanı tap
+  // Find parent category
   const parentCategory = subcategory ? categories.find(cat =>
     cat.id === subcategory.parentId
   ) : null;
@@ -41,7 +41,7 @@ export default function SubcategoryPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center">
               <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-slate-600">Alt kateqoriya yüklənir...</p>
+              <p className="text-slate-600">Loading subcategory...</p>
             </div>
           </div>
         </main>
@@ -55,10 +55,10 @@ export default function SubcategoryPage() {
       <Header />
       <main className="pt-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Breadcrumb - referans şəkildəki kimi sadə */}
+          {/* Breadcrumb - simple as in reference image */}
           <nav className="flex items-center gap-2 text-xs text-gray-500 mb-6">
             <Link href="/products" className="hover:text-blue-600 transition-colors">
-              Məhsullar
+              Products
             </Link>
             <span>/</span>
             {parentCategory && (
@@ -75,20 +75,20 @@ export default function SubcategoryPage() {
             <span className="text-gray-700">{subcategoryName}</span>
           </nav>
 
-          {/* Alt kateqoriya başlığı */}
+          {/* Subcategory header */}
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-gray-900 mb-2">{subcategoryName}</h1>
             <div className="text-sm text-gray-500">
-              {subcategoryProducts.length} məhsul mövcuddur
+              {subcategoryProducts.length} products available
             </div>
           </div>
 
-          {/* Məhsullar */}
+          {/* Products */}
           {subcategoryProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {subcategoryProducts.map((product) => (
                 <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-slate-200 overflow-hidden">
-                  {/* Məhsul şəkli */}
+                  {/* Product image */}
                   <div className="aspect-square bg-gray-100 flex items-center justify-center">
                     {product.image ? (
                       <img
@@ -112,15 +112,15 @@ export default function SubcategoryPage() {
           ) : (
             <div className="text-center py-16">
               <h3 className="text-lg font-medium text-slate-900 mb-2">
-                Məhsul tapılmadı
+                No Products Found
               </h3>
               <p className="text-slate-600">
-                Bu alt kateqoriyada hələ məhsul əlavə edilməyib.
+                No products have been added to this subcategory yet.
               </p>
             </div>
           )}
 
-          {/* Geri qayıt düyməsi */}
+          {/* Back button */}
           <div className="mt-12 text-center">
             {parentCategory ? (
               <Link
@@ -128,7 +128,7 @@ export default function SubcategoryPage() {
                 className="inline-flex items-center gap-2 px-6 py-3 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                {parentCategory.name} kateqoriyasına qayıt
+                Back to {parentCategory.name}
               </Link>
             ) : (
               <Link
@@ -136,7 +136,7 @@ export default function SubcategoryPage() {
                 className="inline-flex items-center gap-2 px-6 py-3 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Məhsullara qayıt
+                Back to Products
               </Link>
             )}
           </div>

@@ -104,7 +104,7 @@ function SafetyPage() {
               <div className="text-center p-8 bg-blue-50 rounded-xl">
                 <Award className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="text-xl font-bold mb-3">ISO 45001</h3>
-                <p className="text-gray-600">İş Sağlamlığı və Təhlükəsizliyi İdarəetmə Sistemi</p>
+                <p className="text-gray-600">Occupational Health and Safety Management System</p>
               </div>
 
               <div className="text-center p-8 bg-green-50 rounded-xl">
@@ -140,9 +140,9 @@ function SafetyPage() {
                   {[
                     'Gündəlik təhlükəsizlik brifinqləri',
                     'Fərdi qoruyucu avadanlıq (FQA) istifadəsi',
-                    'İş sahəsinin təhlükəsizlik yoxlaması',
+                    'Workplace safety inspection',
                     'Təcili vəziyyət planları və təlimləri',
-                    'Təhlükəsizlik siqnalizasiya sistemləri',
+                    'Safety alarm systems',
                     'Tibbi yardım və ilk yardım avadanlığı',
                     'Qəza hesabatı və təhlili',
                     'Davamlı təkmilləşdirmə proqramları'

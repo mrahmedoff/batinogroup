@@ -20,8 +20,8 @@ export default function MediaAdmin() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Media Kitabxanası</h1>
-          <p className="text-sm text-slate-500 mt-1">Şəkil və video fayllarını idarə edin</p>
+          <h1 className="text-2xl font-bold text-slate-900">Media Library</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage image and video files</p>
         </div>
         <button className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
           <Upload className="w-4 h-4" strokeWidth={2} />

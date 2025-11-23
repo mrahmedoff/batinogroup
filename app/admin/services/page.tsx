@@ -37,8 +37,8 @@ export default function ServicesAdmin() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Xidmətlər</h1>
-          <p className="text-sm text-slate-500 mt-1">Şirkət xidmətlərini idarə edin</p>
+          <h1 className="text-2xl font-bold text-slate-900">Services</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage company services</p>
         </div>
         <button 
           onClick={handleAdd}
@@ -60,10 +60,10 @@ export default function ServicesAdmin() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200">
-            {services.map((service) => {
+            {services.map((service, index) => {
               const IconComponent = iconMap[service.icon] || Settings;
               return (
-                <tr key={service.id} className="hover:bg-slate-50 transition-colors">
+                <tr key={service.id || `service-${index}`} className="hover:bg-slate-50 transition-colors">
                   <td className="px-6 py-4">
                     <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
                       <IconComponent className="w-5 h-5 text-white" />
@@ -128,7 +128,11 @@ function ServiceModal({ service, onClose, onSave }: any) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    const serviceData = {
+      ...formData,
+      id: formData.id || Date.now().toString()
+    };
+    onSave(serviceData);
   };
 
   return (

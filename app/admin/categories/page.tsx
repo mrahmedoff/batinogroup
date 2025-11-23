@@ -38,11 +38,11 @@ export default function CategoriesAdmin() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Bu kateqoriyanı silmək istədiyinizə əminsiniz?')) {
+    if (confirm('Are you sure you want to delete this category?')) {
       // Check if category has subcategories
       const hasSubcategories = categories.some(c => c.parentId === id);
       if (hasSubcategories) {
-        alert('Bu kateqoriyanın alt kateqoriyaları var. Əvvəlcə onları silin.');
+        alert('This category has subcategories. Please delete them first.');
         return;
       }
       
@@ -50,7 +50,7 @@ export default function CategoriesAdmin() {
         await deleteCategory(id);
       } catch (error) {
         console.error('Error deleting category:', error);
-        alert('Kateqoriya silinərkən xəta baş verdi');
+        alert('An error occurred while deleting the category');
       }
     }
   };
@@ -74,7 +74,7 @@ export default function CategoriesAdmin() {
       <div className="p-8 flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-600">Kateqoriyalar yüklənir...</p>
+          <p className="text-slate-600">Loading categories...</p>
         </div>
       </div>
     );
@@ -84,12 +84,12 @@ export default function CategoriesAdmin() {
     return (
       <div className="p-8 flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <p className="text-red-600 mb-4">Xəta: {categoriesError}</p>
+          <p className="text-red-600 mb-4">Error: {categoriesError}</p>
           <button 
             onClick={() => window.location.reload()} 
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
-            Yenidən cəhd et
+            Try Again
           </button>
         </div>
       </div>
@@ -100,8 +100,8 @@ export default function CategoriesAdmin() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Kateqoriyalar</h1>
-          <p className="text-sm text-slate-500 mt-1">Menu kateqoriyalarını və alt kateqoriyalarını idarə edin</p>
+          <h1 className="text-2xl font-bold text-slate-900">Categories</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage menu categories and subcategories</p>
         </div>
         <div className="flex gap-2">
           <button
@@ -132,22 +132,22 @@ Check console for detailed logs.`);
           {categories.length === 0 && (
             <button
               onClick={async () => {
-                if (confirm('Test məlumatları əlavə etmək istəyirsiniz?')) {
+                if (confirm('Do you want to add test data?')) {
                   try {
                     // Import seed functions dynamically
                     const { seedAll } = await import('@/scripts/seedFirebase');
                     await seedAll();
-                    alert('Test məlumatları uğurla əlavə edildi!');
+                    alert('Test data added successfully!');
                   } catch (error) {
                     console.error('Seed error:', error);
-                    alert('Test məlumatları əlavə edilərkən xəta baş verdi');
+                    alert('Error occurred while adding test data');
                   }
                 }
               }}
               className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
             >
               <Package className="w-4 h-4" strokeWidth={2} />
-              Test Məlumatları
+              Test Data
             </button>
           )}
           <button
@@ -155,7 +155,7 @@ Check console for detailed logs.`);
             className="px-4 py-2 bg-blue-600 text-white text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
           >
             <Plus className="w-4 h-4" strokeWidth={2} />
-            Yeni Kateqoriya
+            New Category
           </button>
         </div>
       </div>
@@ -167,7 +167,7 @@ Check console for detailed logs.`);
             <Search className="w-4 h-4 absolute left-3 top-3 text-slate-400" />
             <input
               type="text"
-              placeholder="Kateqoriya axtar..."
+              placeholder="Search categories..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
@@ -186,7 +186,7 @@ Check console for detailed logs.`);
 
           <div className="flex items-center gap-2 text-sm text-slate-600">
             <FolderOpen className="w-4 h-4" />
-            <span>{filteredCategories.length} kateqoriya</span>
+            <span>{filteredCategories.length} categories</span>
           </div>
         </div>
       </div>
@@ -213,21 +213,21 @@ Check console for detailed logs.`);
                           ? 'bg-green-100 text-green-800' 
                           : 'bg-red-100 text-red-800'
                       }`}>
-                        {mainCategory.status === 'active' ? 'Aktiv' : 'Deaktiv'}
+                        {mainCategory.status === 'active' ? 'Active' : 'Inactive'}
                       </span>
                       <button
                         onClick={() => handleEdit(mainCategory)}
                         className="text-sm text-blue-600 hover:text-blue-700 font-medium mr-2 inline-flex items-center gap-1"
                       >
                         <Edit2 className="w-4 h-4" strokeWidth={2} />
-                        Redaktə
+                        Edit
                       </button>
                       <button
                         onClick={() => handleDelete(mainCategory.id)}
                         className="text-sm text-red-600 hover:text-red-700 font-medium inline-flex items-center gap-1"
                       >
                         <Trash2 className="w-4 h-4" strokeWidth={2} />
-                        Sil
+                        Delete
                       </button>
                     </div>
                   </div>
@@ -250,21 +250,21 @@ Check console for detailed logs.`);
                             ? 'bg-green-100 text-green-800' 
                             : 'bg-red-100 text-red-800'
                         }`}>
-                          {subCategory.status === 'active' ? 'Aktiv' : 'Deaktiv'}
+                          {subCategory.status === 'active' ? 'Active' : 'Inactive'}
                         </span>
                         <button
                           onClick={() => handleEdit(subCategory)}
                           className="text-sm text-blue-600 hover:text-blue-700 font-medium mr-2 inline-flex items-center gap-1"
                         >
                           <Edit2 className="w-4 h-4" strokeWidth={2} />
-                          Redaktə
+                          Edit
                         </button>
                         <button
                           onClick={() => handleDelete(subCategory.id)}
                           className="text-sm text-red-600 hover:text-red-700 font-medium inline-flex items-center gap-1"
                         >
                           <Trash2 className="w-4 h-4" strokeWidth={2} />
-                          Sil
+                          Delete
                         </button>
                       </div>
                     </div>
@@ -272,7 +272,7 @@ Check console for detailed logs.`);
                   
                   {getSubcategoriesForDisplay(mainCategory.id).length === 0 && (
                     <div className="text-center py-4 text-slate-500">
-                      Alt kateqoriya yoxdur
+                      No subcategories
                     </div>
                   )}
                 </div>
@@ -296,7 +296,7 @@ Check console for detailed logs.`);
               setIsModalOpen(false);
             } catch (error) {
               console.error('Error saving category:', error);
-              alert('Kateqoriya yadda saxlanılarkən xəta baş verdi');
+              alert('An error occurred while saving the category');
             }
           }}
           availableParents={getMainCategoriesForSelect()}
@@ -327,7 +327,7 @@ function CategoryModal({ category, onClose, onSave, availableParents }: any) {
       <div className="bg-white rounded-xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-slate-900">
-            {category ? 'Kateqoriyanı Redaktə Et' : 'Yeni Kateqoriya'}
+            {category ? 'Edit Category' : 'New Category'}
           </h2>
           <button
             onClick={onClose}
@@ -339,19 +339,19 @@ function CategoryModal({ category, onClose, onSave, availableParents }: any) {
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Kateqoriya Adı</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Category Name</label>
             <input
               type="text"
               required
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
               className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              placeholder="Kateqoriya adını daxil edin"
+              placeholder="Enter category name"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Menu Tipi</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Menu Type</label>
             <select
               value={formData.menuType}
               onChange={(e) => setFormData({...formData, menuType: e.target.value})}
@@ -366,27 +366,27 @@ function CategoryModal({ category, onClose, onSave, availableParents }: any) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Kateqoriya Tipi</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Category Type</label>
             <select
               value={formData.type}
               onChange={(e) => setFormData({...formData, type: e.target.value as 'main' | 'sub', parentId: ''})}
               className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value="main">Əsas Kateqoriya</option>
-              <option value="sub">Alt Kateqoriya</option>
+              <option value="main">Main Category</option>
+              <option value="sub">Subcategory</option>
             </select>
           </div>
 
           {formData.type === 'sub' && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Əsas Kateqoriya</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Main Category</label>
               <select
                 required
                 value={formData.parentId}
                 onChange={(e) => setFormData({...formData, parentId: e.target.value})}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               >
-                <option value="">Əsas kateqoriya seçin</option>
+                <option value="">Select main category</option>
                 {availableParents.map((parent: any) => (
                   <option key={parent.id} value={parent.id}>{parent.name}</option>
                 ))}
@@ -395,18 +395,18 @@ function CategoryModal({ category, onClose, onSave, availableParents }: any) {
           )}
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Təsvir</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({...formData, description: e.target.value})}
               rows={6}
               className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
-              placeholder="Kateqoriya haqqında ətraflı məlumat yazın"
+              placeholder="Write detailed information about the category"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Sıralama</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Order</label>
             <input
               type="number"
               min="0"
@@ -424,8 +424,8 @@ function CategoryModal({ category, onClose, onSave, availableParents }: any) {
               onChange={(e) => setFormData({...formData, status: e.target.value as 'active' | 'inactive'})}
               className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value="active">Aktiv</option>
-              <option value="inactive">Deaktiv</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
             </select>
           </div>
 
@@ -434,14 +434,14 @@ function CategoryModal({ category, onClose, onSave, availableParents }: any) {
               type="submit"
               className="flex-1 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Yadda saxla
+              Save
             </button>
             <button
               type="button"
               onClick={onClose}
               className="flex-1 px-4 py-2 bg-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-300 transition-colors"
             >
-              Ləğv et
+              Cancel
             </button>
           </div>
         </form>

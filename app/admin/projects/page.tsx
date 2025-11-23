@@ -24,8 +24,8 @@ export default function ProjectsAdmin() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Layihələr</h1>
-          <p className="text-sm text-slate-500 mt-1">Portfelinizi idarə edin</p>
+          <h1 className="text-2xl font-bold text-slate-900">Projects</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage your portfolio</p>
         </div>
         <button 
           onClick={() => { setEditingProject(null); setIsModalOpen(true); }}

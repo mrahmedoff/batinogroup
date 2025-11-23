@@ -164,7 +164,7 @@ export const searchProducts = async (searchTerm: string): Promise<Product[]> => 
   }
   
   try {
-    // Firestore-da full-text search yoxdur, ona görə bütün məhsulları alıb client-side filter edirik
+    // Firestore doesn't have full-text search, so we get all products and filter client-side
     const products = await getProducts();
     
     return products.filter(product => 

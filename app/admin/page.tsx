@@ -8,7 +8,6 @@ import {
   FolderKanban, 
   Users, 
   Mail,
-  Briefcase,
   Award,
   Newspaper,
   Image,
@@ -20,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminDashboard() {
-  const { services, projects, team, messages, news, partners, certificates, jobs, isLoading } = useData();
+  const { services, projects, team, messages, news, partners, certificates, isLoading } = useData();
   const { products, categories } = useProducts();
 
   if (isLoading) {
@@ -71,7 +70,7 @@ export default function AdminDashboard() {
       color: 'teal'
     },
     { 
-      title: 'Mesajlar', 
+      title: 'Messages', 
       count: messages.filter(m => !m.read).length, 
       icon: Mail,
       href: '/admin/messages',
@@ -84,45 +83,33 @@ export default function AdminDashboard() {
       href: '/admin/news',
       color: 'yellow'
     },
-    { 
-      title: 'Vakansiyalar', 
-      count: jobs.length, 
-      icon: Briefcase,
-      href: '/admin/careers',
-      color: 'pink'
-    },
+
   ];
 
   const quickLinks = [
     {
       title: 'Hero Slides',
-      description: 'Ana səhifə slider idarəsi',
+      description: 'Homepage slider management',
       icon: Monitor,
       href: '/admin/hero',
       color: 'blue'
     },
     {
-      title: 'Məhsul İdarəsi',
-      description: 'Məhsul və materialları idarə edin',
+      title: 'Product Management',
+      description: 'Manage products and materials',
       icon: Package,
       href: '/admin/products',
       color: 'green'
     },
     {
-      title: 'Kateqoriya İdarəsi',
-      description: 'Menu kateqoriyalarını idarə edin',
+      title: 'Category Management',
+      description: 'Manage menu categories',
       icon: FolderTree,
       href: '/admin/categories',
       color: 'purple'
     },
 
-    {
-      title: 'Karyera',
-      description: 'CV müraciətlərini idarə edin',
-      icon: Briefcase,
-      href: '/admin/careers',
-      color: 'indigo'
-    },
+
     {
       title: 'Sertifikatlar',
       description: 'Şirkət sertifikatları',
@@ -139,7 +126,7 @@ export default function AdminDashboard() {
     },
     {
       title: 'Media',
-      description: 'Şəkil və video idarəsi',
+      description: 'Image and video management',
       icon: Image,
       href: '/admin/media',
       color: 'pink'
@@ -152,8 +139,8 @@ export default function AdminDashboard() {
       color: 'teal'
     },
     {
-      title: 'Parametrlər',
-      description: 'Sistem parametrləri',
+      title: 'Settings',
+      description: 'System settings',
       icon: Cog,
       href: '/admin/settings',
       color: 'gray'
@@ -178,7 +165,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="mb-6 lg:mb-8 pt-12 lg:pt-0">
         <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Dashboard</h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">Xoş gəlmisiniz! Sistemə ümumi baxış</p>
+        <p className="text-xs sm:text-sm text-slate-500 mt-1">Welcome! System overview</p>
       </div>
 
       {/* Stats Grid */}
@@ -234,9 +221,9 @@ export default function AdminDashboard() {
       <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 border border-slate-200">
         <div className="flex items-center justify-between mb-4 sm:mb-6">
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-slate-900">Son Mesajlar</h2>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900">Recent Messages</h2>
             <p className="text-xs text-slate-500 mt-1">
-              {messages.length > 0 ? `Cəmi ${messages.length} mesaj` : 'Mesaj yoxdur'}
+              {messages.length > 0 ? `Total ${messages.length} messages` : 'No messages'}
             </p>
           </div>
           {messages.length > 0 && (
@@ -255,7 +242,7 @@ export default function AdminDashboard() {
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                 <Mail className="w-6 h-6 sm:w-8 sm:h-8 text-slate-400" strokeWidth={2} />
               </div>
-              <p className="text-xs sm:text-sm text-slate-500">Hələ heç bir mesaj yoxdur</p>
+              <p className="text-xs sm:text-sm text-slate-500">No messages yet</p>
             </div>
           ) : (
             <>

@@ -112,7 +112,7 @@ function ValuesPage() {
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">{t.howWeWork}</h2>
                 <p className="text-gray-600 leading-relaxed mb-6">
-                  Dəyərlərimiz bizim hər gün necə işlədiyimizi, qərarlar verdiyimizi və müştərilərimizlə əlaqələrimizi müəyyən edir.
+                  Our values define how we work every day, make decisions, and maintain relationships with our clients.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
@@ -163,13 +163,13 @@ function ValuesPage() {
               Dəyərlərimizi paylaşırsınız?
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Komandamıza qoşulun və bizimlə birlikdə gələcəyi qurun
+              Contact us to learn more about our values and work together
             </p>
             <Link 
-              href="/career"
+              href="/contact"
               className="inline-block px-8 py-4 bg-white text-blue-900 font-semibold rounded-lg hover:bg-blue-50 transition-colors shadow-lg"
             >
-              {t.career}
+              {t.contact}
             </Link>
           </div>
         </section>

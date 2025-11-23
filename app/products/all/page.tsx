@@ -12,7 +12,7 @@ export default function AllProductsPage() {
     loading
   } = useProducts();
 
-  // Aktiv məhsulları al
+  // Get active products
   const activeProducts = products.filter(product => product.status === 'active');
 
   if (loading) {

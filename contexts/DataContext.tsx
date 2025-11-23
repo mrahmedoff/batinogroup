@@ -13,6 +13,7 @@ interface SiteSettings {
   linkedin: string;
   instagram: string;
   logo: string;
+  voen: string;
 }
 
 interface Media {
@@ -35,11 +36,11 @@ interface NewsItem {
   published: boolean;
 }
 
-interface Partner {
+export interface Partner {
   id: string;
   name: string;
   logo: string;
-  website: string;
+  website?: string;
   type: 'Müştəri' | 'Tərəfdaş';
   description: string;
 }
@@ -128,7 +129,32 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export function DataProvider({ children }: { children: ReactNode }) {
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<Service[]>([
+    {
+      id: '1',
+      title: 'Industrial Automation',
+      description: 'Complete automation solutions for industrial processes with cutting-edge technology and reliable systems.',
+      icon: 'Settings'
+    },
+    {
+      id: '2',
+      title: 'Electrical Engineering',
+      description: 'Professional electrical engineering services including design, installation, and maintenance of electrical systems.',
+      icon: 'Zap'
+    },
+    {
+      id: '3',
+      title: 'Technical Consulting',
+      description: 'Expert technical consulting services to optimize your operations and implement best practices.',
+      icon: 'Wrench'
+    },
+    {
+      id: '4',
+      title: '24/7 Support',
+      description: 'Round-the-clock technical support and maintenance services to ensure continuous operation.',
+      icon: 'Headphones'
+    }
+  ]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [team, setTeam] = useState<TeamMember[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -142,11 +168,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
     siteName: 'BatinoGroup',
     email: 'info@batinogroup.az',
     phone: '+994 12 XXX XX XX',
-    address: 'Bakı, Azərbaycan',
+    address: 'Baku, Azerbaijan',
     facebook: '',
     linkedin: '',
     instagram: '',
-    logo: '/batinologo.png'
+    logo: '/batinologo.png',
+    voen: '1234567890'
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -184,7 +211,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
         getDocuments('settings'),
       ]);
 
-      setServices(servicesData as any);
+      // Only update services if Firebase has data, otherwise keep default
+      if (servicesData && servicesData.length > 0) {
+        setServices(servicesData as any);
+      }
       setProjects(projectsData as any);
       setTeam(teamData as any);
       setMessages(messagesData as any);

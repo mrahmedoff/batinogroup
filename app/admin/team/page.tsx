@@ -20,8 +20,8 @@ export default function TeamAdmin() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Komanda</h1>
-          <p className="text-sm text-slate-500 mt-1">Komanda üzvlərini idarə edin</p>
+          <h1 className="text-2xl font-bold text-slate-900">Team</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage team members</p>
         </div>
         <button 
           onClick={() => { setEditingMember(null); setIsModalOpen(true); }}
@@ -219,7 +219,7 @@ function TeamModal({ member, onClose, onSave }: any) {
               >
                 <Upload className="w-5 h-5 text-slate-400" />
                 <span className="text-sm text-slate-600">
-                  {imageFile ? imageFile.name : 'Şəkil seçin'}
+                  {imageFile ? imageFile.name : 'Select image'}
                 </span>
               </label>
             </div>

@@ -98,8 +98,8 @@ export default function ProductsAdmin() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Məhsullar</h1>
-          <p className="text-sm text-slate-500 mt-1">Məhsul və materialları idarə edin</p>
+          <h1 className="text-2xl font-bold text-slate-900">Products</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage products and materials</p>
         </div>
         <div className="flex gap-2">
           <button
@@ -379,7 +379,7 @@ function ProductModal({ product, categories, getSubCategories, onClose, onSave }
                 <div className="w-32 h-32 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center">
                   <div className="text-center">
                     <ImageIcon className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <p className="text-xs text-slate-500">Şəkil yoxdur</p>
+                    <p className="text-xs text-slate-500">No image</p>
                   </div>
                 </div>
               )}
@@ -426,7 +426,7 @@ function ProductModal({ product, categories, getSubCategories, onClose, onSave }
               onChange={(e) => setFormData({...formData, category: e.target.value, subcategory: ''})}
               className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
             >
-              <option value="">Kateqoriya seçin</option>
+              <option value="">Select category</option>
               {categories.map((category: any) => (
                 <option key={category.id} value={category.id}>{category.name}</option>
               ))}
@@ -442,7 +442,7 @@ function ProductModal({ product, categories, getSubCategories, onClose, onSave }
               className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none disabled:bg-slate-50 disabled:text-slate-400"
               disabled={!formData.category}
             >
-              <option value="">Alt kateqoriya seçin</option>
+              <option value="">Select subcategory</option>
               {getAvailableSubcategories().map((sub: any) => (
                 <option key={sub.id} value={sub.name}>{sub.name}</option>
               ))}
